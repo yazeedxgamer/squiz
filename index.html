@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>اختبار الكيمياء الحيوية</title>
+    <title>اختبارات الكيمياء الحيوية</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700&display=swap');
 
@@ -42,7 +42,8 @@
             font-size: 2.5rem;
         }
 
-        .quiz-container {
+        /* --- حاويات الأقسام --- */
+        .main-container {
             background-color: var(--container-bg);
             border-radius: var(--border-radius);
             box-shadow: var(--box-shadow);
@@ -51,16 +52,61 @@
             overflow: hidden;
         }
 
+        /* --- تصميم المنيو --- */
+        #menu-container {
+            padding: 40px;
+            text-align: center;
+        }
+
+        .menu-btn {
+            font-family: 'Tajawal', sans-serif;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: var(--border-radius);
+            padding: 20px 40px;
+            font-size: 1.3rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+            margin-bottom: 20px;
+        }
+
+        .menu-btn:hover {
+            background-color: #004494;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(0, 86, 179, 0.2);
+        }
+
+        /* --- تصميم الاختبار --- */
         .quiz-header {
-            padding: 25px;
+            padding: 20px 25px;
             background-color: #f9f9f9;
             border-bottom: 1px solid #eee;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
         
         #question-counter {
             font-size: 1rem;
             color: #777;
-            margin-bottom: 10px;
+        }
+
+        .back-btn {
+            font-family: 'Tajawal', sans-serif;
+            background-color: #6c757d;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 5px 12px;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        .back-btn:hover {
+            background-color: #5a6268;
         }
 
         #question-text {
@@ -68,6 +114,17 @@
             font-weight: 500;
             line-height: 1.6;
             min-height: 60px;
+            text-align: center; /* توسيط السؤال والصورة */
+            padding: 25px;
+        }
+        
+        #question-text img {
+            max-width: 100%;
+            height: auto;
+            max-height: 300px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            border: 1px solid #ddd;
         }
 
         .quiz-body {
@@ -117,13 +174,13 @@
         }
 
         .rationale {
-            font-size: 1rem;
+            font-size: 1.1rem;
             margin-top: 20px;
-            padding: 15px;
+            padding: 20px;
             border-radius: var(--border-radius);
             background-color: #f9f9f9;
             border: 1px solid #eee;
-            line-height: 1.7;
+            line-height: 1.8;
             display: none; /* مخفي افتراضيًا */
         }
         
@@ -135,8 +192,18 @@
             border-left: 5px solid var(--incorrect-color);
         }
         
-        .rationale strong {
+        .encouragement {
+            font-weight: 700;
             color: var(--primary-color);
+            display: block;
+            margin-bottom: 15px;
+            font-size: 1.2rem;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 15px;
+        }
+        
+        .rationale strong {
+            color: #333; /* لون "الشرح:" */
         }
 
         .controls {
@@ -163,6 +230,7 @@
             background-color: #004494;
         }
 
+        /* --- تصميم صفحة النتيجة والمراجعة --- */
         .score-container {
             padding: 40px;
             text-align: center;
@@ -174,12 +242,7 @@
             color: var(--primary-color);
             margin-bottom: 20px;
         }
-
-        .hide {
-            display: none;
-        }
         
-        /* --- أنماط قسم المراجعة --- */
         #review-container h2 {
             text-align: center;
             color: var(--primary-color);
@@ -206,6 +269,13 @@
             color: var(--primary-color);
             margin-bottom: 10px;
             line-height: 1.6;
+        }
+        
+        .review-question img {
+            max-width: 100%;
+            max-height: 200px;
+            border-radius: 5px;
+            margin-bottom: 10px;
         }
         
         .user-answer, .correct-answer, .review-rationale {
@@ -236,19 +306,45 @@
             padding: 10px;
             border-radius: 5px;
         }
+        
+        .final-promo {
+            font-size: 1.2rem;
+            color: #555;
+            margin-top: 30px;
+            padding: 20px;
+            background: #f9f9f9;
+            border-radius: 10px;
+            border: 1px dashed var(--primary-color);
+            line-height: 1.8;
+        }
+        
+        .back-to-menu-btn {
+            margin-top: 20px;
+            background-color: #6c757d;
+        }
 
+        .hide {
+            display: none;
+        }
     </style>
 </head>
 <body>
 
-    <div class="quiz-container">
-        <h1>snap:iyz3d</h1>
+    <div class="main-container">
         
-        <div id="quiz-content">
+        <div id="menu-container">
+            <h1>اختر الاختبار</h1>
+            <button id="start-quiz-1" class="menu-btn">اختبار الكيمياء الحيوية (باقي الاسئلة)</button>
+            <button id="start-quiz-2" class="menu-btn">اختبار عضيات الخلية</button>
+        </div>
+
+        <div id="quiz-content" class="hide">
             <div class="quiz-header">
+                <button class="back-btn" onclick="showMenu()">رجوع للقائمة</button>
                 <div id="question-counter"></div>
-                <div id="question-text">...</div>
             </div>
+            
+            <div id="question-text">...</div>
             
             <div class="quiz-body">
                 <div id="answer-buttons" class="btn-grid">
@@ -263,14 +359,27 @@
 
         <div id="score-container" class="score-container hide">
             </div>
+
     </div>
 
     <script>
-        const questions = [
-            // --- الفصل الأول: الخلية ---
+        // --- مصفوفة التعزيزات الفكاهية (مشتركة) ---
+        const encouragements = [
+            "كفووو! إجابة صحيحة! شكلك فاهم المادة... شرايك تفهّمني سناب iyz3d؟",
+            "وحش! صح عليك! العيال بالاستراحة ما يحلونها، بس أنت حليتها! شكلي بضيفك بسنابي iyz3d عشان أتعلم منك.",
+            "يا سلام! جوابك بطل! الذكاء هذا كله من وين؟ أكيد من متابعة سناب iyz3d!",
+            "خطير! جبتها صح! شكلك دافور الفصل. بالله علمني وش تسوي، شكلك تتابع iyz3d .",
+            "عين الله عليك! جواب ولا أروع! هذا وأنت ما بعد شفت ستريكاتي على سناب iyz3d.",
+            "صح! ما شاء الله تبارك الله. هذا الشغل العدل! تستاهل تضيفني على سناب iyz3d.",
+            "بطل! إجابتك 100%! لو فيه جائزة، أعطيك سنابي iyz3d هدية.",
+            "أيييوه! هذا الجواب اللي يفتح النفس! الذكاء هذا ذكرني بنفسي... ضيفني على سناب iyz3d وتصير مثلي."
+        ];
+
+        // --- أسئلة الاختبار الأول (الشامل) ---
+        const questionsQuiz1 = [
+            // الخلية
             {
                 question: "ما هو الفرق الرئيسي في مادة DNA بين الخلايا بدائية النواة وحقيقية النواة؟",
-                type: 'mc',
                 answers: [
                     { text: "في حقيقية النواة، يوجد DNA في النواة ومحاط بغشاء نووي، بينما في بدائية النواة يوجد في السيتوبلازم (منطقة النيوكليوتيد)", correct: true, rationale: "الخلايا حقيقية النواة تحتوي على نواة حقيقية بغشاء نووي، أما بدائية النواة فلا تحتوي غشاء نووي ويوجد DNA في السيتوبلازم." },
                     { text: "في بدائية النواة، يوجد DNA في النواة، بينما في حقيقية النواة يوجد في السيتوبلازم", correct: false, rationale: "هذا عكس الواقع تماماً. الخلايا حقيقية النواة هي التي لها نواة حقيقية." },
@@ -280,54 +389,14 @@
             },
             {
                 question: "صح أم خطأ: يتكون الغشاء البلازمي (الخلوي) بشكل أساسي من طبقة مزدوجة من الدهون الفوسفورية (Phospholipids).",
-                type: 'tf',
                 answers: [
                     { text: "صح", correct: true, rationale: "يتكون الغشاء الخلوي من طبقة مزدوجة (Bilayer) من الدهون الفوسفورية، بالإضافة إلى البروتينات والكولسترول والكربوهيدرات." },
                     { text: "خطأ", correct: false, rationale: "الغشاء الخلوي هو بالفعل طبقة مزدوجة (Bilayer) من الدهون الفوسفورية." }
                 ]
             },
-            {
-                question: "ما هي العضية المسؤولة عن معالجة وتغليف المواد (مثل البروتينات والدهون) وتصديرها إلى خارج الخلية؟",
-                type: 'mc',
-                answers: [
-                    { text: "الشبكة الإندوبلازمية", correct: false, rationale: "الشبكة الإندوبلازمية (خاصة الخشنة) هي موقع بناء البروتينات والدهون، ولكن جهاز جولجي هو الذي يعالجها ويغلفها للتصدير." },
-                    { text: "الميتوكوندريا", correct: false, rationale: "الميتوكوندريا هي المسؤولة عن إنتاج الطاقة (ATP) في الخلية عن طريق عمليات الأكسدة." },
-                    { text: "جهاز جولجي", correct: true, rationale: "المواد المراد تصديرها خارج الخلية (Exocytosis) تعالج داخل جهاز جولجي وتغلف بحويصلات غشائية." },
-                    { text: "اللايزوسوم (الجسيم الحال)", correct: false, rationale: "اللايزوسوم يحتوي على إنزيمات التحلل لهضم وتكسير المواد، وليس لتصديرها." }
-                ]
-            },
-            {
-                question: "العضية التي تحتوي على إنزيمات الأكسدة التي تحول الهيدروجين إلى فوق أكسيد الهيدروجين (H₂O₂) ثم تحطمه إلى ماء وأكسجين هي:",
-                type: 'mc',
-                answers: [
-                    { text: "اللايزوسوم", correct: false, rationale: "اللايزوسوم يحتوي إنزيمات التحلل (الهضم)، وليس إنزيمات الأكسدة لـ H₂O₂." },
-                    { text: "البيروكسيزوم", correct: true, rationale: "البيروكسيزوم يحتوي على إنزيمات الأكسدة التي تكون فوق أكسيد الهيدروجين (H₂O₂) ثم تحطمه بواسطة إنزيم Catalase." },
-                    { text: "جهاز جولجي", correct: false, rationale: "جهاز جولجي مسؤول عن التغليف والتصدير خارج الخلية." },
-                    { text: "الميتوكوندريا", correct: false, rationale: "الميتوكوندريا مسؤولة عن إنتاج الطاقة (التنفس الخلوي)." }
-                ]
-            },
-            {
-                question: "ما هي العناصر الأربعة التي تشكل أكثر من 99% من معظم الخلايا الحية؟",
-                type: 'mc',
-                answers: [
-                    { text: "الكربون، الهيدروجين، الأكسجين، النيتروجين", correct: true, rationale: "الهيدروجين والأكسجين والكربون والنيتروجين تشكل أكثر من 99% من معظم الخلايا الحية." },
-                    { text: "الكربون، الصوديوم، البوتاسيوم، الكالسيوم", correct: false, rationale: "الصوديوم والبوتاسيوم والكالسيوم هي أيونات مهمة، لكنها لا تشكل النسبة الأكبر مقارنة بـ C, H, O, N." },
-                    { text: "الكربون، الفوسفور، الكبريت، الأكسجين", correct: false, rationale: "الفوسفور (في ATP) والكبريت (في Acetyl CoA) مهمان لنقل الطاقة، لكن النيتروجين والهيدروجين أساسيان وبنسبة أعلى." },
-                    { text: "الحديد، النحاس، الأكسجين، الهيدروجين", correct: false, rationale: "الحديد والنحاس مهمان لنقل الإلكترونات، لكن الكربون والنيتروجين يشكلان نسبة أكبر بكثير." }
-                ]
-            },
-            // --- الفصل الثاني: الماء ---
-            {
-                question: "صح أم خطأ: من الخواص الفيزيائية للماء أن درجة غليانه وانصهاره عالية مقارنة بالسوائل الأخرى.",
-                type: 'tf',
-                answers: [
-                    { text: "صح", correct: true, rationale: "من خواص الماء أن درجة غليانه (100 م) وانصهاره (0 م) عالية، وكذلك له حرارة كامنة للتبخر عالية." },
-                    { text: "خطأ", correct: false, rationale: "الماء يتميز بارتفاع درجة غليانه وانصهاره بسبب الروابط الهيدروجينية القوية بين جزيئاته." }
-                ]
-            },
+            // الماء
             {
                 question: "ما هو نظام التحكم (المحلول المنظم) الأساسي للرقم الهيدروجيني في بلازما الدم؟",
-                type: 'mc',
                 answers: [
                     { text: "نظام الفوسفات", correct: false, rationale: "نظام الفوسفات هو أحد المنظمات الفسيولوجية الهامة، لكنه يعمل بشكل أساسي داخل الخلايا، بينما نظام البيكربونات هو الأساسي في بلازما الدم." },
                     { text: "نظام الأسيتات", correct: false, rationale: "نظام الأسيتات (حمض الخليك وخلات الصوديوم) هو مثال على المحاليل المنظمة، ولكنه ليس المنظم الأساسي في دم الإنسان." },
@@ -337,7 +406,6 @@
             },
             {
                 question: "عند دخول مادة قاعدية إلى الدم، ماذا يحدث لنظام البيكربونات المنظم؟",
-                type: 'mc',
                 answers: [
                     { text: "يتفاعل حمض الكربونيك (H₂CO₃) معها وتزداد كمية البيكربونات (HCO₃⁻)", correct: true, rationale: "عند دخول مادة قاعدية (basic substance)، يتفاعل معها حمض الكربونيك (H₂CO₃)، مما يؤدي إلى زيادة في تركيز البيكربونات (HCO₃⁻)." },
                     { text: "تتفاعل البيكربونات (HCO₃⁻) معها وتزداد كمية حمض الكربونيك (H₂CO₃)", correct: false, rationale: "هذا يحدث عند دخول مادة حامضية. القاعدة تتفاعل مع الحمض (حمض الكربونيك)." },
@@ -345,28 +413,9 @@
                     { text: "يقل تركيز كلا من حمض الكربونيك والبيكربونات", correct: false, rationale: "عند تفاعل القاعدة مع حمض الكربونيك، يقل حمض الكربونيك ويزيد البيكربونات." }
                 ]
             },
-            {
-                question: "وفقاً للسلايدات، إذا انخفض الرقم الهيدروجيني لدم الإنسان إلى أقل من 7.0، فإن الموت قد يحدث نتيجة لـ:",
-                type: 'mc',
-                answers: [
-                    { text: "الكزاز (Tetany)", correct: false, rationale: "الكزاز يحدث إذا ارتفع الرقم الهيدروجيني إلى 7.8 (زيادة القاعدية - Alkalosis)." },
-                    { text: "الغيبوبة الحمضية (Acidosis)", correct: true, rationale: "عند درجة أقل من 7.0 يموت الإنسان نتيجة الغيبوبة الحمضية (Acidotic Coma)." },
-                    { text: "الوضع الطبيعي", correct: false, rationale: "المدى الطبيعي لدم الإنسان قريب جداً من 7.4." },
-                    { text: "فشل نظام الفوسفات", correct: false, rationale: "النتيجة السريرية المباشرة لانخفاض الـ pH الحاد (أقل من 7.0) هي الغيبوبة الحمضية." }
-                ]
-            },
-            // --- الفصل الثالث: الكربوهيدرات ---
-            {
-                question: "صح أم خطأ: السكر الذي يحتوي على مجموعة ألدهيد (CHO) يسمى كيتوز (Ketose).",
-                type: 'tf',
-                answers: [
-                    { text: "صح", correct: false, rationale: "السكر الذي يحتوي على مجموعة ألدهيد يسمى ألدوز (Aldose). السكر الذي يحتوي على مجموعة كيتون (C=O) يسمى كيتوز (Ketose)." },
-                    { text: "خطأ", correct: true, rationale: "السكر الذي يحتوي على مجموعة ألدهيد يسمى ألدوز (Aldose)، أما الكيتوز فيحتوي على مجموعة كيتون." }
-                ]
-            },
+            // الكربوهيدرات
             {
                 question: "لحساب عدد المتشابهات الفراغية (2ⁿ) لسكر سداسي ألدوزي (Aldohexose)، كم تساوي 'n' (عدد ذرات الكربون غير المتماثلة)؟",
-                type: 'mc',
                 answers: [
                     { text: "2", correct: false, rationale: "عدد ذرات الكربون غير المتماثلة في الألدوهكسوز هو 4 (نطرح ذرة الكربون الأولى C1 الألدهيدية والأخيرة C6)." },
                     { text: "3", correct: false, rationale: "الرقم 3 هو عدد ذرات الكربون غير المتماثلة في الكيتوهكسوز (Ketohexose)." },
@@ -376,7 +425,6 @@
             },
             {
                 question: "لحساب عدد المتشابهات الفراغية (2ⁿ) لسكر سداسي كيتوني (Ketohexose) مثل الفركتوز، كم تساوي 'n' (عدد ذرات الكربون غير المتماثلة)؟",
-                type: 'mc',
                 answers: [
                     { text: "4", correct: false, rationale: "الرقم 4 هو عدد ذرات الكربون غير المتماثلة في الألدوهكسوز (Aldohexose)." },
                     { text: "3 (القاعدة: الكيتوني نطرح 3)", correct: true, rationale: "الكيتوهكسوز (6 كربون) يحتوي على 3 ذرات كربون غير متماثلة (n=3)، لأن C1 (كحول أولي), C2 (الكيتون), و C6 (كحول أولي) تعتبر متماثلة. (القاعدة: n = 6-3 = 3)." },
@@ -386,17 +434,15 @@
             },
              {
                 question: "كم عدد المتشابهات الفراغية المحتملة لسكر سداسي ألدوزي (Aldohexose)؟",
-                type: 'mc',
                 answers: [
                     { text: "8 (2³)", correct: false, rationale: "عدد المتشابهات 8 هو للكيتوهكسوز (n=3)، بينما الألدوهكسوز له n=4." },
                     { text: "16 (2⁴)", correct: true, rationale: "الألدوهكسوز له 4 ذرات كربون غير متماثلة (n=4). وعليه، عدد المتشابهات الفراغية هو 2ⁿ = 2⁴ = 16." },
                     { text: "4 (2²)", correct: false, rationale: "عدد المتشابهات 4 هو للألدوتتروز (n=2)." },
-                    { text: "32 (2⁵)", correct: false, rationale: "الألدوهكسوز له 4 ذرات كربون غير متماثلة فقط." }
+                    { text: "32 (2⁵)", correct: false, rationale: "الألدوهكسوز له 4 ذرات كربون غير المتماثلة فقط." }
                 ]
             },
             {
                 question: "ما هو نوع التشابه الفراغي بين D-Glucose و D-Galactose؟",
-                type: 'mc',
                 answers: [
                     { text: "إبيمرات (Epimers) عند C2", correct: false, rationale: "التشابه بين D-Glucose و D-Mannose هو إبيمر عند C2." },
                     { text: "إبيمرات (Epimers) عند C4", correct: true, rationale: "D-جلوكوز و D-جلاكتوز هما إبيمرات (epimers) فيما يتعلق بذرة الكربون رقم 4، حيث يختلفان فقط في الترتيب الفراغي حول هذه الذرة." },
@@ -406,7 +452,6 @@
             },
             {
                 question: "في الشكل الحلقي (Pyranose) لسكر الجلوكوز، ما الذي يحدد ما إذا كان السكر α (ألفا) أو β (بيتا)؟",
-                type: 'mc',
                 answers: [
                     { text: "اتجاه مجموعة الهيدروكسيل (OH) على ذرة الكربون الأنوميرية (C1)", correct: true, rationale: "يتم تحديد ألفا وبيتا بناءً على اتجاه مجموعة الهيدروكسيل (OH) على ذرة الكربون رقم 1 (الكربون الأنومرية). إذا كانت (OH) إلى أسفل يكون ألفا (α)، وإذا كانت إلى أعلى يكون بيتا (β)." },
                     { text: "اتجاه مجموعة (OH) على ذرة الكربون C4", correct: false, rationale: "الاختلاف عند C4 يحدد الإبيمر (مثل الجلوكوز والجلاكتوز)، وليس الأنومر (ألفا أو بيتا)." },
@@ -415,8 +460,7 @@
                 ]
             },
             {
-                question: "صح أم خطأ: في سكر الفركتوز الحلقي (Furanose or Pyranose)، تعتبر ذرة الكربون رقم 2 (C2) هي ذرة الكربون الأنوميرية.",
-                type: 'tf',
+                question: "صح أم خطأ: في سكر الفركتوز الحلقي، تعتبر ذرة الكربون رقم 2 (C2) هي ذرة الكربون الأنوميرية.",
                 answers: [
                     { text: "صح", correct: true, rationale: "لأن الفركتوز سكر كيتوني، فإن مجموعة الكيتون (C2) هي التي تتفاعل لتكوين الحلقة، وتصبح هي ذرة الكربون الأنوميرية." },
                     { text: "خطأ", correct: false, rationale: "ذرة الكربون C1 هي الذرة الأنوميرية في السكريات الألدوزية (مثل الجلوكوز)، أما في الكيتوزية (مثل الفركتوز) فهي C2." }
@@ -424,7 +468,6 @@
             },
             {
                 question: "يتكون سكر السكروز (سكر المائدة) من ارتباط جزيئي...",
-                type: 'mc',
                 answers: [
                     { text: "α-جلوكوز و α-جلوكوز", correct: false, rationale: "هذا هو تركيب سكر المالتوز (سكر الشعير)." },
                     { text: "β-جلوكوز و β-جالاكتوز", correct: false, rationale: "هذا هو تركيب سكر اللاكتوز (سكر الحليب)." },
@@ -434,7 +477,6 @@
             },
             {
                 question: "ما هي نوع الرابطة الجلايكوسيدية في سكر اللاكتوز (سكر الحليب)؟",
-                type: 'mc',
                 answers: [
                     { text: "α-1→4", correct: false, rationale: "هذه هي الرابطة الموجودة في سكر المالتوز وسلاسل الأميلوز المستقيمة في النشا." },
                     { text: "β-1→4", correct: true, rationale: "يتكون اللاكتوز من ارتباط β-جالاكتوز مع جلوكوز برابطة جلايكوسيدية نوع β-1→4." },
@@ -444,7 +486,6 @@
             },
             {
                 question: "صح أم خطأ: سكر السكروز يعتبر سكراً مختزلاً.",
-                type: 'tf',
                 answers: [
                     { text: "صح", correct: false, rationale: "السكروز سكر غير مختزل، وذلك لعدم وجود مجموعة ألدهيدية حرة. ذرات الكربون الأنوميرية (C1 في الجلوكوز و C2 في الفركتوز) كلاهما مشارك في الرابطة." },
                     { text: "خطأ", correct: true, rationale: "السكروز هو سكر غير مختزل. السكريات المختزلة (مثل المالتوز واللاكتوز) يجب أن تحتوي على مجموعة ألدهيد حرة (ذرة كربون أنوميرية غير مرتبطة)." }
@@ -452,7 +493,6 @@
             },
             {
                 question: "أي من السكريات العديدة التالية يعتبر \"غير متجانس\" (Heterogeneous)؟",
-                type: 'mc',
                 answers: [
                     { text: "النشا", correct: false, rationale: "النشا سكر عديد متجانس، لأنه يعطي نفس النوع من السكر (جلوكوز) عند تحلله." },
                     { text: "السيليلوز", correct: false, rationale: "السيليلوز سكر عديد متجانس، يتكون فقط من وحدات β-جلوكوز." },
@@ -462,7 +502,6 @@
             },
             {
                 question: "ما هي الوحدة البنائية الأساسية ونوع الرابطة في السيليلوز (Cellulose)؟",
-                type: 'mc',
                 answers: [
                     { text: "α-جلوكوز ، ورابطة α-1→4", correct: false, rationale: "هذا هو تركيب الأميلوز (الجزء المستقيم من النشا)." },
                     { text: "β-جلوكوز ، ورابطة β-1→4", correct: true, rationale: "يتكون السيليلوز من سلاسل مستقيمة غير متفرعة ناتجة من ارتباط وحدات β-جلوكوز بروابط β-1→4 جلايكوسيدية." },
@@ -472,7 +511,6 @@
             },
             {
                 question: "ما هو السكر العديد (المتجانس) الذي يخزن في الكبد والعضلات في الحيوانات ويعتبر أكثر تفرعاً من الأميلوبكتين؟",
-                type: 'mc',
                 answers: [
                     { text: "النشا", correct: false, rationale: "النشا هو سكر التخزين في النباتات." },
                     { text: "السيليلوز", correct: false, rationale: "السيليلوز هو سكر تركيبي (بنائي) في جدار الخلية النباتية." },
@@ -481,70 +519,320 @@
                 ]
             }
         ];
+        
+        // --- أسئلة الاختبار الثاني (العضيات) ---
+        const questionsQuiz2 = [
+            // النواة
+            {
+                question: '<img src="https://www.vedantu.com/seo/content-images/ed56ad7c-ba1f-4ecb-9e5f-cff188b41d5e_1..png" alt="عضية النواة"><br>ما هي هذه العضية التي تعتبر مركز التحكم في الخلية؟',
+                answers: [
+                    { text: "النواة (Nucleus)", correct: true, rationale: "هذه هي النواة، وهي محاطة بغشاء مزدوج وتحتوي على النوية والمادة الوراثية (DNA)." },
+                    { text: "الميتوكوندريا", correct: false, rationale: "الميتوكوندريا لها غشاء داخلي به انثناءات (أعراف)، وشكلها مختلف." },
+                    { text: "جهاز جولجي", correct: false, rationale: "جهاز جولجي عبارة عن حويصلات غشائية مسطحة." },
+                    { text: "اللايزوسوم", correct: false, rationale: "اللايزوسوم عبارة عن حويصلة صغيرة (كيس) فقط." }
+                ]
+            },
+            {
+                question: "ما هي وظيفة الفتحات (الثقوب) النووية الموجودة على غشاء النواة؟",
+                answers: [
+                    { text: "إنتاج الطاقة", correct: false, rationale: "إنتاج الطاقة هو وظيفة الميتوكوندريا." },
+                    { text: "المرور الاختياري للمواد من وإلى السيتوبلازم", correct: true, rationale: "الفتحات النووية هي بوابات تنظم دخول وخروج الجزيئات مثل RNA والبروتينات من وإلى النواة." },
+                    { text: "تصنيع البروتين", correct: false, rationale: "تصنيع البروتين يتم في الريبوسومات." },
+                    { text: "الهضم والتحلل", correct: false, rationale: "الهضم والتحلل وظيفة اللايزوسوم." }
+                ]
+            },
+            {
+                question: "ما هي وظيفة النوية (Nucleolus) الموجودة داخل النواة؟",
+                answers: [
+                    { text: "تخزين الـ DNA", correct: false, rationale: "الـ DNA مخزن في الكروماتين/الكروموسومات." },
+                    { text: "تصنيع الريبوسومات", correct: true, rationale: "النوية (غير محاطة بغشاء) هي المصنع الذي يتم فيه تجميع وحدات الريبوسومات." },
+                    { text: "إنتاج الطاقة للنواة", correct: false, rationale: "إنتاج الطاقة (ATP) للخلية كلها يتم في الميتوكوندريا." },
+                    { text: "تغليف المواد", correct: false, rationale: "التغليف وظيفة جهاز جولجي." }
+                ]
+            },
+            // الشبكة الإندوبلازمية
+            {
+                question: '<img src="https://www.shutterstock.com/image-vector/education-chart-biology-endoplasmic-reticulum-600w-1057812947.jpg" alt="عضية الشبكة الإندوبلازمية"><br>ما اسم هذه الشبكة الغشائية المتصلة بالنواة؟',
+                answers: [
+                    { text: "جهاز جولجي", correct: false, rationale: "جهاز جولجي يكون منفصلاً عن النواة عادةً." },
+                    { text: "الشبكة الإندوبلازمية (Endoplasmic Reticulum)", correct: true, rationale: "هذه هي الشبكة الإندوبلازمية بنوعيها الخشن (عليه ريبوسومات) والأملس، وهي متصلة بالغلاف النووي." },
+                    { text: "الغشاء البلازمي", correct: false, rationale: "الغشاء البلازمي يحيط بالخلية بأكملها." },
+                    { text: "الميتوكوندريا", correct: false, rationale: "الميتوكوندريا عضية منفصلة بشكلها البيضاوي المميز." }
+                ]
+            },
+            {
+                question: "ما هي الوظيفة الأساسية للشبكة الإندوبلازمية الخشنة (Rough ER)؟",
+                answers: [
+                    { text: "بناء الدهون", correct: false, rationale: "بناء الدهون هو وظيفة الشبكة الإندوبلازمية الملساء (الناعمة)." },
+                    { text: "بناء البروتينات (بواسطة الريبوسومات التي عليها)", correct: true, rationale: "تُسمى \"خشنة\" لوجود الريبوسومات على سطحها، والتي وظيفتها الأساسية هي بناء البروتينات." },
+                    { text: "إنتاج الطاقة (ATP)", correct: false, rationale: "إنتاج الطاقة هو وظيفة الميتوكوندريا." },
+                    { text: "التغليف والتصدير", correct: false, rationale: "التغليف والتصدير خارج الخلية هو وظيفة جهاز جولجي." }
+                ]
+            },
+            {
+                question: "ما هي وظيفة الشبكة الإندوبلازمية الملساء (الناعمة)؟",
+                answers: [
+                    { text: "بناء بعض الدهون", correct: true, rationale: "الشبكة الملساء (الناعمة) هي الموقع الرئيسي لبناء الدهون." },
+                    { text: "بناء البروتينات", correct: false, rationale: "بناء البروتينات وظيفة الشبكة الخشنة (لوجود الريبوسومات)." },
+                    { text: "الهضم", correct: false, rationale: "الهضم وظيفة اللايزوسومات." },
+                    { text: "المرور الاختياري", correct: false, rationale: "المرور الاختياري وظيفة الغشاء البلازمي وفتحات النواة." }
+                ]
+            },
+            // جهاز جولجي
+            {
+                question: '<img src="https://cdn.britannica.com/52/116252-050-A1D8E92B/Golgi-apparatus-complex-modification-proteins-role-cell.jpg" alt="عضية جهاز جولجي"><br>ما اسم هذه العضية التي تشبه "مكتب بريد" الخلية؟',
+                answers: [
+                    { text: "اللايزوسوم", correct: false, rationale: "اللايزوسوم حويصلة واحدة، وليس مجموعة حويصلات متراصة." },
+                    { text: "الشبكة الإندوبلازمية", correct: false, rationale: "الشبكة الإندوبلازمية متصلة بالنواة وتكون على هيئة شبكة أو أنابيب." },
+                    { text: "جهاز جولجي (Golgi Apparatus)", correct: true, rationale: "هذا هو جهاز جولجي، يتكون من حويصلات غشائية مسطحة، ووظيفته معالجة وتغليف المواد." },
+                    { text: "النواة", correct: false, rationale: "النواة هي العضية الكبيرة التي تحتوي على DNA." }
+                ]
+            },
+            {
+                question: "ما هي وظيفة جهاز جولجي الرئيسية المتعلقة بالمواد المصنعة في الشبكة الإندوبلازمية؟",
+                answers: [
+                    { text: "هضمها وتحليلها", correct: false, rationale: "الهضم والتحليل وظيفة اللايزوسوم." },
+                    { text: "استخدامها لإنتاج طاقة", correct: false, rationale: "إنتاج الطاقة وظيفة الميتوكوندريا." },
+                    { text: "معالجتها وتغليفها وتصديرها خارج الخلية (Exocytosis)", correct: true, rationale: "جهاز جولجي يستقبل البروتينات والدهون، يعالجها، يغلفها في حويصلات، ثم يصدرها خارج الخلية." },
+                    { text: "تخزينها كنشا", correct: false, rationale: "التخزين كنشا يحدث في النباتات، وليس وظيفة جولجي." }
+                ]
+            },
+            // الميتوكوندريا
+            {
+                question: '<img src="https://www.shutterstock.com/image-vector/vector-illustration-mitochondria-components-on-260nw-2241887621.jpg" alt="عضية الميتوكوندريا"><br>ما اسم هذه العضية التي تعتبر "محطة توليد الطاقة"؟',
+                answers: [
+                    { text: "الميتوكوندريا (Mitochondria)", correct: true, rationale: "هذه هي الميتوكوندريا، تتميز بغشائين، والداخلي ينطوي مكوناً الأعراف (Cristae)." },
+                    { text: "البيروكسيزوم", correct: false, rationale: "البيروكسيزوم حويصلة بسيطة أصغر حجماً." },
+                    { text: "النواة", correct: false, rationale: "النواة أكبر حجماً وتحتوي على النوية." },
+                    { text: "جهاز جولجي", correct: false, rationale: "جهاز جولجي عبارة عن أكياس غشائية مسطحة." }
+                ]
+            },
+            {
+                question: "ما هي الوظيفة الأساسية للميتوكوندريا؟",
+                answers: [
+                    { text: "تصنيع البروتين", correct: false, rationale: "تصنيع البروتين وظيفة الريبوسومات." },
+                    { text: "إنتاج الطاقة (ATP) عبر عمليات الأكسدة", correct: true, rationale: "الميتوكوندريا هي المركز الرئيسي للتنفس الخلوي وعمليات الأكسدة لإنتاج الطاقة (ATP)." },
+                    { text: "تخزين الماء", correct: false, rationale: "تخزين الماء وظيفة الفجوات (Vacuoles) بشكل أساسي." },
+                    { text: "الدعامة والحماية", correct: false, rationale: "الدعامة والحماية وظيفة الجدار الخلوي (في النباتات)." }
+                ]
+            },
+            // اللايزوسوم
+            {
+                question: '<img src="https://microbenotes.com/wp-content/uploads/2020/02/Lysosomes-Diagram-e1586376325209-1024x524.jpeg" alt="عضية اللايزوسوم"><br>ما اسم هذه الحويصلة التي تحتوي إنزيمات هاضمة؟',
+                answers: [
+                    { text: "الريبوسوم", correct: false, rationale: "الريبوسوم أصغر بكثير وهو جسيم وليس حويصلة غشائية." },
+                    { text: "اللايزوسوم (Lysosome)", correct: true, rationale: "هذا هو اللايزوسوم (الجسيم الحال)، وهو حويصلة مشتقة من جولجي ومليئة بإنزيمات التحلل." },
+                    { text: "البيروكسيزوم", correct: false, rationale: "البيروكسيزوم يشبهه شكلياً، لكنه يحتوي على إنزيمات أكسدة (مثل الكاتاليز) وليس إنزيمات هضم." },
+                    { text: "النواة", correct: false, rationale: "النواة هي مركز التحكم الأكبر حجماً." }
+                ]
+            },
+            {
+                question: "ما هي وظيفة اللايزوسوم (الجسيم الحال)؟",
+                answers: [
+                    { text: "هضم وتكسير المواد (Phagocytosis) ومخلفات الخلية", correct: true, rationale: "اللايزوسومات هي (الجهاز الهضمي) للخلية، تهضم المواد الداخلة ومكونات الخلية القديمة." },
+                    { text: "إنتاج الطاقة", correct: false, rationale: "هذه وظيفة الميتوكوندريا." },
+                    { text: "بناء الدهون", correct: false, rationale: "هذه وظيفة الشبكة الإندوبلازمية الملساء." },
+                    { text: "تصدير البروتينات", correct: false, rationale: "هذه وظيفة جهاز جولجي." }
+                ]
+            },
+            // البيروكسيزوم
+            {
+                question: "ما هي العضية التي تحتوي على إنزيم (Catalase) لتحطيم مادة H₂O₂ (فوق أكسيد الهيدروجين) السامة؟",
+                answers: [
+                    { text: "اللايزوسوم", correct: false, rationale: "اللايزوسوم يحتوي إنزيمات هضم وتحليل (Phagocytosis)، وليس الكاتاليز." },
+                    { text: "الميتوكوندريا", correct: false, rationale: "الميتوكوندريا تركز على إنتاج الطاقة (ATP)." },
+                    { text: "البيروكسيزوم (Peroxisome)", correct: true, rationale: "البيروكسيزوم هو الذي ينتج H₂O₂ كناتج ثانوي لعمليات الأكسدة، ويحتوي على إنزيم الكاتاليز لتحطيمه فوراً إلى ماء وأكسجين." },
+                    { text: "جهاز جولجي", correct: false, rationale: "جهاز جولجي مسؤول عن التغليف والتصدير." }
+                ]
+            },
+            // الريبوسومات
+            {
+                question: '<img src="https://www.shutterstock.com/image-vector/structure-ribosome-infographics-vector-illustration-260nw-507985297.jpg" alt="عضية الريبوسوم"><br>ما اسم هذه الجسيمات المسؤولة عن تصنيع البروتين؟',
+                answers: [
+                    { text: "الريبوسومات (Ribosomes)", correct: true, rationale: "هذه هي الريبوسومات، تتكون من وحدتين (كبرى وصغرى) وهي مصانع البروتين في الخلية." },
+                    { text: "الكروموسومات", correct: false, rationale: "الكروموسومات هي المادة الوراثية (DNA) داخل النواة." },
+                    { text: "اللايزوسومات", correct: false, rationale: "اللايزوسومات حويصلات هضمية." },
+                    { text: "البروتينات الداخلية", correct: false, rationale: "هذه هي العضيات التي *تصنع* البروتينات." }
+                ]
+            },
+            {
+                question: "أين توجد الريبوسومات في الخلية حقيقية النواة؟",
+                answers: [
+                    { text: "فقط مرتبطة بالشبكة الإندوبلازمية الخشنة", correct: false, rationale: "توجد مرتبطة، ولكن أيضاً توجد حرة في السيتوبلازم." },
+                    { text: "فقط حرة تسبح في السيتوبلازم", correct: false, rationale: "توجد حرة، ولكن أيضاً مرتبطة بالشبكة الإندوبلازمية." },
+                    { text: "حرة في السيتوبلازم ومرتبطة بالشبكة الإندوبلازمية", correct: true, rationale: "توجد الريبوسومات في مكانين: حرة في السيتوبلازم (لتصنيع بروتينات تبقى داخل الخلية) ومرتبطة بالشبكة الخشنة (لتصنيع بروتينات للتصدير أو للأغشية)." },
+                    { text: "داخل جهاز جولجي فقط", correct: false, rationale: "جهاز جولجي يستقبل البروتينات بعد تصنيعها، ولا يصنعها." }
+                ]
+            },
+            // الغشاء الخلوي
+            {
+                question: '<img src="https://www.shutterstock.com/image-vector/fluid-mosaic-model-cell-membrane-600w-2503414059.jpg" alt="الغشاء الخلوي"><br>ماذا يمثل هذا الشكل (النموذج الفسيفسائي المائع)؟',
+                answers: [
+                    { text: "الجدار الخلوي", correct: false, rationale: "الجدار الخلوي تركيب صلب وسميك (مثل السيليلوز)، وهذا تركيب مرن." },
+                    { text: "الغشاء الخلوي (Cell Membrane)", correct: true, rationale: "هذا هو الغشاء الخلوي، يتكون من طبقة مزدوجة من الدهون الفوسفورية (Bilayer) وبروتينات منغمسة بداخلها." },
+                    { text: "غشاء النواة", correct: false, rationale: "غشاء النواة يشبهه لكنه مزدوج (غشائين) ويحتوي على ثقوب نووية." },
+                    { text: "الشبكة الإندوبلازمية", correct: false, rationale: "الشبكة الإندوبلازمية هي شبكة من الأغشية داخل السيتوبلازم." }
+                ]
+            },
+            {
+                question: "ما هي المكونات الأربعة الرئيسية للغشاء الخلوي حسب السلايدات؟",
+                answers: [
+                    { text: "دهون فوسفورية، بروتينات، كولسترول، كربوهيدرات (سكريات)", correct: true, rationale: "يتكون الغشاء من طبقة مزدوجة من الدهون الفوسفورية، وبروتينات (داخلية وخارجية)، ووحدات كولسترول، ونسبة بسيطة من الكربوهيدرات." },
+                    { text: "سيليلوز، بروتين، ماء، أيونات", correct: false, rationale: "السيليلوز هو مكون الجدار الخلوي في النبات، وليس الغشاء الخلوي." },
+                    { text: "DNA, RNA, ريبوسومات، نواة", correct: false, rationale: "هذه مكونات داخل الخلية، وليست مكونات الغشاء المحيط بها." },
+                    { text: "دهون فقط", correct: false, rationale: "الدهون الفوسفورية هي المكون الأساسي، ولكنه ليس الوحيد." }
+                ]
+            },
+            // الجدار الخلوي
+            {
+                question: '<img src="https://www.sciencefacts.net/wp-content/uploads/2020/06/Cell-Wall-Structure-Diagram.jpg" alt="الجدار الخلوي"><br>ما اسم هذا التركيب الصلب الذي يوفر الدعامة والحماية؟',
+                answers: [
+                    { text: "الغشاء الخلوي", correct: false, rationale: "الغشاء الخلوي مرن ورقيق، أما هذا فسميك وصلب." },
+                    { text: "الجدار الخلوي (Cell Wall)", correct: true, rationale: "هذا هو الجدار الخلوي، يوجد في النباتات والبكتيريا (وليس الحيوانات)، ويتكون من ألياف (مثل السيليلوز) ليعطي الدعامة." },
+                    { text: "الهيكل الخلوي", correct: false, rationale: "الهيكل الخلوي عبارة عن أنابيب وألياف بروتينية *داخل* الخلية." },
+                    { text: "الكبسولة (في بدائية النواة)", correct: false, rationale: "الصورة توضح تركيب جدار خلية نباتية (من السيليلوز) بشكل أساسي." }
+                ]
+            },
+            {
+                question: "صح أم خطأ: الجدار الخلوي يوجد في الخلايا الحيوانية وخلايا الإنسان.",
+                answers: [
+                    { text: "صح", correct: false, rationale: "الجدار الخلوي لا يوجد في الحيوان أو الإنسان، بل يوجد في النباتات والبكتيريا. الخلايا الحيوانية محاطة بغشاء خلوي فقط." },
+                    { text: "خطأ", correct: true, rationale: "الجدار الخلوي لا يوجد في الحيوان أو الإنسان. الخلايا الحيوانية محاطة بغشاء خلوي فقط." }
+                ]
+            },
+            // السيتوبلازم
+            {
+                question: '<img src="https://cdn-ildfibj.nitrocdn.com/qaWeLntkRcyxNUcEoWbLpZLQkcgLFsiJ/assets/images/optimized/www.biologyonline.com/wp-content/uploads/2019/10/cell-parts-1-686x576.png" alt="السيتوبلازم"><br>ما اسم المادة الهلامية (الجزء السائل + العضيات) التي تملأ الخلية؟',
+                answers: [
+                    { text: "السائل النووي", correct: false, rationale: "السائل النووي هو السائل الموجود *داخل* النواة." },
+                    { text: "السيتوبلازم (Cytoplasm)", correct: true, rationale: "السيتوبلازم هو كل شيء داخل الغشاء الخلوي ما عدا النواة (أي السيتوسول + العضيات)." },
+                    { text: "السيتوسول", correct: false, rationale: "السيتوسول هو الجزء *السائل* فقط من السيتوبلازم (الماء والأيونات والإنزيمات الذائبة)." },
+                    { text: "الدم", correct: false, rationale: "هذه مكونات خلية واحدة، والدم يتكون من بلازما وخلايا دم." }
+                ]
+            },
+            {
+                question: "ما الفرق بين السيتوبلازم (Cytoplasm) والسيتوسول (Cytosol)؟",
+                answers: [
+                    { text: "لا يوجد فرق، هما نفس الشيء", correct: false, rationale: "يوجد فرق دقيق بينهما." },
+                    { text: "السيتوبلازم هو السائل فقط، والسيتوسول هو السائل مع العضيات", correct: false, rationale: "هذا عكس التعريف الصحيح." },
+                    { text: "السيتوسول هو الجزء السائل الهلامي، أما السيتوبلازم فهو السيتوسول + العضيات المنغمسة فيه", correct: true, rationale: "السيتوبلازم = السيتوسول (السائل) + العضيات (مثل الميتوكوندريا وجولجي)." },
+                    { text: "السيتوبلازم يوجد في الحيوان والسيتوسول في النبات", correct: false, rationale: "كلاهما يوجد في جميع الخلايا حقيقية النواة." }
+                ]
+            },
+            // مقارنات
+            {
+                question: "أي من التالي يوجد في الخلايا بدائية النواة (Prokaryotes)؟",
+                answers: [
+                    { text: "نواة حقيقية بغشاء نووي", correct: false, rationale: "الخلايا بدائية النواة لا تحتوي على نواة حقيقية أو غشاء نووي." },
+                    { text: "ريبوسومات وسيتوبلازم", correct: true, rationale: "الخلايا بدائية النواة (مثل البكتيريا) بسيطة، ولكنها تحتوي على الأساسيات: سيتوبلازم، ريبوسومات لتصنيع البروتين، ومادة وراثية (Nucleoid)." },
+                    { text: "ميتوكوندريا وجهاز جولجي", correct: false, rationale: "الميتوكوندريا وجهاز جولجي هي عضيات غشائية توجد فقط في الخلايا حقيقية النواة." },
+                    { text: "شبكة إندوبلازمية", correct: false, rationale: "الشبكة الإندوبلازمية عضية غشائية توجد فقط في الخلايا حقيقية النواة." }
+                ]
+            }
+        ];
 
+        // --- المتغيرات الأساسية للاختبار ---
+        const menuContainer = document.getElementById('menu-container');
+        const quizContentElement = document.getElementById('quiz-content');
+        const scoreContainerElement = document.getElementById('score-container');
+        
         const questionElement = document.getElementById('question-text');
         const questionCounterElement = document.getElementById('question-counter');
         const answerButtonsElement = document.getElementById('answer-buttons');
         const nextButton = document.getElementById('next-btn');
-        const quizContentElement = document.getElementById('quiz-content');
-        const scoreContainerElement = document.getElementById('score-container');
-        const rationaleElement = document.getElementById('rationale-text');
-
+        // *** هذا هو السطر الذي تم إصلاحه ***
+        const rationaleElement = document.getElementById('rationale-text'); 
+        
+        let currentQuestionsArray = [];
         let shuffledQuestions, currentQuestionIndex;
         let score = 0;
-        let userAnswers = []; // <-- متغير جديد لتخزين إجابات المستخدم
+        let userAnswers = []; // لتخزين إجابات المستخدم للمراجعة
 
-        function startQuiz() {
-            shuffledQuestions = questions.sort(() => Math.random() - 0.5);
+        // --- وظائف التنقل ---
+        
+        function showMenu() {
+            menuContainer.classList.remove('hide');
+            quizContentElement.classList.add('hide');
+            scoreContainerElement.classList.add('hide');
+        }
+
+        function showQuiz() {
+            menuContainer.classList.add('hide');
+            quizContentElement.classList.remove('hide');
+            scoreContainerElement.classList.add('hide');
+        }
+        
+        function showScore() {
+            menuContainer.classList.add('hide');
+            quizContentElement.classList.add('hide');
+            scoreContainerElement.classList.remove('hide');
+        }
+
+        // --- وظائف الاختبار ---
+
+        // دالة لبدء الاختبار
+        function startQuiz(quizType) {
+            if (quizType === 'quiz1') {
+                currentQuestionsArray = questionsQuiz1;
+            } else if (quizType === 'quiz2') {
+                currentQuestionsArray = questionsQuiz2;
+            }
+            
+            shuffledQuestions = currentQuestionsArray.sort(() => Math.random() - 0.5);
             currentQuestionIndex = 0;
             score = 0;
-            userAnswers = []; // <-- إعادة تعيين مصفوفة الإجابات
-            quizContentElement.classList.remove('hide');
-            scoreContainerElement.innerHTML = ''; // <-- مسح النتائج والمراجعة القديمة
-            scoreContainerElement.classList.add('hide');
-            nextButton.classList.add('hide');
+            userAnswers = []; 
+            showQuiz();
             showQuestion(shuffledQuestions[currentQuestionIndex]);
         }
 
+        // دالة لعرض السؤال
         function showQuestion(question) {
             resetState();
-            questionCounterElement.innerText = `السؤال ${currentQuestionIndex + 1} من ${questions.length}`;
-            questionElement.innerText = question.question;
+            questionCounterElement.innerText = `السؤال ${currentQuestionIndex + 1} من ${shuffledQuestions.length}`;
+            questionElement.innerHTML = question.question; // استخدام innerHTML لعرض الصور
             
             question.answers.forEach(answer => {
                 const button = document.createElement('button');
                 button.innerText = answer.text;
                 button.classList.add('btn');
                 button.dataset.correct = answer.correct;
-                // سنحتاج للوصول إلى التعليل الصحيح لاحقاً
                 button.addEventListener('click', selectAnswer);
                 answerButtonsElement.appendChild(button);
             });
         }
 
+        // دالة لإعادة تعيين الحالة (إخفاء الأزرار والتعليقات)
         function resetState() {
             nextButton.classList.add('hide');
-            rationaleElement.style.display = 'none';
+            rationaleElement.style.display = 'none'; // <-- هذا السطر هو سبب الخطأ
             rationaleElement.classList.remove('correct', 'incorrect');
             while (answerButtonsElement.firstChild) {
                 answerButtonsElement.removeChild(answerButtonsElement.firstChild);
             }
         }
+        
+        // دالة لاختيار تعزيز عشوائي
+        function getRandomEncouragement() {
+            return encouragements[Math.floor(Math.random() * encouragements.length)];
+        }
 
+        // دالة عند اختيار إجابة
         function selectAnswer(e) {
             const selectedButton = e.target;
             const isCorrect = selectedButton.dataset.correct === 'true';
             const currentQuestion = shuffledQuestions[currentQuestionIndex];
             const correctAnswer = currentQuestion.answers.find(ans => ans.correct === true);
 
-            // إظهار التعليل الصحيح دائماً
+            // إظهار الشرح والتعزيز
             if (isCorrect) {
                 score++;
                 rationaleElement.classList.add('correct');
-                rationaleElement.innerHTML = `<strong>أحسنت!</strong> ${correctAnswer.rationale}`;
+                const encouragement = getRandomEncouragement();
+                rationaleElement.innerHTML = `<span class="encouragement">${encouragement}</span><strong>الشرح:</strong> ${correctAnswer.rationale}`;
             } else {
                 rationaleElement.classList.add('incorrect');
-                rationaleElement.innerHTML = `<strong>خطأ. الشرح:</strong> ${correctAnswer.rationale}`;
+                rationaleElement.innerHTML = `<strong>للأسف، الإجابة غير صحيحة. الشرح:</strong> ${correctAnswer.rationale}`;
             }
             
             rationaleElement.style.display = 'block';
@@ -573,6 +861,7 @@
             nextButton.classList.remove('hide');
         }
 
+        // دوال مساعدة لتلوين الأزرار
         function setStatusClass(element, correct) {
             clearStatusClass(element);
             if (correct) {
@@ -587,6 +876,7 @@
             element.classList.remove('incorrect');
         }
 
+        // دالة لزر "التالي"
         function handleNextButton() {
             currentQuestionIndex++;
             if (shuffledQuestions.length > currentQuestionIndex) {
@@ -596,14 +886,14 @@
             }
         }
 
+        // دالة لإظهار النتيجة والمراجعة النهائية
         function showScoreAndReview() {
-            quizContentElement.classList.add('hide');
-            scoreContainerElement.classList.remove('hide');
+            showScore(); // إظهار حاوية النتيجة
             
             // 1. عرض النتيجة
             let scoreHTML = `
                 <h2>النتيجة النهائية</h2>
-                <p>لقد أجبت بشكل صحيح على ${score} من أصل ${questions.length} سؤال.</p>
+                <p>لقد أجبت بشكل صحيح على ${score} من أصل ${shuffledQuestions.length} سؤال.</p>
             `;
             
             // 2. إنشاء حاوية المراجعة
@@ -612,8 +902,8 @@
             userAnswers.forEach((answer, index) => {
                 reviewHTML += `
                     <div class="review-question">
-                        <h4>السؤال ${index + 1}: ${answer.questionText}</h4>
-                        <p class="user-answer">
+                        <h4>السؤال ${index + 1}:</h4>
+                        <div>${answer.questionText}</div> <p class="user-answer" style="margin-top: 15px;">
                             <strong>إجابتك:</strong> ${answer.selectedAnswer} 
                             ${answer.isCorrect 
                                 ? '<span class="correct-text">(صحيحة)</span>' 
@@ -629,23 +919,33 @@
             
             reviewHTML += '</div>';
             
-            // 3. إنشاء زر إعادة الاختبار
-            const restartButtonHTML = `
-                <button class="btn" onclick="startQuiz()" style="margin-top: 20px; background-color: var(--primary-color); color: white; border: none;">
-                    إعادة الاختبار
+            // 3. رسالة السناب الفكاهية
+            const finalPromoHTML = `
+                <div class="final-promo">
+                    ما شاء الله تبارك الله، خلصت الاختبار!
+                    <br>
+                    سواء جبت العيد أو طلعت دافور، الأهم إنك حاولت. ولأنك بطل وكملت للآخر، تعال شوف باقي الاسئلة على سنابي <strong>iyz3d</strong>، هناك الاختبارات اللي على أصولها! 😉
+                </div>
+            `;
+            
+            // 4. إنشاء زر الرجوع للقائمة
+            const backButtonHTML = `
+                <button class="btn back-to-menu-btn" onclick="showMenu()">
+                    الرجوع للقائمة الرئيسية
                 </button>
             `;
 
-            // 4. تجميع كل شيء وعرضه
-            scoreContainerElement.innerHTML = scoreHTML + reviewHTML + restartButtonHTML;
+            // 5. تجميع كل شيء وعرضه
+            scoreContainerElement.innerHTML = scoreHTML + finalPromoHTML + reviewHTML + backButtonHTML;
         }
 
+        // --- ربط الأزرار ---
+        document.getElementById('start-quiz-1').addEventListener('click', () => startQuiz('quiz1'));
+        document.getElementById('start-quiz-2').addEventListener('click', () => startQuiz('quiz2'));
         nextButton.addEventListener('click', handleNextButton);
 
-        // بدء الاختبار عند تحميل الصفحة
-        startQuiz();
+        // (الدالة showMenu() تم تعريفها في الأعلى وهي مرتبطة بزر الرجوع)
+
     </script>
 </body>
 </html>
-
-
