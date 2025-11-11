@@ -3,895 +3,647 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>مراجعة الأسئلة</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
-    
+    <title>اختبار</title>
     <style>
-        /* --- التصميم الأساسي --- */
-        body {
-            font-family: 'Cairo', sans-serif;
-            background-color: #f4f7f6;
-            color: #333;
+        @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700&display=swap');
+
+        :root {
+            --primary-color: #0056b3; /* أزرق داكن */
+            --secondary-color: #f4f4f4; /* رمادي فاتح للخلفية */
+            --correct-color: #28a745; /* أخضر */
+            --incorrect-color: #dc3545; /* أحمر */
+            --text-color: #333;
+            --container-bg: #ffffff;
+            --border-radius: 10px;
+            --box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+        }
+
+        * {
+            box-sizing: border-box;
             margin: 0;
-            padding: 20px;
+            padding: 0;
         }
 
-        .container {
-            max-width: 800px;
-            margin: 20px auto;
-            background-color: #ffffff;
-            border-radius: 12px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-            padding: 30px;
-        }
-
-        /* --- تصميم الأسئلة --- */
-        .question-block {
-            margin-bottom: 25px;
-            padding: 20px;
-            border: 1px solid #e0e0e0;
-            border-radius: 10px;
-            transition: all 0.3s ease;
-            border-right: 5px solid #007bff; /* خط أزرق بجانب كل سؤال */
-        }
-
-        .question-block p {
-            font-size: 1.1rem;
-            font-weight: 600;
-            margin-top: 0;
-            margin-bottom: 15px;
-            line-height: 1.6;
-        }
-
-        .options-container {
+        body {
+            font-family: 'Tajawal', sans-serif;
+            background-color: var(--secondary-color);
+            color: var(--text-color);
             display: flex;
-            flex-direction: column;
+            justify-content: center;
+            align-items: flex-start;
+            min-height: 100vh;
+            padding: 20px;
         }
 
-        .options-container label {
-            display: block;
-            padding: 12px 15px;
-            margin-bottom: 8px;
-            border-radius: 8px;
-            background-color: #f9f9f9;
-            border: 1px solid #eee;
-            cursor: pointer;
-            transition: all 0.2s ease;
+        h1 {
+            color: var(--primary-color);
+            text-align: center;
+            margin-bottom: 25px;
+            font-size: 2.5rem;
         }
 
-        .options-container label:hover {
-            background-color: #f0f0f0;
-            border-color: #ccc;
-        }
-
-        .options-container input[type="radio"] {
-            margin-left: 10px; /* ليتناسب مع RTL */
-            transform: scale(1.1);
-        }
-
-        /* --- تصميم زر الإرسال --- */
-        .submit-btn {
-            display: block;
+        .quiz-container {
+            background-color: var(--container-bg);
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
             width: 100%;
-            padding: 15px;
-            font-size: 1.2rem;
-            font-weight: 700;
-            font-family: 'Cairo', sans-serif;
-            color: #fff;
-            background-color: #007bff;
-            border: none;
-            border-radius: 10px;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
+            max-width: 800px;
+            overflow: hidden;
+        }
+
+        .quiz-header {
+            padding: 25px;
+            background-color: #f9f9f9;
+            border-bottom: 1px solid #eee;
+        }
+        
+        #question-counter {
+            font-size: 1rem;
+            color: #777;
+            margin-bottom: 10px;
+        }
+
+        #question-text {
+            font-size: 1.4rem;
+            font-weight: 500;
+            line-height: 1.6;
+            min-height: 60px;
+        }
+
+        .quiz-body {
+            padding: 25px;
+        }
+
+        .btn-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 15px;
             margin-top: 20px;
         }
 
-        .submit-btn:hover {
-            background-color: #0056b3;
+        .btn {
+            font-family: 'Tajawal', sans-serif;
+            background-color: var(--container-bg);
+            border: 2px solid #ddd;
+            border-radius: var(--border-radius);
+            padding: 15px;
+            font-size: 1.1rem;
+            text-align: right;
+            cursor: pointer;
+            transition: all 0.3s ease;
         }
 
-        /* --- تصميم صندوق النتائج (مخفي افتراضيًا) --- */
-        #results-container {
-            display: none;
-            padding: 20px;
-            margin-top: 30px;
-            border-radius: 10px;
-            background-color: #e6f7ff;
-            border: 1px solid #b3e0ff;
-            text-align: center;
+        .btn:hover:not(:disabled) {
+            background-color: #f0f0f0;
+            border-color: var(--primary-color);
         }
 
-        #results-container h2 {
-            margin: 0;
-            color: #0056b3;
+        .btn.correct {
+            background-color: #e6f7ec;
+            border-color: var(--correct-color);
+            color: var(--correct-color);
+            font-weight: 700;
         }
 
-        /* --- تصميم حالات التصحيح --- */
+        .btn.incorrect {
+            background-color: #fdedee;
+            border-color: var(--incorrect-color);
+            color: var(--incorrect-color);
+        }
+
+        .btn:disabled {
+            cursor: not-allowed;
+            opacity: 0.8;
+        }
+
+        .rationale {
+            font-size: 1rem;
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: var(--border-radius);
+            background-color: #f9f9f9;
+            border: 1px solid #eee;
+            line-height: 1.7;
+            display: none; /* مخفي افتراضيًا */
+        }
         
-        /* الحالة الصحيحة */
-        .question-block.correct {
-            background-color: #f0fff4;
-            border-color: #5cb85c;
-            border-right-width: 5px;
+        .rationale.correct {
+            border-left: 5px solid var(--correct-color);
         }
 
-        /* الحالة الخاطئة */
-        .question-block.incorrect {
-            background-color: #fff0f0;
-            border-color: #d9534f;
-            border-right-width: 5px;
+        .rationale.incorrect {
+            border-left: 5px solid var(--incorrect-color);
+        }
+        
+        .rationale strong {
+            color: var(--primary-color);
         }
 
-        /* إظهار الإجابة الصحيحة (عند الخطأ) */
-        .correct-answer-key {
-            font-weight: bold;
-            color: #333;
-            background-color: #dff0d8 !important; /* أخضر فاتح لتمييز الإجابة الصحيحة */
-            border-color: #5cb85c !important;
+        .controls {
+            padding: 25px;
+            display: flex;
+            justify-content: center;
+            border-top: 1px solid #eee;
         }
 
-        /* حالة عدم الإجابة */
-        .question-block.unanswered {
-            background-color: #fefaf0;
-            border-color: #f0ad4e;
-            border-right-width: 5px;
+        #next-btn {
+            font-family: 'Tajawal', sans-serif;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: var(--border-radius);
+            padding: 12px 35px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        #next-btn:hover {
+            background-color: #004494;
+        }
+
+        .score-container {
+            padding: 40px;
+            text-align: center;
+            font-size: 1.5rem;
+        }
+        
+        .score-container h2 {
+            font-size: 2.2rem;
+            color: var(--primary-color);
+            margin-bottom: 20px;
+        }
+
+        .hide {
+            display: none;
+        }
+        
+        /* --- أنماط قسم المراجعة --- */
+        #review-container h2 {
+            text-align: center;
+            color: var(--primary-color);
+            margin-top: 30px;
+            margin-bottom: 20px;
+            font-size: 1.8rem;
+            border-top: 1px solid #eee;
+            padding-top: 25px;
+        }
+        
+        .review-question {
+            text-align: right;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .review-question:last-of-type {
+            border-bottom: none;
+        }
+        
+        .review-question h4 {
+            font-size: 1.2rem;
+            color: var(--primary-color);
+            margin-bottom: 10px;
+            line-height: 1.6;
+        }
+        
+        .user-answer, .correct-answer, .review-rationale {
+            font-size: 1rem;
+            margin-bottom: 8px;
+            line-height: 1.6;
+        }
+        
+        .user-answer span.correct-text {
+            color: var(--correct-color);
+            font-weight: 700;
+        }
+        
+        .user-answer span.incorrect-text {
+            color: var(--incorrect-color);
+            font-weight: 700;
+        }
+        
+        .correct-answer {
+            background-color: #e6f7ec;
+            padding: 5px 10px;
+            border-radius: 5px;
+            border-right: 4px solid var(--correct-color);
+        }
+        
+        .review-rationale {
+            background-color: #f9f9f9;
+            padding: 10px;
+            border-radius: 5px;
         }
 
     </style>
 </head>
 <body>
 
-    <div class="container">
-        <form id="quiz-form">
-            
-            <div class="question-block" id="q1-block">
-                <p>1. بكتيريا (Escherichia coli) هي جرثومة تعيش بصورة طبيعية في الأمعاء الغليظة للبشر والحيوانات الا ان هناك بعض الأنواع الضارة منها قد تسبب تسمم غذائي خطير.</p>
-                <div class="options-container">
-                    <label><input type="radio" name="q1" value="true"> صح</label>
-                    <label><input type="radio" name="q1" value="false"> خطأ</label>
-                </div>
-            </div>
-
-            <div class="question-block" id="q2-block">
-                <p>2. هرمون الأدرينالين يعمل على تثبيط الجهاز المناعي ويصبح الجسم أشد عرضة للأمراض.</p>
-                <div class="options-container">
-                    <label><input type="radio" name="q2" value="true"> صح</label>
-                    <label><input type="radio" name="q2" value="false"> خطأ</label>
-                </div>
-            </div>
-
-            <div class="question-block" id="q3-block">
-                <p>3. تصنف الخضروات النشوية مثل البازلاء والبطاطا واليقطين من قائمة الخبز وليس الخضروات لارتفاع محتواها من الكربوهيدرات.</p>
-                <div class="options-container">
-                    <label><input type="radio" name="q3" value="true"> صح</label>
-                    <label><input type="radio" name="q3" value="false"> خطأ</label>
-                </div>
-            </div>
-
-            <div class="question-block" id="q4-block">
-                <p>4. تؤثر عمليات التخزين والطهي على القيمة الغذائية للأطعمة خاصة الخضروات والفواكه مما قد تسبب في فقد فيتامين C و E.</p>
-                <div class="options-container">
-                    <label><input type="radio" name="q4" value="true"> صح</label>
-                    <label><input type="radio" name="q4" value="false"> خطأ</label>
-                </div>
-            </div>
-
-            <div class="question-block" id="q5-block">
-                <p>5. يؤدي نقص البروتين في الغذاء إلى كبت المناعة وارتفاع معدل الإصابة بالأمراض المعدية، كما يزيد من عدد الخلايا الليمفاوية المنتجة لجلوبيولين المناعة.</p>
-                <div class="options-container">
-                    <label><input type="radio" name="q5" value="true"> صح</label>
-                    <label><input type="radio" name="q5" value="false"> خطأ</label>
-                </div>
-            </div>
-
-            <div class="question-block" id="q6-block">
-                <p>6. هناك كميات محددة من الأطعمة في المجموعات الغذائية يطلق عليها الحصص الغذائية والتي يختلف عددها وحجمها ووزنها تبعا لنوعية المادة الغذائية وعمر وجنس الفرد والحالة الفسيولوجية.</p>
-                <div class="options-container">
-                    <label><input type="radio" name="q6" value="true"> صح</label>
-                    <label><input type="radio" name="q6" value="false"> خطأ</label>
-                </div>
-            </div>
-
-            <div class="question-block" id="q7-block">
-                <p>7. للمحافظة على الوزن وعدم الإصابة بالسمنة والوزن الزائد يجب ان تكون كمية الطاقة الداخلة أقل من الطاقة المستهلكة.</p>
-                <div class="options-container">
-                    <label><input type="radio" name="q7" value="true"> صح</label>
-                    <label><input type="radio" name="q7" value="false"> خطأ</label>
-                </div>
+    <div class="quiz-container">
+        <h1>اختبار الكيمياء الحيوية</h1>
+        
+        <div id="quiz-content">
+            <div class="quiz-header">
+                <div id="question-counter"></div>
+                <div id="question-text">...</div>
             </div>
             
-            <div class="question-block" id="q8-block">
-                <p>8. تنتقل العدوى بـ Salmonella عند تناول الأطعمة الملوثة بالبكتيريا، مثل الدجاج أو البيض النيء أو غير المطبوخ بشكل جيد.</p>
-                <div class="options-container">
-                    <label><input type="radio" name="q8" value="true"> صح</label>
-                    <label><input type="radio" name="q8" value="false"> خطأ</label>
-                </div>
+            <div class="quiz-body">
+                <div id="answer-buttons" class="btn-grid">
+                    </div>
+                <div id="rationale-text" class="rationale"></div>
             </div>
 
-            <div class="question-block" id="q9-block">
-                <p>9. يتناقص مقدار التوتر وتتحسن وظيفة الدماغ المعرفية بعد ممارسة الرياضة، ويحفز إنتاج الإندورفين.</p>
-                <div class="options-container">
-                    <label><input type="radio" name="q9" value="true"> صح</label>
-                    <label><input type="radio" name="q9" value="false"> خطأ</label>
-                </div>
+            <div class="controls">
+                <button id="next-btn" class="hide">التالي</button>
             </div>
+        </div>
 
-            <div class="question-block" id="q10-block">
-                <p>10. يحترق البروتين عند التسخين الجاف للطعام مثل الشواء والقلي، ويتحول إلى مادة لذيذة الطعم وتتكون مادة الأكريلاميد المفيدة للصحة.</p>
-                <div class="options-container">
-                    <label><input type="radio" name="q10" value="true"> صح</label>
-                    <label><input type="radio" name="q10" value="false"> خطأ</label>
-                </div>
+        <div id="score-container" class="score-container hide">
             </div>
-
-            <div class="question-block" id="q11-block">
-                <p>11. يلفظ Malnutrition فقط من النقص في تناول الغذاء.</p>
-                <div class="options-container">
-                    <label><input type="radio" name="q11" value="true"> صح</label>
-                    <label><input type="radio" name="q11" value="false"> خطأ</label>
-                </div>
-            </div>
-
-            <div class="question-block" id="q12-block">
-                <p>12. تنخفض حجم الكتلة العضلية بنسبة 30% مع التقدم في العمر خاصة بعد سن الثلاثين لذا ينصح بمزاولة الرياضة لمدة كافية وبشكل منتظم.</p>
-                <div class="options-container">
-                    <label><input type="radio" name="q12" value="true"> صح</label>
-                    <label><input type="radio" name="q12" value="false"> خطأ</label>
-                </div>
-            </div>
-
-            <div class="question-block" id="q13-block">
-                <p>13. ممارسة التمارين الرياضية بانتظام تخفض نسبة كولسترول البروتين الدهني عالي الكثافة وهو الكولسترول الجيد (HDL).</p>
-                <div class="options-container">
-                    <label><input type="radio" name="q13" value="true"> صح</label>
-                    <label><input type="radio" name="q13" value="false"> خطأ</label>
-                </div>
-            </div>
-
-            <div class="question-block" id="q14-block">
-                <p>14. يحدث التزنخ في بعض أنواع اللحوم نتيجة لأكسدة الليبيدات.</p>
-                <div class="options-container">
-                    <label><input type="radio" name="q14" value="true"> صح</label>
-                    <label><input type="radio" name="q14" value="false"> خطأ</label>
-                </div>
-            </div>
-
-            <div class="question-block" id="q15-block">
-                <p>15. نقص حمض التربتوفان قد يؤدي إلى انخفاض مستوى السيروتونين و قد ينجم عن ذلك اضطرابات في المزاج كالقلق والاكتئاب.</p>
-                <div class="options-container">
-                    <label><input type="radio" name="q15" value="true"> صح</label>
-                    <label><input type="radio" name="q15" value="false"> خطأ</label>
-                </div>
-            </div>
-
-            <div class="question-block" id="q16-block">
-                <p>16. تنصح التوصيات بالمشي المنتظم 4 آلاف خطوة في اليوم الواحد للشخص السليم.</p>
-                <div class="options-container">
-                    <label><input type="radio" name="q16" value="true"> صح</label>
-                    <label><input type="radio" name="q16" value="false"> خطأ</label>
-                </div>
-            </div>
-
-            <div class="question-block" id="q17-block">
-                <p>17. من فوائد الرجيم السريع تذويب الدهون حول أربطة القلب والكليتين مما يساهم في زيادة صحة الإنسان.</p>
-                <div class="options-container">
-                    <label><input type="radio" name="q17" value="true"> صح</label>
-                    <label><input type="radio" name="q17" value="false"> خطأ</label>
-                </div>
-            </div>
-
-            <div class="question-block" id="q18-block">
-                <p>18. من مضاعفات ارتفاع ضغط الدم الاصابة بالفشل الكلوي.</p>
-                <div class="options-container">
-                    <label><input type="radio" name="q18" value="true"> صح</label>
-                    <label><input type="radio" name="q18" value="false"> خطأ</label>
-                </div>
-            </div>
-
-            <div class="question-block" id="q19-block">
-                <p>19. الصحة الإيجابية تمثل الحالة التي يتمكن فيها الفرد من مواجهة المشاكل والمؤثرات البيئية والضغوط النفسية ...</p>
-                <div class="options-container">
-                    <label><input type="radio" name="q19" value="true"> صح</label>
-                    <label><input type="radio" name="q19" value="false"> خطأ</label>
-                </div>
-            </div>
-
-            <div class="question-block" id="q20-block">
-                <p>20. تتلاشى الخلايا الدهنية مباشرة من الجسم إذا فقد الشخص المصاب بالسمنة جزءا من وزنه.</p>
-                <div class="options-container">
-                    <label><input type="radio" name="q20" value="true"> صح</label>
-                    <label><input type="radio" name="q20" value="false"> خطأ</label>
-                </div>
-            </div>
-
-            <div class="question-block" id="q21-block">
-                <p>21. ارتفاع نسبة الشحوم البروتينية منخفضة الكثافة LDL تخفض من نسبة الاصابة بأمراض القلب وانسداد الشرايين.</p>
-                <div class="options-container">
-                    <label><input type="radio" name="q21" value="true"> صح</label>
-                    <label><input type="radio" name="q21" value="false"> خطأ</label>
-                </div>
-            </div>
-
-            <div class="question-block" id="q22-block">
-                <p>22. من الصفات الرئيسة لعلم الوبائيات الوصفي هي الشخص والمكان والتوقيت.</p>
-                <div class="options-container">
-                    <label><input type="radio" name="q22" value="true"> صح</label>
-                    <label><input type="radio" name="q22" value="false"> خطأ</label>
-                </div>
-            </div>
-
-            <div class="question-block" id="q23-block">
-                <p>23. يؤدي الضغط النفسي الإيجابي إلى إصابة الفرد بالعديد من الأمراض مثل السكري أو الربو...</p>
-                <div class="options-container">
-                    <label><input type="radio" name="q23" value="true"> صح</label>
-                    <label><input type="radio" name="q23" value="false"> خطأ</label>
-                </div>
-            </div>
-
-            <div class="question-block" id="q24-block">
-                <p>24. للمحافظة على الوزن وعدم الإصابة بالسمنة والوزن الزائد يجب ان تكون كمية الطاقة الداخلة للجسم أعلى من الطاقة المستهلكة.</p>
-                <div class="options-container">
-                    <label><input type="radio" name="q24" value="true"> صح</label>
-                    <label><input type="radio" name="q24" value="false"> خطأ</label>
-                </div>
-            </div>
-
-            <div class="question-block" id="q25-block">
-                <p>25. تؤدي الضغوط النفسية الى زيادة افراز هرمون الكورتيزول والذي قد يؤدي الى ضعف المناعة والإصابة بالأمراض.</p>
-                <div class="options-container">
-                    <label><input type="radio" name="q25" value="true"> صح</label>
-                    <label><input type="radio" name="q25" value="false"> خطأ</label>
-                </div>
-            </div>
-
-            <div class="question-block" id="q26-block">
-                <p>26. أشارت الدراسات الى أن انخفاض تسوس الأسنان له علاقة بزيادة مستوى الفلورايد في الماء.</p>
-                <div class="options-container">
-                    <label><input type="radio" name="q26" value="true"> صح</label>
-                    <label><input type="radio" name="q26" value="false"> خطأ</label>
-                </div>
-            </div>
-
-            <div class="question-block" id="q27-block">
-                <p>27. المراهقات والنساء الصغيرات في السن أكثر عرضة للإصابة بمرض فقدان الشهية، أو الشره المرضي بشكل أكبر من الأولاد.</p>
-                <div class="options-container">
-                    <label><input type="radio" name="q27" value="true"> صح</label>
-                    <label><input type="radio" name="q27" value="false"> خطأ</label>
-                </div>
-            </div>
-
-            <div class="question-block" id="q28-block">
-                <p>28. سكر الحمل هو أي تغير في نسبة السكر بالدم، وتم تشخيصه لأول مرة أثناء الحمل وقد يستمر الى ما بعد الولادة.</p>
-                <div class="options-container">
-                    <label><input type="radio" name="q28" value="true"> صح</label>
-                    <label><input type="radio" name="q28" value="false"> خطأ</label>
-                </div>
-            </div>
-
-            <div class="question-block" id="q29-block">
-                <p>29. يحدث داء السكرى من النوع الأول في سن مبكرة جدا وللوراثة دور مهم فيه.</p>
-                <div class="options-container">
-                    <label><input type="radio" name="q29" value="true"> صح</label>
-                    <label><input type="radio" name="q29" value="false"> خطأ</label>
-                </div>
-            </div>
-
-            <div class="question-block" id="q30-block">
-                <p>30. هناك علاقة بين الأمراض المزمنة والسرطان مثل مرض التهاب القولون المزمن.</p>
-                <div class="options-container">
-                    <label><input type="radio" name="q30" value="true"> صح</label>
-                    <label><input type="radio" name="q30" value="false"> خطأ</label>
-                </div>
-            </div>
-
-            <div class="question-block" id="q31-block">
-                <p>31. لا تملك معظم عوامل الخطورة الخمسة المرافقة لمتلازمة الأيض الغذائي أي أعراض أو علامات.</p>
-                <div class="options-container">
-                    <label><input type="radio" name="q31" value="true"> صح</label>
-                    <label><input type="radio" name="q31" value="false"> خطأ</label>
-                </div>
-            </div>
-
-            <div class="question-block" id="q32-block">
-                <p>32. اثبتت الدراسات وجود علاقة بين مرض البلاجرا و نقص فيتامين النياسين (B3).</p>
-                <div class="options-container">
-                    <label><input type="radio" name="q32" value="true"> صح</label>
-                    <label><input type="radio" name="q32" value="false"> خطأ</label>
-                </div>
-            </div>
-
-            <div class="question-block" id="q33-block">
-                <p>33. تهدف الدراسات التحليلية إلى دراسة توزع الأمراض وانتشارها في المجتمعات وفقاً لعوامل الشخص والزمان والمكان.</p>
-                <div class="options-container">
-                    <label><input type="radio" name="q33" value="true"> صح</label>
-                    <label><input type="radio" name="q33" value="false"> خطأ</label>
-                </div>
-            </div>
-
-            <div class="question-block" id="q34-block">
-                <p>34. (Diabetes Diagnosis) يعتبر المرحلة الأولى في اكتشاف الاصابة بمرض السكري.</p>
-                <div class="options-container">
-                    <label><input type="radio" name="q34" value="true"> صح</label>
-                    <label><input type="radio" name="q34" value="false"> خطأ</label>
-                </div>
-            </div>
-
-            <div class="question-block" id="q35-block">
-                <p>35. الورم الحميد هو نمو وتكاثر غير طبيعي للخلايا وينمو بشكل بطيء في الجسم.</p>
-                <div class="options-container">
-                    <label><input type="radio" name="q35" value="true"> صح</label>
-                    <label><input type="radio" name="q35" value="false"> خطأ</label>
-                </div>
-            </div>
-
-            <div class="question-block" id="q36-block">
-                <p>36. تناول مركبات الكورتيزون قد ترفع نسبة السكر في الدم مما يسبب الإصابة بمرض السكري.</p>
-                <div class="options-container">
-                    <label><input type="radio" name="q36" value="true"> صح</label>
-                    <label><input type="radio" name="q36" value="false"> خطأ</label>
-                </div>
-            </div>
-
-            <div class="question-block" id="q37-block">
-                <p>37. عندما يكون مؤشر كتلة الجسم (BMI) للشخص 20 تكون درجة الخطر للإصابة بالأمراض المزمنة عالية.</p>
-                <div class="options-container">
-                    <label><input type="radio" name="q37" value="true"> صح</label>
-                    <label><input type="radio" name="q37" value="false"> خطأ</label>
-                </div>
-            </div>
-            
-            <div class="question-block" id="q38-block">
-                <p>38. من مكونات الجهاز المناعي ..........</p>
-                <div class="options-container">
-                    <label><input type="radio" name="q38" value="a"> أ- الطحال</label>
-                    <label><input type="radio" name="q38" value="b"> ب- النخاع</label>
-                    <label><input type="radio" name="q38" value="c"> ج- الغدد الليمفاوية</label>
-                    <label><input type="radio" name="q38" value="d"> د- جميع ماسبق صحيح</label>
-                    <label><input type="radio" name="q38" value="e"> هـ- أ و ب</label>
-                </div>
-            </div>
-
-            <div class="question-block" id="q39-block">
-                <p>39. تتلاشى الخلايا الدهنية مباشرة إذا فقد الشخص البدين جزءاً من وزنه؟</p>
-                <div class="options-container">
-                    <label><input type="radio" name="q39" value="a"> أ- نعم</label>
-                    <label><input type="radio" name="q39" value="b"> ب- لا</label>
-                </div>
-            </div>
-
-            <div class="question-block" id="q40-block">
-                <p>40. من مسميات المناعة الطبيعية .............</p>
-                <div class="options-container">
-                    <label><input type="radio" name="q40" value="a"> أ- المناعة الغير نوعية</label>
-                    <label><input type="radio" name="q40" value="b"> ب- المناعة النوعية</label>
-                    <label><input type="radio" name="q40" value="c"> ج- المناعة المؤقتة السالبة</label>
-                    <label><input type="radio" name="q40" value="d"> د- المناعة الصناعية النشطة</label>
-                </div>
-            </div>
-
-            <div class="question-block" id="q41-block">
-                <p>41. يحمل ويتضمن اسم «طبقي» (My Plate) من قبل ادارة الأغذية والزراعة الأمريكية كل مما يلي ما عدا:</p>
-                <div class="options-container">
-                    <label><input type="radio" name="q41" value="a"> أ- الفواكه والخضراوات</label>
-                    <label><input type="radio" name="q41" value="b"> ب- الدهون</label>
-                    <label><input type="radio" name="q41" value="c"> ج- الحبوب</label>
-                    <label><input type="radio" name="q41" value="d"> د- البروتين</label>
-                    <label><input type="radio" name="q41" value="e"> هـ- كأس (لبن, حليب)</label>
-                </div>
-            </div>
-
-            <div class="question-block" id="q42-block">
-                <p>42. سوء التغذيه يكون نتيجة لـ...</p>
-                <div class="options-container">
-                    <label><input type="radio" name="q42" value="a"> أ- نقص بعض العناصر الغذائية</label>
-                    <label><input type="radio" name="q42" value="b"> ب- الافراط في الغذاء</label>
-                    <label><input type="radio" name="q42" value="c"> ج- خلل في أجهزة الجسم</label>
-                    <label><input type="radio" name="q42" value="d"> د- جميع ما ذكر صحيح</label>
-                    <label><input type="radio" name="q42" value="e"> هـ- أ و ب معا</label>
-                </div>
-            </div>
-            
-            <div class="question-block" id="q43-block">
-                <p>43. يعاني شخص من سوء امتصاص الدهون. أي من الفيتامينات التالية يواجه هذا الشخص مشكلة في امتصاصه؟</p>
-                <div class="options-container">
-                    <label><input type="radio" name="q43" value="a"> أ- فيتامين B12</label>
-                    <label><input type="radio" name="q43" value="b"> ب- فيتامين B6</label>
-                    <label><input type="radio" name="q43" value="c"> ج- فيتامين E</label>
-                </div>
-            </div>
-
-            <div class="question-block" id="q44-block">
-                <p>44. تناول الكربوهيدرات بكميات قليلة جدا والدهون العالية قد تصل نسبتها 68% من كمية السعرات الحرارية والتقليل من تناول الخضروات والفواكه والحليب يطلق عليه...</p>
-                <div class="options-container">
-                    <label><input type="radio" name="q44" value="a"> أ- الاعتماد على وجبة واحدة يومياً</label>
-                    <label><input type="radio" name="q44" value="b"> ب- حمية الكيتو</label>
-                    <label><input type="radio" name="q44" value="c"> ج- حمية الديتوكس</label>
-                    <label><input type="radio" name="q44" value="d"> د- لا يوجد إجابة صحيحة</label>
-                </div>
-            </div>
-
-            <div class="question-block" id="q45-block">
-                <p>45. يرتفع معدل الكولسترول مع التقدم في العمر نتيجة لارتفاع الكوليسترول السيء ويرمز له بـ...</p>
-                <div class="options-container">
-                    <label><input type="radio" name="q45" value="a"> أ- LDL</label>
-                    <label><input type="radio" name="q45" value="b"> ب- VLDL</label>
-                    <label><input type="radio" name="q45" value="c"> ج- HDL</label>
-                    <label><input type="radio" name="q45" value="d"> د- Triglycerides</label>
-                </div>
-            </div>
-
-            <div class="question-block" id="q46-block">
-                <p>46. من المشاكل الصحية التي تنجم عن السمنة:</p>
-                <div class="options-container">
-                    <label><input type="radio" name="q46" value="a"> أ- ارتفاع ضغط الدم</label>
-                    <label><input type="radio" name="q46" value="b"> ب- الإصابة بقرحة المعدة</label>
-                    <label><input type="radio" name="q46" value="c"> ج- الإصابة بالتهاب المفاصل</label>
-                    <label><input type="radio" name="q46" value="d"> د- أ و ب معا</label>
-                    <label><input type="radio" name="q46" value="e"> هـ- أ و ج معا</label>
-                </div>
-            </div>
-
-            <div class="question-block" id="q47-block">
-                <p>47. بالإمكان المحافظة على لون الفواكه بمعالجتها بـ...</p>
-                <div class="options-container">
-                    <label><input type="radio" name="q47" value="a"> أ- ثاني أكسيد الكبريت</label>
-                    <label><input type="radio" name="q47" value="b"> ب- البكتين</label>
-                    <label><input type="radio" name="q47" value="c"> ج- انزيم الأميليز</label>
-                    <label><input type="radio" name="q47" value="d"> د- انزيم اللاكتيز</label>
-                </div>
-            </div>
-
-            <div class="question-block" id="q48-block">
-                <p>48. تعد مجموعة الفيتامينات التي تذوب في الدهون:</p>
-                <div class="options-container">
-                    <label><input type="radio" name="q48" value="a"> أ- تفقد عن طريق الماء</label>
-                    <label><input type="radio" name="q48" value="b"> ب- أكثر مقاومة للحرارة</label>
-                    <label><input type="radio" name="q48" value="c"> ج- لا تتأكسد مع الحرارة</label>
-                </div>
-            </div>
-
-            <div class="question-block" id="q49-block">
-                <p>49. المواد الغذائية سريعة التلف هي:</p>
-                <div class="options-container">
-                    <label><input type="radio" name="q49" value="a"> أ- Perishable Foods</label>
-                    <label><input type="radio" name="q49" value="b"> ب- Semi-Perishable Foods</label>
-                    <label><input type="radio" name="q49" value="c"> ج- Non Perishable Foods</label>
-                    <label><input type="radio" name="q49" value="d"> د- Toxic Foods</label>
-                </div>
-            </div>
-
-            <div class="question-block" id="q50-block">
-                <p>50. تعرف المناعة التي يكتسبها الطفل من الام خلال الستة شهور الاولى من حياته بـ...</p>
-                <div class="options-container">
-                    <label><input type="radio" name="q50" value="a"> أ- المناعة المكتسبة</label>
-                    <label><input type="radio" name="q50" value="b"> ب- المناعة الطبيعية</label>
-                    <label><input type="radio" name="q50" value="c"> ج- المناعة المؤقتة السالبة</label>
-                    <label><input type="radio" name="q50" value="d"> د- المناعة الصناعية النشطة</label>
-                </div>
-            </div>
-
-            <div class="question-block" id="q51-block">
-                <p>51. دراسة أثر تناول مشروب القرفة على خفض مستوى السكر بالدم لدى مرضى السكري تعد مثال على:</p>
-                <div class="options-container">
-                    <label><input type="radio" name="q51" value="a"> أ- الدراسات الوصفية</label>
-                    <label><input type="radio" name="q51" value="b"> ب- الدراسات التحليلية</label>
-                    <label><input type="radio" name="q51" value="c"> ج- الدراسات التجريبية</label>
-                    <label><input type="radio" name="q51" value="d"> د- الأبحاث الاستكشافية</label>
-                </div>
-            </div>
-            
-            <div class="question-block" id="q52-block">
-                <p>52. يقصد بـ Mortality Rate:</p>
-                <div class="options-container">
-                    <label><input type="radio" name="q52" value="a"> أ- معدل حدوث المرض</label>
-                    <label><input type="radio" name="q52" value="b"> ب- عدد الحالات المصابة بالمرض</label>
-                    <label><input type="radio" name="q52" value="c"> ج- معدل الوفيات</label>
-                </div>
-            </div>
-
-            <div class="question-block" id="q53-block">
-                <p>53. مصطلح الدراسات الوصفية يعني:</p>
-                <div class="options-container">
-                    <label><input type="radio" name="q53" value="a"> أ- Analytic studies</label>
-                    <label><input type="radio" name="q53" value="b"> ب- Experimental studies</label>
-                    <label><input type="radio" name="q53" value="c"> ج- Observation studies</label>
-                    <label><input type="radio" name="q53" value="d"> د- Descriptive studies</label>
-                </div>
-            </div>
-
-            <div class="question-block" id="q54-block">
-                <p>54. من الدراسات التي يتم فيها اختبار الافراد المصابين بالمرض ومجموعات أخرى من الأفراد لهم نفس الخصائص ولكن غير مصابين بالمرض (مجموعة ضابطة) هي الدراسات:</p>
-                <div class="options-container">
-                    <label><input type="radio" name="q54" value="a"> أ- Cross-cultural studies</label>
-                    <label><input type="radio" name="q54" value="b"> ب- Special population</label>
-                    <label><input type="radio" name="q54" value="c"> ج- Case-control Study</label>
-                </div>
-            </div>
-
-            <div class="question-block" id="q55-block">
-                <p>55. الورم السرطاني:</p>
-                <div class="options-container">
-                    <label><input type="radio" name="q55" value="a"> أ- عادة يكون كتلة متفرعة وغير محددة</label>
-                    <label><input type="radio" name="q55" value="b"> ب- غالبا محاط بغشاء خارج الورم</label>
-                    <label><input type="radio" name="q55" value="c"> ج- ليس لديه القدرة على الانتشار</label>
-                    <label><input type="radio" name="q55" value="d"> د- أ و ب معا</label>
-                </div>
-            </div>
-
-            <div class="question-block" id="q56-block">
-                <p>56. من أهم أهداف علم الوبائيات التغذوي:</p>
-                <div class="options-container">
-                    <label><input type="radio" name="q56" value="a"> أ- مراقبة استهلاك الأطعمة... وتقييم الحالة الغذائية</label>
-                    <label><input type="radio" name="q56" value="b"> ب- وضع فرضيات جديدة للعلاقة بين الغذاء وحدوث الأمراض</label>
-                    <label><input type="radio" name="q56" value="c"> ج- تقييم مدى قوة العلاقة بين الغذاء والمرض</label>
-                    <label><input type="radio" name="q56" value="d"> د- جميع ما ذكر صحيح</label>
-                </div>
-            </div>
-
-            <div class="question-block" id="q57-block">
-                <p>57. دراسة مجموعة محددة من السكان حيث يتم تتبعهم خلال فترة من الزمن تشمل دراسة بأثر رجعي للماضي ومستقبلية:</p>
-                <div class="options-container">
-                    <label><input type="radio" name="q57" value="a"> أ- Cohort Study</label>
-                    <label><input type="radio" name="q57" value="b"> ب- Case-Control Study</label>
-                    <label><input type="radio" name="q57" value="c"> ج- Pilot Study</label>
-                    <label><input type="radio" name="q57" value="d"> د- أ و ب معا</label>
-                </div>
-            </div>
-
-            <div class="question-block" id="q58-block">
-                <p>58. يتم تشخيص زيادة الوزن ومؤشر السمنة من محيط قياس الخصر (Waist Circumference) إذا كان:</p>
-                <div class="options-container">
-                    <label><input type="radio" name="q58" value="a"> أ- للرجل 120 أو أكثر وللنساء 80 أو أكثر</label>
-                    <label><input type="radio" name="q58" value="b"> ب- للرجل 102 أو أكثر والنساء 88 أو أكثر</label>
-                    <label><input type="radio" name="q58" value="c"> ج- للرجل 90 أو أكثر وللنساء 70 أو أكثر</label>
-                    <label><input type="radio" name="q58" value="d"> د- للرجل 120 أو أكثر وللنساء 100 أو أكثر</label>
-                </div>
-            </div>
-
-            <div class="question-block" id="q59-block">
-                <p>59. هو Anorexia nervosa:</p>
-                <div class="options-container">
-                    <label><input type="radio" name="q59" value="a"> أ- اللهام العصابي</label>
-                    <label><input type="radio" name="q59" value="b"> ب- الشره العصابي</label>
-                    <label><input type="radio" name="q59" value="c"> ج- الفهم العصابي</label>
-                </div>
-            </div>
-
-            <div class="question-block" id="q60-block">
-                <p>60. مجموعة من الحالات الصحية التي تضع المريض تحت خطورة الإصابة بمشاكل صحية خطيرة كداء السكري وأمراض القلب:</p>
-                <div class="options-container">
-                    <label><input type="radio" name="q60" value="a"> أ- متلازمة الأيض الغذائي</label>
-                    <label><input type="radio" name="q60" value="b"> ب- العمليات الكيميائية بالجسم</label>
-                    <label><input type="radio" name="q60" value="c"> ج- المتلازمة الاستقلابية</label>
-                    <label><input type="radio" name="q60" value="d"> د- أ و ب معا</label>
-                    <label><input type="radio" name="q60" value="e"> هـ- أ و ج معا</label>
-                </div>
-            </div>
-
-            <div class="question-block" id="q61-block">
-                <p>61. إذا كان مؤشر كتلة الجسم BMI للفرد يساوي 22 فتكون الحالة:</p>
-                <div class="options-container">
-                    <label><input type="radio" name="q61" value="a"> أ- أقل من الوزن الطبيعي</label>
-                    <label><input type="radio" name="q61" value="b"> ب- وزن مثالي</label>
-                    <label><input type="radio" name="q61" value="c"> ج- زيادة وزن</label>
-                    <label><input type="radio" name="q61" value="d"> د- سمنة</label>
-                </div>
-            </div>
-
-            <div class="question-block" id="q62-block">
-                <p>62. النوع الأول لداء السكرى يكون سببه..</p>
-                <div class="options-container">
-                    <label><input type="radio" name="q62" value="a"> أ- انعدام افراز الانسولين</label>
-                    <label><input type="radio" name="q62" value="b"> ب- قلة استقبال الخلايا للانسولين</label>
-                    <label><input type="radio" name="q62" value="c"> ج- نتيجة الحمل</label>
-                </div>
-            </div>
-
-            <div class="question-block" id="q63-block">
-                <p>63. للوقاية من الأمراض المزمنة ينبغي على الفرد:</p>
-                <div class="options-container">
-                    <label><input type="radio" name="q63" value="a"> أ- خفض مستوى التوتر والسيطرة عليه</label>
-                    <label><input type="radio" name="q63" value="b"> ب- الحفاظ على مستويات طبيعية من ضغط الدم والكوليسترول والسكري</label>
-                    <label><input type="radio" name="q63" value="c"> ج- المحافظة على وزن صحي</label>
-                    <label><input type="radio" name="q63" value="d"> د- جميع ما ذكر صحيح</label>
-                </div>
-            </div>
-
-            <div class="question-block" id="q64-block">
-                <p>64. الدراسات الوبائية المبنية على الملاحظة تسمى .....</p>
-                <div class="options-container">
-                    <label><input type="radio" name="q64" value="a"> أ- Analytical Studies</label>
-                    <label><input type="radio" name="q64" value="b"> ب- Observation Studies</label>
-                    <label><input type="radio" name="q64" value="c"> ج- Intervention studies</label>
-                </div>
-            </div>
-
-            <div class="question-block" id="q65-block">
-                <p>65. القاتل الصامت هو:</p>
-                <div class="options-container">
-                    <label><input type="radio" name="q65" value="a"> أ- السكري</label>
-                    <label><input type="radio" name="q65" value="b"> ب- ضغط الدم</label>
-                    <label><input type="radio" name="q65" value="c"> ج- السرطان</label>
-                    <label><input type="radio" name="q65" value="d"> د- متلازمة الأيض</label>
-                </div>
-            </div>
-
-            <div class="question-block" id="q66-block">
-                <p>66. من عوامل الخطورة للاصابة بمتلازمة الايض الغذائي..</p>
-                <div class="options-container">
-                    <label><input type="radio" name="q66" value="a"> أ- زيادة محيط الخصر</label>
-                    <label><input type="radio" name="q66" value="b"> ب- ارتفاع مستوى السكر في الدم للصائم</label>
-                    <label><input type="radio" name="q66" value="c"> ج- ارتفاع مستوى الكولسترول الجيد في الدم</label>
-                    <label><input type="radio" name="q66" value="d"> د- جميع ماذكر صحيح</label>
-                    <label><input type="radio" name="q66" value="e"> هـ- أ و ب معا</label>
-                </div>
-            </div>
-
-            <div class="question-block" id="q67-block">
-                <p>67. تمد الجسم بالطاقة لزمن أطول عند هضمها:</p>
-                <div class="options-container">
-                    <label><input type="radio" name="q67" value="a"> أ- الكربوهيدرات المعقدة</label>
-                    <label><input type="radio" name="q67" value="b"> ب- الكربوهيدرات البسيطة</label>
-                    <label><input type="radio" name="q67" value="c"> ج- الالياف</label>
-                </div>
-            </div>
-
-            <div class="question-block" id="q68-block">
-                <p>68. الضغوط النفسية والخوف والتوتر يحفز الجسم لإفراز هرمونات عديدة من الغدد الصماء والتي قد تسبب اضطرابات مثل هرمون:</p>
-                <div class="options-container">
-                    <label><input type="radio" name="q68" value="a"> أ- الادرينالين</label>
-                    <label><input type="radio" name="q68" value="b"> ب- الدوبامين</label>
-                    <label><input type="radio" name="q68" value="c"> ج- السيروتونين</label>
-                </div>
-            </div>
-
-            <div id="results-container">
-                <h2 id="score-text"></h2>
-            </div>
-            
-            <button type="submit" class="submit-btn">✅ انتهيت</button>
-        </form>
     </div>
 
     <script>
-        // --- السكربت الخاص بالتصحيح ---
-
-        // 1. تعريف الإجابات الصحيحة
-        const correctAnswers = {
-            q1: "true",  // صح
-            q2: "false", // خطأ (ينشط)
-            q3: "true",  // صح
-            q4: "true",  // صح
-            q5: "false", // خطأ (يقلل)
-            q6: "true",  // صح
-            q7: "true",  // صح (حسب الصورة، رغم أنه علمياً خطأ للمحافظة)
-            q8: "true",  // صح
-            q9: "true",  // صح
-            q10: "false", // خطأ (مسببة للسرطان)
-            q11: "false", // خطأ (نقص أو زيادة)
-            q12: "true",  // صح
-            q13: "false", // خطأ (يخفض السيء LDL ويرفع الجيد HDL)
-            q14: "true",  // صح
-            q15: "true",  // صح (حسب الصورة ✓) - *تم التعديل بناء على العلامة*
-            q16: "false", // خطأ (الموصى به 8-10 آلاف)
-            q17: "false", // خطأ (خطير)
-            q18: "true",  // صح (من PDF)
-            q19: "true",  // صح (من PDF)
-            q20: "false", // خطأ (يصغر حجمها لا تتلاشى)
-            q21: "false", // خطأ (يرفع النسبة)
-            q22: "true",  // صح (من PDF)
-            q23: "false", // خطأ (الضغط السلبي)
-            q24: "false", // خطأ (يجب أن تتساوى، أو أقل لخسارة الوزن)
-            q25: "true",  // صح (من PDF)
-            q26: "true",  // صح (من PDF)
-            q27: "true",  // صح (من PDF)
-            q28: "true",  // صح (من PDF)
-            q29: "true",  // صح (من PDF)
-            q30: "true",  // صح (من PDF)
-            q31: "true",  // صح (من PDF)
-            q32: "true",  // صح (من PDF)
-            q33: "false", // خطأ (هذه الدراسات الوصفية)
-            q34: "false", // خطأ (التشخيص ليس المرحلة الأولى)
-            q35: "true",  // صح (من PDF)
-            q36: "true",  // صح (من PDF)
-            q37: "false", // خطأ (ضمن الوزن المثالي)
-            q38: "d",     // د- جميع ماسبق صحيح
-            q39: "b",     // ب- لا
-            q40: "a",     // أ- المناعة الغير نوعية
-            q41: "b",     // ب- الدهون (ما عدا)
-            q42: "e",     // هـ- أ و ب معا (نقص أو افراط)
-            q43: "c",     // ج- فيتامين E
-            q44: "b",     // ب- حمية الكيتو
-            q45: "a",     // أ- LDL
-            q46: "e",     // هـ- أ و ج معا (ارتفاع ضغط الدم والتهاب المفاصل)
-            q47: "a",     // أ- ثاني أكسيد الكبريت
-            q48: "b",     // ب- أكثر مقاومة للحرارة
-            q49: "a",     // أ- Perishable Foods
-            q50: "b",     // ب- المناعة الطبيعية
-            q51: "c",     // ج- الدراسات التجريبية
-            q52: "c",     // ج- معدل الوفيات
-            q53: "d",     // د- Descriptive studies
-            q54: "c",     // ج- Case-control Study
-            q55: "a",     // أ- عادة يكون كتلة متفرعة وغير محددة
-            q56: "d",     // د- جميع ما ذكر صحيح
-            q57: "a",     // أ- Cohort Study
-            q58: "b",     // ب- للرجل 102 أو أكثر والنساء 88 أو أكثر
-            q59: "c",     // ج- الفهم العصابي
-            q60: "e",     // هـ- أ و ج معا
-            q61: "b",     // ب- وزن مثالي
-            q62: "a",     // أ- انعدام افراز الانسولين
-            q63: "d",     // د- جميع ما ذكر صحيح
-            q64: "b",     // ب- Observation Studies
-            q65: "b",     // ب- ضغط الدم
-            q66: "e",     // هـ- أ و ب معا
-            q67: "a",     // أ- الكربوهيدرات المعقدة
-            q68: "a"      // أ- الادرينالين
-        };
-
-        // 2. إضافة مستمع الحدث للنموذج
-        const quizForm = document.getElementById('quiz-form');
-        const resultsContainer = document.getElementById('results-container');
-        const scoreText = document.getElementById('score-text');
-
-        quizForm.addEventListener('submit', function(event) {
-            event.preventDefault(); // منع إرسال النموذج بالطريقة التقليدية
-
-            let score = 0;
-            const totalQuestions = Object.keys(correctAnswers).length;
-            const allInputs = quizForm.querySelectorAll('input[type="radio"]');
-
-            // المرور على كل سؤال للتحقق
-            for (const questionName in correctAnswers) {
-                const correctAnswer = correctAnswers[questionName];
-                const questionBlock = document.getElementById(`${questionName}-block`);
-                const selectedOption = quizForm.querySelector(`input[name="${questionName}"]:checked`);
-
-                if (selectedOption) {
-                    const userAnswer = selectedOption.value;
-                    
-                    if (userAnswer === correctAnswer) {
-                        // إجابة صحيحة
-                        score++;
-                        questionBlock.classList.remove('incorrect', 'unanswered');
-                        questionBlock.classList.add('correct');
-                    } else {
-                        // إجابة خاطئة
-                        questionBlock.classList.remove('correct', 'unanswered');
-                        questionBlock.classList.add('incorrect');
-                        
-                        // إظهار الإجابة الصحيحة
-                        const correctLabel = questionBlock.querySelector(`input[value="${correctAnswer}"]`).parentElement;
-                        correctLabel.classList.add('correct-answer-key');
-                    }
-                } else {
-                    // لم تتم الإجابة
-                    questionBlock.classList.remove('correct', 'incorrect');
-                    questionBlock.classList.add('unanswered');
-                    
-                    // إظهار الإجابة الصحيحة
-                    const correctLabel = questionBlock.querySelector(`input[value="${correctAnswer}"]`).parentElement;
-                    correctLabel.classList.add('correct-answer-key');
-                }
+        const questions = [
+            // --- الفصل الأول: الخلية ---
+            {
+                question: "ما هو الفرق الرئيسي في مادة DNA بين الخلايا بدائية النواة وحقيقية النواة؟",
+                type: 'mc',
+                answers: [
+                    { text: "في حقيقية النواة، يوجد DNA في النواة ومحاط بغشاء نووي، بينما في بدائية النواة يوجد في السيتوبلازم (منطقة النيوكليوتيد)", correct: true, rationale: "الخلايا حقيقية النواة تحتوي على نواة حقيقية بغشاء نووي، أما بدائية النواة فلا تحتوي غشاء نووي ويوجد DNA في السيتوبلازم." },
+                    { text: "في بدائية النواة، يوجد DNA في النواة، بينما في حقيقية النواة يوجد في السيتوبلازم", correct: false, rationale: "هذا عكس الواقع تماماً. الخلايا حقيقية النواة هي التي لها نواة حقيقية." },
+                    { text: "كلا النوعين لا يحتوي على غشاء نووي، لكن DNA في حقيقية النواة أكبر حجماً", correct: false, rationale: "الخلايا حقيقية النواة تمتلك غشاءً نووياً يحيط بالـ DNA." },
+                    { text: "الخلايا بدائية النواة لا تحتوي على DNA، فقط RNA", correct: false, rationale: "الخلايا بدائية النواة تحتوي على DNA، وهو يعمل كروموسوم واحد." }
+                ]
+            },
+            {
+                question: "صح أم خطأ: يتكون الغشاء البلازمي (الخلوي) بشكل أساسي من طبقة مزدوجة من الدهون الفوسفورية (Phospholipids).",
+                type: 'tf',
+                answers: [
+                    { text: "صح", correct: true, rationale: "يتكون الغشاء الخلوي من طبقة مزدوجة (Bilayer) من الدهون الفوسفورية، بالإضافة إلى البروتينات والكولسترول والكربوهيدرات." },
+                    { text: "خطأ", correct: false, rationale: "الغشاء الخلوي هو بالفعل طبقة مزدوجة (Bilayer) من الدهون الفوسفورية." }
+                ]
+            },
+            {
+                question: "ما هي العضية المسؤولة عن معالجة وتغليف المواد (مثل البروتينات والدهون) وتصديرها إلى خارج الخلية؟",
+                type: 'mc',
+                answers: [
+                    { text: "الشبكة الإندوبلازمية", correct: false, rationale: "الشبكة الإندوبلازمية (خاصة الخشنة) هي موقع بناء البروتينات والدهون، ولكن جهاز جولجي هو الذي يعالجها ويغلفها للتصدير." },
+                    { text: "الميتوكوندريا", correct: false, rationale: "الميتوكوندريا هي المسؤولة عن إنتاج الطاقة (ATP) في الخلية عن طريق عمليات الأكسدة." },
+                    { text: "جهاز جولجي", correct: true, rationale: "المواد المراد تصديرها خارج الخلية (Exocytosis) تعالج داخل جهاز جولجي وتغلف بحويصلات غشائية." },
+                    { text: "اللايزوسوم (الجسيم الحال)", correct: false, rationale: "اللايزوسوم يحتوي على إنزيمات التحلل لهضم وتكسير المواد، وليس لتصديرها." }
+                ]
+            },
+            {
+                question: "العضية التي تحتوي على إنزيمات الأكسدة التي تحول الهيدروجين إلى فوق أكسيد الهيدروجين ($H_{2}O_{2}$) ثم تحطمه إلى ماء وأكسجين هي:",
+                type: 'mc',
+                answers: [
+                    { text: "اللايزوسوم", correct: false, rationale: "اللايزوسوم يحتوي إنزيمات التحلل (الهضم)، وليس إنزيمات الأكسدة لـ H2O2." },
+                    { text: "البيروكسيزوم", correct: true, rationale: "البيروكسيزوم يحتوي على إنزيمات الأكسدة التي تكون فوق أكسيد الهيدروجين (H2O2) ثم تحطمه بواسطة إنزيم Catalase." },
+                    { text: "جهاز جولجي", correct: false, rationale: "جهاز جولجي مسؤول عن التغليف والتصدير خارج الخلية." },
+                    { text: "الميتوكوندريا", correct: false, rationale: "الميتوكوندريا مسؤولة عن إنتاج الطاقة (التنفس الخلوي)." }
+                ]
+            },
+            {
+                question: "ما هي العناصر الأربعة التي تشكل أكثر من 99% من معظم الخلايا الحية؟",
+                type: 'mc',
+                answers: [
+                    { text: "الكربون، الهيدروجين، الأكسجين، النيتروجين", correct: true, rationale: "الهيدروجين والأكسجين والكربون والنيتروجين تشكل أكثر من 99% من معظم الخلايا الحية." },
+                    { text: "الكربون، الصوديوم، البوتاسيوم، الكالسيوم", correct: false, rationale: "الصوديوم والبوتاسيوم والكالسيوم هي أيونات مهمة، لكنها لا تشكل النسبة الأكبر مقارنة بـ C, H, O, N." },
+                    { text: "الكربون، الفوسفور، الكبريت، الأكسجين", correct: false, rationale: "الفوسفور (في ATP) والكبريت (في Acetyl CoA) مهمان لنقل الطاقة، لكن النيتروجين والهيدروجين أساسيان وبنسبة أعلى." },
+                    { text: "الحديد، النحاس، الأكسجين، الهيدروجين", correct: false, rationale: "الحديد والنحاس مهمان لنقل الإلكترونات، لكن الكربون والنيتروجين يشكلان نسبة أكبر بكثير." }
+                ]
+            },
+            // --- الفصل الثاني: الماء ---
+            {
+                question: "صح أم خطأ: من الخواص الفيزيائية للماء أن درجة غليانه وانصهاره عالية مقارنة بالسوائل الأخرى.",
+                type: 'tf',
+                answers: [
+                    { text: "صح", correct: true, rationale: "من خواص الماء أن درجة غليانه (100 م) وانصهاره (0 م) عالية، وكذلك له حرارة كامنة للتبخر عالية." },
+                    { text: "خطأ", correct: false, rationale: "الماء يتميز بارتفاع درجة غليانه وانصهاره بسبب الروابط الهيدروجينية القوية بين جزيئاته." }
+                ]
+            },
+            {
+                question: "ما هو نظام التحكم (المحلول المنظم) الأساسي للرقم الهيدروجيني في بلازما الدم؟",
+                type: 'mc',
+                answers: [
+                    { text: "نظام الفوسفات", correct: false, rationale: "نظام الفوسفات هو أحد المنظمات الفسيولوجية الهامة، لكنه يعمل بشكل أساسي داخل الخلايا، بينما نظام البيكربونات هو الأساسي في بلازما الدم." },
+                    { text: "نظام الأسيتات", correct: false, rationale: "نظام الأسيتات (حمض الخليك وخلات الصوديوم) هو مثال على المحاليل المنظمة، ولكنه ليس المنظم الأساسي في دم الإنسان." },
+                    { text: "نظام البيكربونات", correct: true, rationale: "نظام التحكم الأساسي للرقم الهيدروجيني في بلازما الدم هو نظام البيكربونات، الذي يتألف من حمض الكربونيك (H2CO3) والبيكربونات (HCO3-)." },
+                    { text: "حمض الهيدروكلوريك", correct: false, rationale: "حمض الهيدروكلوريك هو حمض قوي، وليس محلولاً منظماً." }
+                ]
+            },
+            {
+                question: "عند دخول مادة قاعدية إلى الدم، ماذا يحدث لنظام البيكربونات المنظم؟",
+                type: 'mc',
+                answers: [
+                    { text: "يتفاعل حمض الكربونيك ($H_{2}CO_{3}$) معها وتزداد كمية البيكربونات ($HCO_{3}^{-}$)", correct: true, rationale: "عند دخول مادة قاعدية (basic substance)، يتفاعل معها حمض الكربونيك (H2CO3)، مما يؤدي إلى زيادة في تركيز البيكربونات (HCO3-)." },
+                    { text: "تتفاعل البيكربونات ($HCO_{3}^{-}$) معها وتزداد كمية حمض الكربونيك ($H_{2}CO_{3}$)", correct: false, rationale: "هذا يحدث عند دخول مادة حامضية. القاعدة تتفاعل مع الحمض (حمض الكربونيك)." },
+                    { text: "لا يتغير شيء", correct: false, rationale: "وظيفة المحلول المنظم هي التفاعل لمقاومة التغير في الـ pH، لذلك يجب أن تتغير تراكيز مكوناته." },
+                    { text: "يقل تركيز كلا من حمض الكربونيك والبيكربونات", correct: false, rationale: "عند تفاعل القاعدة مع حمض الكربونيك، يقل حمض الكربونيك ويزيد البيكربونات." }
+                ]
+            },
+            {
+                question: "وفقاً للسلايدات، إذا انخفض الرقم الهيدروجيني لدم الإنسان إلى أقل من 7.0، فإن الموت قد يحدث نتيجة لـ:",
+                type: 'mc',
+                answers: [
+                    { text: "الكزاز (Tetany)", correct: false, rationale: "الكزاز يحدث إذا ارتفع الرقم الهيدروجيني إلى 7.8 (زيادة القاعدية - Alkalosis)." },
+                    { text: "الغيبوبة الحمضية (Acidosis)", correct: true, rationale: "عند درجة أقل من 7.0 يموت الإنسان نتيجة الغيبوبة الحمضية (Acidotic Coma)." },
+                    { text: "الوضع الطبيعي", correct: false, rationale: "المدى الطبيعي لدم الإنسان قريب جداً من 7.4." },
+                    { text: "فشل نظام الفوسفات", correct: false, rationale: "النتيجة السريرية المباشرة لانخفاض الـ pH الحاد (أقل من 7.0) هي الغيبوبة الحمضية." }
+                ]
+            },
+            // --- الفصل الثالث: الكربوهيدرات ---
+            {
+                question: "صح أم خطأ: السكر الذي يحتوي على مجموعة ألدهيد (CHO) يسمى كيتوز (Ketose).",
+                type: 'tf',
+                answers: [
+                    { text: "صح", correct: false, rationale: "السكر الذي يحتوي على مجموعة ألدهيد يسمى ألدوز (Aldose). السكر الذي يحتوي على مجموعة كيتون (C=O) يسمى كيتوز (Ketose)." },
+                    { text: "خطأ", correct: true, rationale: "السكر الذي يحتوي على مجموعة ألدهيد يسمى ألدوز (Aldose)، أما الكيتوز فيحتوي على مجموعة كيتون." }
+                ]
+            },
+            {
+                question: "لحساب عدد المتشابهات الفراغية ($2^n$) لسكر سداسي ألدوزي (Aldohexose)، كم تساوي 'n' (عدد ذرات الكربون غير المتماثلة)؟",
+                type: 'mc',
+                answers: [
+                    { text: "2", correct: false, rationale: "عدد ذرات الكربون غير المتماثلة في الألدوهكسوز هو 4 (نطرح ذرة الكربون الأولى C1 الألدهيدية والأخيرة C6)." },
+                    { text: "3", correct: false, rationale: "الرقم 3 هو عدد ذرات الكربون غير المتماثلة في الكيتوهكسوز (Ketohexose)." },
+                    { text: "4 (القاعدة: الألدوزي نطرح 2)", correct: true, rationale: "الألدوهكسوز (6 كربون) يحتوي على 4 ذرات كربون غير متماثلة (n=4)، لأن ذرة الكربون C1 (الألدهيد) و C6 (الكحول الأولي) متماثلة. (القاعدة: n = 6-2 = 4)." },
+                    { text: "6", correct: false, rationale: "الرقم 6 هو العدد الكلي لذرات الكربون، وليس عدد الذرات غير المتماثلة." }
+                ]
+            },
+            {
+                question: "لحساب عدد المتشابهات الفراغية ($2^n$) لسكر سداسي كيتوني (Ketohexose) مثل الفركتوز، كم تساوي 'n' (عدد ذرات الكربون غير المتماثلة)؟",
+                type: 'mc',
+                answers: [
+                    { text: "4", correct: false, rationale: "الرقم 4 هو عدد ذرات الكربون غير المتماثلة في الألدوهكسوز (Aldohexose)." },
+                    { text: "3 (القاعدة: الكيتوني نطرح 3)", correct: true, rationale: "الكيتوهكسوز (6 كربون) يحتوي على 3 ذرات كربون غير متماثلة (n=3)، لأن C1 (كحول أولي), C2 (الكيتون), و C6 (كحول أولي) تعتبر متماثلة. (القاعدة: n = 6-3 = 3)." },
+                    { text: "5", correct: false, rationale: "عدد ذرات الكربون غير المتماثلة هو 3 فقط (C3, C4, C5)." },
+                    { text: "6", correct: false, rationale: "الرقم 6 هو العدد الكلي لذرات الكربون." }
+                ]
+            },
+             {
+                question: "كم عدد المتشابهات الفراغية المحتملة لسكر سداسي ألدوزي (Aldohexose)؟",
+                type: 'mc',
+                answers: [
+                    { text: "8 ($2^3$)", correct: false, rationale: "عدد المتشابهات 8 هو للكيتوهكسوز (n=3)، بينما الألدوهكسوز له n=4." },
+                    { text: "16 ($2^4$)", correct: true, rationale: "الألدوهكسوز له 4 ذرات كربون غير متماثلة (n=4). وعليه، عدد المتشابهات الفراغية هو 2^n = 2^4 = 16." },
+                    { text: "4 ($2^2$)", correct: false, rationale: "عدد المتشابهات 4 هو للألدوتتروز (n=2)." },
+                    { text: "32 ($2^5$)", correct: false, rationale: "الألدوهكسوز له 4 ذرات كربون غير متماثلة فقط." }
+                ]
+            },
+            {
+                question: "ما هو نوع التشابه الفراغي بين D-Glucose و D-Galactose؟",
+                type: 'mc',
+                answers: [
+                    { text: "إبيمرات (Epimers) عند C2", correct: false, rationale: "التشابه بين D-Glucose و D-Mannose هو إبيمر عند C2." },
+                    { text: "إبيمرات (Epimers) عند C4", correct: true, rationale: "D-جلوكوز و D-جلاكتوز هما إبيمرات (epimers) فيما يتعلق بذرة الكربون رقم 4، حيث يختلفان فقط في الترتيب الفراغي حول هذه الذرة." },
+                    { text: "أنومرات (Anomers)", correct: false, rationale: "الأنومرات (ألفا وبيتا) تصف الاختلاف حول ذرة الكربون الأنوميرية (C1) بعد تكوين الحلقة." },
+                    { text: "صور متماثلة (Enantiomers)", correct: false, rationale: "الصور المتماثلة (مثل D-Glucose و L-Glucose) تكون صورة مرآة لبعضها عند *كل* ذرات الكربون غير المتماثلة." }
+                ]
+            },
+            {
+                question: "في الشكل الحلقي (Pyranose) لسكر الجلوكوز، ما الذي يحدد ما إذا كان السكر $\\alpha$ (ألفا) أو $\\beta$ (بيتا)؟",
+                type: 'mc',
+                answers: [
+                    { text: "اتجاه مجموعة الهيدروكسيل (OH) على ذرة الكربون الأنوميرية (C1)", correct: true, rationale: "يتم تحديد ألفا وبيتا بناءً على اتجاه مجموعة الهيدروكسيل (OH) على ذرة الكربون رقم 1 (الكربون الأنومرية). إذا كانت (OH) إلى أسفل يكون ألفا (α)، وإذا كانت إلى أعلى يكون بيتا (β)." },
+                    { text: "اتجاه مجموعة (OH) على ذرة الكربون C4", correct: false, rationale: "الاختلاف عند C4 يحدد الإبيمر (مثل الجلوكوز والجلاكتوز)، وليس الأنومر (ألفا أو بيتا)." },
+                    { text: "اتجاه مجموعة (OH) على ذرة الكربون ما قبل الأخيرة (C5)", correct: false, rationale: "الاختلاف عند C5 (في السلسلة المفتوحة) يحدد ما إذا كان السكر D أو L." },
+                    { text: "ما إذا كان السكر سداسي (Pyranose) أو خماسي (Furanose)", correct: false, rationale: "نوع الحلقة (بيرانوز أو فيورانوز) يحدد حجمها، ولكل منهما يمكن أن يوجد في شكلي ألفا وبيتا." }
+                ]
+            },
+            {
+                question: "صح أم خطأ: في سكر الفركتوز الحلقي (Furanose or Pyranose)، تعتبر ذرة الكربون رقم 2 (C2) هي ذرة الكربون الأنوميرية.",
+                type: 'tf',
+                answers: [
+                    { text: "صح", correct: true, rationale: "لأن الفركتوز سكر كيتوني، فإن مجموعة الكيتون (C2) هي التي تتفاعل لتكوين الحلقة، وتصبح هي ذرة الكربون الأنوميرية." },
+                    { text: "خطأ", correct: false, rationale: "ذرة الكربون C1 هي الذرة الأنوميرية في السكريات الألدوزية (مثل الجلوكوز)، أما في الكيتوزية (مثل الفركتوز) فهي C2." }
+                ]
+            },
+            {
+                question: "يتكون سكر السكروز (سكر المائدة) من ارتباط جزيئي...",
+                type: 'mc',
+                answers: [
+                    { text: "$\\alpha$-جلوكوز و $\\alpha$-جلوكوز", correct: false, rationale: "هذا هو تركيب سكر المالتوز (سكر الشعير)." },
+                    { text: "$\\beta$-جلوكوز و $\\beta$-جالاكتوز", correct: false, rationale: "هذا هو تركيب سكر اللاكتوز (سكر الحليب)." },
+                    { text: "$\\alpha$-جلوكوز و $\\beta$-فركتوز", correct: true, rationale: "يتكون سكر السكروز من ارتباط جزيء α-جلوكوز و β-فركتوز." },
+                    { text: "$\\beta$-فركتوز و $\\beta$-فركتوز", correct: false, rationale: "هذا هو أساس سكر الإنيولين (سكر عديد)، وليس السكروز (سكر ثنائي)." }
+                ]
+            },
+            {
+                question: "ما هي نوع الرابطة الجلايكوسيدية في سكر اللاكتوز (سكر الحليب)؟",
+                type: 'mc',
+                answers: [
+                    { text: "$\\alpha-1\\rightarrow4$", correct: false, rationale: "هذه هي الرابطة الموجودة في سكر المالتوز وسلاسل الأميلوز المستقيمة في النشا." },
+                    { text: "$\\beta-1\\rightarrow4$", correct: true, rationale: "يتكون اللاكتوز من ارتباط β-جالاكتوز مع جلوكوز برابطة جلايكوسيدية نوع β-1→4." },
+                    { text: "$\\alpha-1\\rightarrow2$", correct: false, rationale: "هذه هي الرابطة المميزة لسكر السكروز (بين الجلوكوز والفركتوز)." },
+                    { text: "$\\alpha-1\\rightarrow6$", correct: false, rationale: "هذه هي الرابطة الموجودة عند نقاط التفرع في الأميلوبكتين والجلايكوجين." }
+                ]
+            },
+            {
+                question: "صح أم خطأ: سكر السكروز يعتبر سكراً مختزلاً.",
+                type: 'tf',
+                answers: [
+                    { text: "صح", correct: false, rationale: "السكروز سكر غير مختزل، وذلك لعدم وجود مجموعة ألدهيدية حرة. ذرات الكربون الأنوميرية (C1 في الجلوكوز و C2 في الفركتوز) كلاهما مشارك في الرابطة." },
+                    { text: "خطأ", correct: true, rationale: "السكروز هو سكر غير مختزل. السكريات المختزلة (مثل المالتوز واللاكتوز) يجب أن تحتوي على مجموعة ألدهid حرة (ذرة كربون أنوميرية غير مرتبطة)." }
+                ]
+            },
+            {
+                question: "أي من السكريات العديدة التالية يعتبر \"غير متجانس\" (Heterogeneous)؟",
+                type: 'mc',
+                answers: [
+                    { text: "النشا", correct: false, rationale: "النشا سكر عديد متجانس، لأنه يعطي نفس النوع من السكر (جلوكوز) عند تحلله." },
+                    { text: "السيليلوز", correct: false, rationale: "السيليلوز سكر عديد متجانس، يتكون فقط من وحدات β-جلوكوز." },
+                    { text: "الجلايكوجين", correct: false, rationale: "الجلايكوجين سكر عديد متجانس، يتكون فقط من وحدات α-جلوكوز." },
+                    { text: "حمض الهايلويورونك", correct: true, rationale: "السكريات العديدة غير المتجانسة تعطي أكثر من نوع من السكر عند تحللها. حمض الهايلويورونك غير متجانس لأنه يتكون من وحدات متكررة من (Glucuronic Acid) و (N-Acetyl-D-glucosamine)." }
+                ]
+            },
+            {
+                question: "ما هي الوحدة البنائية الأساسية ونوع الرابطة في السيليلوز (Cellulose)؟",
+                type: 'mc',
+                answers: [
+                    { text: "$\\alpha$-جلوكوز ، ورابطة $\\alpha-1\\rightarrow4$", correct: false, rationale: "هذا هو تركيب الأميلوز (الجزء المستقيم من النشا)." },
+                    { text: "$\\beta$-جلوكوز ، ورابطة $\\beta-1\\rightarrow4$", correct: true, rationale: "يتكون السيليلوز من سلاسل مستقيمة غير متفرعة ناتجة من ارتباط وحدات β-جلوكوز بروابط β-1→4 جلايكوسيدية." },
+                    { text: "$\\alpha$-جلوكوز ، وروابط $\\alpha-1\\rightarrow4$ و $\\alpha-1\\rightarrow6$", correct: false, rationale: "هذا هو تركيب الأميلوبكتين (الجزء المتفرع من النشا) والجلايكوجين." },
+                    { text: "$\\beta$-فركتوز ، ورابطة $\\beta-1\\rightarrow2$", correct: false, rationale: "هذا هو تركيب سكر الإنيولين." }
+                ]
+            },
+            {
+                question: "ما هو السكر العديد (المتجانس) الذي يخزن في الكبد والعضلات في الحيوانات ويعتبر أكثر تفرعاً من الأميلوبكتين؟",
+                type: 'mc',
+                answers: [
+                    { text: "النشا", correct: false, rationale: "النشا هو سكر التخزين في النباتات." },
+                    { text: "السيليلوز", correct: false, rationale: "السيليلوز هو سكر تركيبي (بنائي) في جدار الخلية النباتية." },
+                    { text: "الجلايكوجين", correct: true, rationale: "الجلايكوجين هو سكر التخزين الحيواني (في الكبد والعضلات)، ويشبه الأميلوبكتين لكنه يكون أكثر تفرعاً." },
+                    { text: "الكيتين", correct: false, rationale: "الكيتين سكر تركيبي في الهيكل الخارجي للافقاريات." }
+                ]
             }
+        ];
 
-            // تعطيل جميع خيارات الإجابة بعد الانتهاء
-            allInputs.forEach(input => {
-                input.disabled = true;
+        const questionElement = document.getElementById('question-text');
+        const questionCounterElement = document.getElementById('question-counter');
+        const answerButtonsElement = document.getElementById('answer-buttons');
+        const nextButton = document.getElementById('next-btn');
+        const quizContentElement = document.getElementById('quiz-content');
+        const scoreContainerElement = document.getElementById('score-container');
+        const rationaleElement = document.getElementById('rationale-text');
+
+        let shuffledQuestions, currentQuestionIndex;
+        let score = 0;
+        let userAnswers = []; // <-- متغير جديد لتخزين إجابات المستخدم
+
+        function startQuiz() {
+            shuffledQuestions = questions.sort(() => Math.random() - 0.5);
+            currentQuestionIndex = 0;
+            score = 0;
+            userAnswers = []; // <-- إعادة تعيين مصفوفة الإجابات
+            quizContentElement.classList.remove('hide');
+            scoreContainerElement.innerHTML = ''; // <-- مسح النتائج والمراجعة القديمة
+            scoreContainerElement.classList.add('hide');
+            nextButton.classList.add('hide');
+            showQuestion(shuffledQuestions[currentQuestionIndex]);
+        }
+
+        function showQuestion(question) {
+            resetState();
+            questionCounterElement.innerText = `السؤال ${currentQuestionIndex + 1} من ${questions.length}`;
+            questionElement.innerText = question.question;
+            
+            question.answers.forEach(answer => {
+                const button = document.createElement('button');
+                button.innerText = answer.text;
+                button.classList.add('btn');
+                button.dataset.correct = answer.correct;
+                // سنحتاج للوصول إلى التعليل الصحيح لاحقاً
+                button.addEventListener('click', selectAnswer);
+                answerButtonsElement.appendChild(button);
+            });
+        }
+
+        function resetState() {
+            nextButton.classList.add('hide');
+            rationaleElement.style.display = 'none';
+            rationaleElement.classList.remove('correct', 'incorrect');
+            while (answerButtonsElement.firstChild) {
+                answerButtonsElement.removeChild(answerButtonsElement.firstChild);
+            }
+        }
+
+        function selectAnswer(e) {
+            const selectedButton = e.target;
+            const isCorrect = selectedButton.dataset.correct === 'true';
+            const currentQuestion = shuffledQuestions[currentQuestionIndex];
+            const correctAnswer = currentQuestion.answers.find(ans => ans.correct === true);
+
+            // إظهار التعليل الصحيح دائماً
+            if (isCorrect) {
+                score++;
+                rationaleElement.classList.add('correct');
+                rationaleElement.innerHTML = `<strong>أحسنت!</strong> ${correctAnswer.rationale}`;
+            } else {
+                rationaleElement.classList.add('incorrect');
+                rationaleElement.innerHTML = `<strong>خطأ. الشرح:</strong> ${correctAnswer.rationale}`;
+            }
+            
+            rationaleElement.style.display = 'block';
+
+            // تخزين الإجابة للمراجعة
+            userAnswers.push({
+                questionText: currentQuestion.question,
+                selectedAnswer: selectedButton.innerText,
+                correctAnswer: correctAnswer.text,
+                rationale: correctAnswer.rationale,
+                isCorrect: isCorrect
             });
 
-            // إظهار النتيجة
-            scoreText.textContent = `نتيجتك: ${score} من ${totalQuestions}`;
-            resultsContainer.style.display = 'block';
+            // تعطيل الأزرار
+            Array.from(answerButtonsElement.children).forEach(button => {
+                setStatusClass(button, button.dataset.correct === 'true');
+                button.disabled = true;
+            });
 
-            // الانتقال إلى أعلى الصفحة لإظهار النتيجة
-            window.scrollTo({ top: 0, behavior: 'smooth' });
+            // إظهار زر "التالي"
+            if (shuffledQuestions.length > currentQuestionIndex + 1) {
+                nextButton.innerText = 'السؤال التالي';
+            } else {
+                nextButton.innerText = 'إظهار النتيجة والمراجعة';
+            }
+            nextButton.classList.remove('hide');
+        }
 
-            // إخفاء زر الإرسال
-            quizForm.querySelector('.submit-btn').style.display = 'none';
-        });
+        function setStatusClass(element, correct) {
+            clearStatusClass(element);
+            if (correct) {
+                element.classList.add('correct');
+            } else {
+                element.classList.add('incorrect');
+            }
+        }
 
+        function clearStatusClass(element) {
+            element.classList.remove('correct');
+            element.classList.remove('incorrect');
+        }
+
+        function handleNextButton() {
+            currentQuestionIndex++;
+            if (shuffledQuestions.length > currentQuestionIndex) {
+                showQuestion(shuffledQuestions[currentQuestionIndex]);
+            } else {
+                showScoreAndReview();
+            }
+        }
+
+        function showScoreAndReview() {
+            quizContentElement.classList.add('hide');
+            scoreContainerElement.classList.remove('hide');
+            
+            // 1. عرض النتيجة
+            let scoreHTML = `
+                <h2>النتيجة النهائية</h2>
+                <p>لقد أجبت بشكل صحيح على ${score} من أصل ${questions.length} سؤال.</p>
+            `;
+            
+            // 2. إنشاء حاوية المراجعة
+            let reviewHTML = '<div id="review-container"><h2>مراجعة الاختبار</h2>';
+            
+            userAnswers.forEach((answer, index) => {
+                reviewHTML += `
+                    <div class="review-question">
+                        <h4>السؤال ${index + 1}: ${answer.questionText}</h4>
+                        <p class="user-answer">
+                            <strong>إجابتك:</strong> ${answer.selectedAnswer} 
+                            ${answer.isCorrect 
+                                ? '<span class="correct-text">(صحيحة)</span>' 
+                                : '<span class="incorrect-text">(خاطئة)</span>'}
+                        </p>
+                        ${!answer.isCorrect 
+                            ? `<p class="correct-answer"><strong>الإجابة الصحيحة:</strong> ${answer.correctAnswer}</p>` 
+                            : ''}
+                        <p class="review-rationale"><strong>الشرح:</strong> ${answer.rationale}</p>
+                    </div>
+                `;
+            });
+            
+            reviewHTML += '</div>';
+            
+            // 3. إنشاء زر إعادة الاختبار
+            const restartButtonHTML = `
+                <button class="btn" onclick="startQuiz()" style="margin-top: 20px; background-color: var(--primary-color); color: white; border: none;">
+                    إعادة الاختبار
+                </button>
+            `;
+
+            // 4. تجميع كل شيء وعرضه
+            scoreContainerElement.innerHTML = scoreHTML + reviewHTML + restartButtonHTML;
+        }
+
+        nextButton.addEventListener('click', handleNextButton);
+
+        // بدء الاختبار عند تحميل الصفحة
+        startQuiz();
     </script>
 </body>
 </html>
