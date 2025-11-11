@@ -3,12 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ملخص مواد الاختبار</title>
+    <title>ملخص مواد الاختبار (تصميم مضغوط)</title>
     <style>
         /* --- إعدادات أساسية --- */
         body {
             font-family: 'Tahoma', 'Helvetica Neue', Helvetica, Arial, sans-serif;
-            line-height: 1.8;
+            line-height: 1.7; /* تقليل تباعد الأسطر قليلاً */
             background-color: #f4f7f6;
             color: #333;
             margin: 0;
@@ -30,71 +30,72 @@
             margin-bottom: 30px;
             border-bottom: 3px solid #3498db;
             padding-bottom: 10px;
-            font-size: 2.5em;
+            font-size: 2.2em; /* تصغير طفيف */
         }
 
-        /* --- بطاقة المادة (التصميم الاحترافي) --- */
+        /* --- بطاقة المادة (تصميم مضغوط ومحسن) --- */
         .article-card {
             background-color: #ffffff;
-            border: 1px solid #ddd;
-            border-radius: 10px;
-            padding: 25px;
-            margin-bottom: 25px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            border: 1px solid #e0e0e0; /* حد أنعم */
+            border-radius: 8px; /* تقليل الحواف */
+            padding: 20px; /* تقليل الحشو الداخلي */
+            margin-bottom: 20px; /* تقليل المسافة بين البطاقات */
+            box-shadow: 0 3px 8px rgba(0, 0, 0, 0.04);
             transition: box-shadow 0.3s ease;
         }
 
         .article-card:hover {
-            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
+            box-shadow: 0 5px 12px rgba(0, 0, 0, 0.07);
         }
 
-        /* --- عنوان المادة (مثل: المادة السابعة والستون) --- */
+        /* --- عنوان المادة (تصميم محسن) --- */
         h2 {
             color: #3498db;
             margin-top: 0;
-            margin-bottom: 20px;
-            font-size: 1.8em;
-            border-bottom: 1px solid #eee;
-            padding-bottom: 10px;
+            margin-bottom: 15px; /* تقليل المسافة بعد العنوان */
+            font-size: 1.6em; /* تصغير العنوان */
+            border-bottom: 2px solid #3498db; /* خط سفلي أوضح */
+            padding-bottom: 8px; /* تقليل الحشو */
         }
 
         /* --- نص المادة --- */
         p {
-            font-size: 1.1em;
-            margin-bottom: 15px;
+            font-size: 1.0em; /* تصغير الخط الأساسي (مهم لتقليل الصفحات) */
+            margin-bottom: 12px;
         }
 
         /* --- القوائم المرقمة وغير المرقمة --- */
         ul, ol {
-            padding-right: 25px;
-            font-size: 1.1em;
+            padding-right: 20px; /* تقليل المسافة البادئة */
+            font-size: 1.0em; /* توحيد حجم الخط */
         }
 
         li {
-            margin-bottom: 10px;
+            margin-bottom: 8px; /* تقليل المسافة بين النقاط */
         }
 
         /* --- تنسيق خاص لملاحظة "باختصار" --- */
         .summary-note {
             background: #eef7ff;
-            border-right: 5px solid #3498db;
-            padding: 15px 20px;
-            margin-top: 20px;
-            border-radius: 5px;
+            border-right: 4px solid #3498db;
+            padding: 12px 15px;
+            margin-top: 15px;
+            border-radius: 4px;
         }
 
         .summary-note h4 {
             margin-top: 0;
-            font-size: 1.2em;
+            font-size: 1.1em;
             color: #2c3e50;
         }
 
-        /* --- تنسيقات للطباعة (للحفظ كـ PDF) --- */
+        /* --- تنسيقات للطباعة (مضغوطة جداً لتقليل الصفحات) --- */
         @media print {
             body {
-                background-color: #ffffff; /* خلفية بيضاء للطباعة */
-                font-family: 'Times New Roman', Times, serif; /* خط أوضح للطباعة */
+                background-color: #ffffff;
+                font-family: 'Times New Roman', Times, serif;
                 color: #000;
+                line-height: 1.5; /* تقليل تباعد الأسطر للطباعة */
             }
 
             .container {
@@ -104,38 +105,38 @@
             }
 
             h1 {
-                font-size: 24pt;
+                font-size: 22pt; /* تصغير طفيف */
                 border-bottom: 2px solid #000;
             }
 
             h2 {
-                font-size: 18pt;
+                font-size: 16pt; /* (كان 18pt) تصغير لتقليل المساحة */
                 color: #000;
-                border-bottom: 1px solid #aaa;
-                /* ضمان عدم انقسام البطاقة بين صفحتين */
+                border-bottom: 1px solid #888;
+                padding-bottom: 5px; /* تقليل */
+                margin-bottom: 10px; /* تقليل */
                 page-break-after: avoid; 
             }
 
             p, li {
-                font-size: 14pt;
-                line-height: 1.6;
+                font-size: 12pt; /* (كان 14pt) هذا هو التعديل الأهم لتقليل عدد الصفحات */
+                line-height: 1.5;
             }
             
-            /* إزالة الظل والحدود الملونة للطباعة */
             .article-card {
                 box-shadow: none;
-                border: 1px solid #ccc;
-                margin-bottom: 20px;
-                /* ضمان عدم انقسام البطاقة بين صفحتين */
+                border: 1px solid #bbb;
+                margin-bottom: 15px; /* تقليل المسافة بين البطاقات في الطباعة */
+                padding: 15px; /* تقليل الحشو في الطباعة */
                 page-break-inside: avoid; 
             }
 
             .summary-note {
                 background: #f0f0f0;
                 border-right: 3px solid #888;
+                padding: 10px;
             }
 
-            /* إخفاء أي عناصر غير مرغوب فيها عند الطباعة */
             .no-print {
                 display: none;
             }
@@ -145,7 +146,7 @@
 <body>
 
     <div class="container">
-        <h1>ملخص مواد الأحوال الشخصية</h1>
+        
 
         <div class="article-card">
             <h2>المادة السابعة والستون</h2>
