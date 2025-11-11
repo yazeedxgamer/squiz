@@ -3,949 +3,643 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>اختبارات الكيمياء الحيوية</title>
+    <title>ملخص مواد الاختبار</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700&display=swap');
-
-        :root {
-            --primary-color: #0056b3; /* أزرق داكن */
-            --secondary-color: #f4f4f4; /* رمادي فاتح للخلفية */
-            --correct-color: #28a745; /* أخضر */
-            --incorrect-color: #dc3545; /* أحمر */
-            --text-color: #333;
-            --container-bg: #ffffff;
-            --border-radius: 10px;
-            --box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-        }
-
-        * {
-            box-sizing: border-box;
+        /* --- إعدادات أساسية --- */
+        body {
+            font-family: 'Tahoma', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            line-height: 1.8;
+            background-color: #f4f7f6;
+            color: #333;
             margin: 0;
             padding: 0;
+            direction: rtl;
         }
 
-        body {
-            font-family: 'Tajawal', sans-serif;
-            background-color: var(--secondary-color);
-            color: var(--text-color);
-            display: flex;
-            justify-content: center;
-            align-items: flex-start;
-            min-height: 100vh;
+        /* --- الحاوية الرئيسية --- */
+        .container {
+            max-width: 900px;
+            margin: 20px auto;
             padding: 20px;
         }
 
+        /* --- عنوان الملخص --- */
         h1 {
-            color: var(--primary-color);
             text-align: center;
-            margin-bottom: 25px;
-            font-size: 2.5rem;
+            color: #2c3e50;
+            margin-bottom: 30px;
+            border-bottom: 3px solid #3498db;
+            padding-bottom: 10px;
+            font-size: 2.5em;
         }
 
-        /* --- حاويات الأقسام --- */
-        .main-container {
-            background-color: var(--container-bg);
-            border-radius: var(--border-radius);
-            box-shadow: var(--box-shadow);
-            width: 100%;
-            max-width: 800px;
-            overflow: hidden;
-        }
-
-        /* --- تصميم المنيو --- */
-        #menu-container {
-            padding: 40px;
-            text-align: center;
-        }
-
-        .menu-btn {
-            font-family: 'Tajawal', sans-serif;
-            background-color: var(--primary-color);
-            color: white;
-            border: none;
-            border-radius: var(--border-radius);
-            padding: 20px 40px;
-            font-size: 1.3rem;
-            font-weight: 700;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            width: 100%;
-            margin-bottom: 20px;
-        }
-
-        .menu-btn:hover {
-            background-color: #004494;
-            transform: translateY(-2px);
-            box-shadow: 0 6px 15px rgba(0, 86, 179, 0.2);
-        }
-
-        /* --- تصميم الاختبار --- */
-        .quiz-header {
-            padding: 20px 25px;
-            background-color: #f9f9f9;
-            border-bottom: 1px solid #eee;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        
-        #question-counter {
-            font-size: 1rem;
-            color: #777;
-        }
-
-        .back-btn {
-            font-family: 'Tajawal', sans-serif;
-            background-color: #6c757d;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            padding: 5px 12px;
-            font-size: 0.9rem;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-        }
-        .back-btn:hover {
-            background-color: #5a6268;
-        }
-
-        #question-text {
-            font-size: 1.4rem;
-            font-weight: 500;
-            line-height: 1.6;
-            min-height: 60px;
-            text-align: center; /* توسيط السؤال والصورة */
-            padding: 25px;
-        }
-        
-        #question-text img {
-            max-width: 100%;
-            height: auto;
-            max-height: 300px;
-            border-radius: 8px;
-            margin-bottom: 15px;
+        /* --- بطاقة المادة (التصميم الاحترافي) --- */
+        .article-card {
+            background-color: #ffffff;
             border: 1px solid #ddd;
-        }
-
-        .quiz-body {
-            padding: 25px;
-        }
-
-        .btn-grid {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 15px;
-            margin-top: 20px;
-        }
-
-        .btn {
-            font-family: 'Tajawal', sans-serif;
-            background-color: var(--container-bg);
-            border: 2px solid #ddd;
-            border-radius: var(--border-radius);
-            padding: 15px;
-            font-size: 1.1rem;
-            text-align: right;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .btn:hover:not(:disabled) {
-            background-color: #f0f0f0;
-            border-color: var(--primary-color);
-        }
-
-        .btn.correct {
-            background-color: #e6f7ec;
-            border-color: var(--correct-color);
-            color: var(--correct-color);
-            font-weight: 700;
-        }
-
-        .btn.incorrect {
-            background-color: #fdedee;
-            border-color: var(--incorrect-color);
-            color: var(--incorrect-color);
-        }
-
-        .btn:disabled {
-            cursor: not-allowed;
-            opacity: 0.8;
-        }
-
-        .rationale {
-            font-size: 1.1rem;
-            margin-top: 20px;
-            padding: 20px;
-            border-radius: var(--border-radius);
-            background-color: #f9f9f9;
-            border: 1px solid #eee;
-            line-height: 1.8;
-            display: none; /* مخفي افتراضيًا */
-        }
-        
-        .rationale.correct {
-            border-left: 5px solid var(--correct-color);
-        }
-
-        .rationale.incorrect {
-            border-left: 5px solid var(--incorrect-color);
-        }
-        
-        .encouragement {
-            font-weight: 700;
-            color: var(--primary-color);
-            display: block;
-            margin-bottom: 15px;
-            font-size: 1.2rem;
-            border-bottom: 1px solid #eee;
-            padding-bottom: 15px;
-        }
-        
-        .rationale strong {
-            color: #333; /* لون "الشرح:" */
-        }
-
-        .controls {
-            padding: 25px;
-            display: flex;
-            justify-content: center;
-            border-top: 1px solid #eee;
-        }
-
-        #next-btn {
-            font-family: 'Tajawal', sans-serif;
-            background-color: var(--primary-color);
-            color: white;
-            border: none;
-            border-radius: var(--border-radius);
-            padding: 12px 35px;
-            font-size: 1.1rem;
-            font-weight: 700;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-        }
-
-        #next-btn:hover {
-            background-color: #004494;
-        }
-
-        /* --- تصميم صفحة النتيجة والمراجعة --- */
-        .score-container {
-            padding: 40px;
-            text-align: center;
-            font-size: 1.5rem;
-        }
-        
-        .score-container h2 {
-            font-size: 2.2rem;
-            color: var(--primary-color);
-            margin-bottom: 20px;
-        }
-        
-        #review-container h2 {
-            text-align: center;
-            color: var(--primary-color);
-            margin-top: 30px;
-            margin-bottom: 20px;
-            font-size: 1.8rem;
-            border-top: 1px solid #eee;
-            padding-top: 25px;
-        }
-        
-        .review-question {
-            text-align: right;
-            margin-bottom: 25px;
-            padding-bottom: 15px;
-            border-bottom: 1px solid #eee;
-        }
-        
-        .review-question:last-of-type {
-            border-bottom: none;
-        }
-        
-        .review-question h4 {
-            font-size: 1.2rem;
-            color: var(--primary-color);
-            margin-bottom: 10px;
-            line-height: 1.6;
-        }
-        
-        .review-question img {
-            max-width: 100%;
-            max-height: 200px;
-            border-radius: 5px;
-            margin-bottom: 10px;
-        }
-        
-        .user-answer, .correct-answer, .review-rationale {
-            font-size: 1rem;
-            margin-bottom: 8px;
-            line-height: 1.6;
-        }
-        
-        .user-answer span.correct-text {
-            color: var(--correct-color);
-            font-weight: 700;
-        }
-        
-        .user-answer span.incorrect-text {
-            color: var(--incorrect-color);
-            font-weight: 700;
-        }
-        
-        .correct-answer {
-            background-color: #e6f7ec;
-            padding: 5px 10px;
-            border-radius: 5px;
-            border-right: 4px solid var(--correct-color);
-        }
-        
-        .review-rationale {
-            background-color: #f9f9f9;
-            padding: 10px;
-            border-radius: 5px;
-        }
-        
-        .final-promo {
-            font-size: 1.2rem;
-            color: #555;
-            margin-top: 30px;
-            padding: 20px;
-            background: #f9f9f9;
             border-radius: 10px;
-            border: 1px dashed var(--primary-color);
-            line-height: 1.8;
-        }
-        
-        .back-to-menu-btn {
-            margin-top: 20px;
-            background-color: #6c757d;
+            padding: 25px;
+            margin-bottom: 25px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            transition: box-shadow 0.3s ease;
         }
 
-        .hide {
-            display: none;
+        .article-card:hover {
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
+        }
+
+        /* --- عنوان المادة (مثل: المادة السابعة والستون) --- */
+        h2 {
+            color: #3498db;
+            margin-top: 0;
+            margin-bottom: 20px;
+            font-size: 1.8em;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 10px;
+        }
+
+        /* --- نص المادة --- */
+        p {
+            font-size: 1.1em;
+            margin-bottom: 15px;
+        }
+
+        /* --- القوائم المرقمة وغير المرقمة --- */
+        ul, ol {
+            padding-right: 25px;
+            font-size: 1.1em;
+        }
+
+        li {
+            margin-bottom: 10px;
+        }
+
+        /* --- تنسيق خاص لملاحظة "باختصار" --- */
+        .summary-note {
+            background: #eef7ff;
+            border-right: 5px solid #3498db;
+            padding: 15px 20px;
+            margin-top: 20px;
+            border-radius: 5px;
+        }
+
+        .summary-note h4 {
+            margin-top: 0;
+            font-size: 1.2em;
+            color: #2c3e50;
+        }
+
+        /* --- تنسيقات للطباعة (للحفظ كـ PDF) --- */
+        @media print {
+            body {
+                background-color: #ffffff; /* خلفية بيضاء للطباعة */
+                font-family: 'Times New Roman', Times, serif; /* خط أوضح للطباعة */
+                color: #000;
+            }
+
+            .container {
+                max-width: 100%;
+                margin: 0;
+                padding: 0;
+            }
+
+            h1 {
+                font-size: 24pt;
+                border-bottom: 2px solid #000;
+            }
+
+            h2 {
+                font-size: 18pt;
+                color: #000;
+                border-bottom: 1px solid #aaa;
+                /* ضمان عدم انقسام البطاقة بين صفحتين */
+                page-break-after: avoid; 
+            }
+
+            p, li {
+                font-size: 14pt;
+                line-height: 1.6;
+            }
+            
+            /* إزالة الظل والحدود الملونة للطباعة */
+            .article-card {
+                box-shadow: none;
+                border: 1px solid #ccc;
+                margin-bottom: 20px;
+                /* ضمان عدم انقسام البطاقة بين صفحتين */
+                page-break-inside: avoid; 
+            }
+
+            .summary-note {
+                background: #f0f0f0;
+                border-right: 3px solid #888;
+            }
+
+            /* إخفاء أي عناصر غير مرغوب فيها عند الطباعة */
+            .no-print {
+                display: none;
+            }
         }
     </style>
 </head>
 <body>
 
-    <div class="main-container">
-        
-        <div id="menu-container">
-            <h1>اختر الاختبار</h1>
-            <button id="start-quiz-1" class="menu-btn">اختبار الكيمياء الحيوية (باقي الاسئلة)</button>
-            <button id="start-quiz-2" class="menu-btn">اختبار عضيات الخلية</button>
+    <div class="container">
+        <h1>ملخص مواد الأحوال الشخصية</h1>
+
+        <div class="article-card">
+            <h2>المادة السابعة والستون</h2>
+            <p>لا يثبت نسب الولد إلا بعقد زواج صحيح، أو بالإقرار، أو بالبينة.</p>
+            <p>يثبت نسب الولد إلى أمه بواسطة ولادتها له.</p>
         </div>
 
-        <div id="quiz-content" class="hide">
-            <div class="quiz-header">
-                <button class="back-btn" onclick="showMenu()">رجوع للقائمة</button>
-                <div id="question-counter"></div>
-            </div>
-            
-            <div id="question-text">...</div>
-            
-            <div class="quiz-body">
-                <div id="answer-buttons" class="btn-grid">
-                    </div>
-                <div id="rationale-text" class="rationale"></div>
-            </div>
+        <div class="article-card">
+            <h2>المادة الثامنة والستون</h2>
+            <p>يثبت نسب الولد لأبيه إذا ولد أثناء عقد الزواج الصحيح أو بعده بفترة تقل عن مدة أقصى الحمل.</p>
+            <p>حددت مدة أقصى الحمل بعشرة أشهر، وللمحكمة أن تحكم بخلاف ذلك بناء على تقرير طبي.</p>
+        </div>
 
-            <div class="controls">
-                <button id="next-btn" class="hide">التالي</button>
+        <div class="article-card">
+            <h2>المادة التاسعة والستون</h2>
+            <p>تحدد شروط إثبات النسب بالإقرار حتى على فراش الموت، ومنها:</p>
+            <ul>
+                <li>أن يكون المقر عاقلاً بالغاً.</li>
+                <li>أن يكون الولد مجهول النسب.</li>
+                <li>أن تكون هناك مناسبة في السن بين المقر والولد تسمح بصدق الإقرار.</li>
+                <li>إذا كان الإقرار من الأب، يجب إثبات أن الوالدة كانت في عقد زواج (صحيح أو فاسد).</li>
+                <li>إثبات الاتصال بفحص الحمض النووي (البصمة الوراثية).</li>
+            </ul>
+        </div>
+
+        <div class="article-card">
+            <h2>المادة السبعون</h2>
+            <p>للمحكمة في أحوال استثنائية، أو عند التنازع على نسب ولد، أن تأمر بإجراء فحص الحمض النووي وفق الضوابط النظامية.</p>
+            <p>لا تعتمد المحكمة على نتيجة الفحص إلا بعد التحقق من أن الولد مجهول النسب، وأن فارق السن يحتمل نسبة الولد.</p>
+        </div>
+
+        <div class="article-card">
+            <h2>المادة الحادية والسبعون</h2>
+            <p>إذا كان الأب متوفى، يثبت نسب الولد من زوجها الحالي أو السابق عن طريق الإقرار (مع شروط المادة (69)) أو عن طريق البينة (الإثبات) بأن الولادة كانت خلال عقد زواج صحيح أو فاسد.</p>
+        </div>
+
+        <div class="article-card">
+            <h2>المادة الثانية والسبعون</h2>
+            <p>إذا ثبت النسب وأدرج في السجلات الرسمية (التسجيل)، فلا تقبل الدعوى أو المطالبة بإلغائه.</p>
+        </div>
+
+        <div class="article-card">
+            <h2>المادة الثالثة والسبعون</h2>
+            <p>في الحالات التي يثبت فيها النسب بالولادة خلال عقد الزواج، لا يجوز للرجل نفي نسب الولد إلا عن طريق اللعان (طريقة شرعية محددة)، بشرطين:</p>
+            <ol>
+                <li>أن يقدم الدعوى خلال خمسين يوماً من تاريخ علمه بالولادة.</li>
+                <li>ألا يكون قد أقر بنسب الولد سواء صراحة أو ضمناً.</li>
+            </ol>
+        </div>
+
+        <div class="article-card">
+            <h2>المادة الرابعة والسبعون</h2>
+            <p>إذا رفعت دعوى نفي النسب (اللعان)، تنظر المحكمة فيها بعد إجراء فحص الحمض النووي، بشرط موافقة الزوجة على إجراء الفحص.</p>
+            <p>إذا امتنعت الزوجة عن إجراء الفحص، تستكمل المحكمة النظر في الدعوى بدونه.</p>
+            <p>يتم إجراء اللعان أمام المحكمة بصيغة قسم محددة. إذا أدى الرجل القسم (حلف) وأنكر النسب، وامتنعت الزوجة عن أداء القسم المقابل، تحكم المحكمة بنفي النسب.</p>
+        </div>
+
+        <div class="article-card">
+            <h2>المادة الخامسة والسبعون</h2>
+            <p>يترتب على حكم اللعان - مع الأخذ في الاعتبار نتيجة فحص الحمض النووي وفقاً للمادة (74) - انتفاء ونفي نسب الولد.</p>
+            <p>ومع ذلك، يحتفظ النظام بحق الولد؛ فإذا أكذب الرجل نفسه لاحقاً (أي اعترف بأنه كذب في حلف اليمين أثناء اللعان)، يثبت نسب الولد إليه، حتى لو كان ذلك بعد صدور الحكم بنفي النسب. وبعد هذا الاعتراف، لا يُقبل منه الرجوع أو الإنكار مرة أخرى.</p>
+            
+            <div class="summary-note">
+                <h4>&lt;&lt; باختصار</h4>
+                <p><strong>نفي النسب:</strong> النتيجة الأساسية للعان.</p>
+                <p><strong>الاستثناء:</strong> إذا اعترف الأب لاحقاً بأنه كذب أثناء اللعان، فيثبت النسب ولا يُسمع له بعد ذلك.</p>
             </div>
         </div>
 
-        <div id="score-container" class="score-container hide">
-            </div>
-
-    </div>
-
-    <script>
-        // --- مصفوفة التعزيزات الفكاهية (مشتركة) ---
-        const encouragements = [
-            "كفووو! إجابة صحيحة! شكلك فاهم المادة... شرايك تفهّمني سناب iyz3d؟",
-            "وحش! صح عليك! العيال بالاستراحة ما يحلونها، بس أنت حليتها! شكلي بضيفك بسنابي iyz3d عشان أتعلم منك.",
-            "يا سلام! جوابك بطل! الذكاء هذا كله من وين؟ أكيد من متابعة سناب iyz3d!",
-            "خطير! جبتها صح! شكلك دافور الفصل. بالله علمني وش تسوي، شكلك تتابع iyz3d .",
-            "عين الله عليك! جواب ولا أروع! هذا وأنت ما بعد شفت ستريكاتي على سناب iyz3d.",
-            "صح! ما شاء الله تبارك الله. هذا الشغل العدل! تستاهل تضيفني على سناب iyz3d.",
-            "بطل! إجابتك 100%! لو فيه جائزة، أعطيك سنابي iyz3d هدية.",
-            "أيييوه! هذا الجواب اللي يفتح النفس! الذكاء هذا ذكرني بنفسي... ضيفني على سناب iyz3d وتصير مثلي."
-        ];
-
-        // --- أسئلة الاختبار الأول (الشامل) ---
-        const questionsQuiz1 = [
-            // الخلية
-            {
-                question: "ما هو الفرق الرئيسي في مادة DNA بين الخلايا بدائية النواة وحقيقية النواة؟",
-                answers: [
-                    { text: "في حقيقية النواة، يوجد DNA في النواة ومحاط بغشاء نووي، بينما في بدائية النواة يوجد في السيتوبلازم (منطقة النيوكليوتيد)", correct: true, rationale: "الخلايا حقيقية النواة تحتوي على نواة حقيقية بغشاء نووي، أما بدائية النواة فلا تحتوي غشاء نووي ويوجد DNA في السيتوبلازم." },
-                    { text: "في بدائية النواة، يوجد DNA في النواة، بينما في حقيقية النواة يوجد في السيتوبلازم", correct: false, rationale: "هذا عكس الواقع تماماً. الخلايا حقيقية النواة هي التي لها نواة حقيقية." },
-                    { text: "كلا النوعين لا يحتوي على غشاء نووي، لكن DNA في حقيقية النواة أكبر حجماً", correct: false, rationale: "الخلايا حقيقية النواة تمتلك غشاءً نووياً يحيط بالـ DNA." },
-                    { text: "الخلايا بدائية النواة لا تحتوي على DNA، فقط RNA", correct: false, rationale: "الخلايا بدائية النواة تحتوي على DNA، وهو يعمل كروموسوم واحد." }
-                ]
-            },
-            {
-                question: "صح أم خطأ: يتكون الغشاء البلازمي (الخلوي) بشكل أساسي من طبقة مزدوجة من الدهون الفوسفورية (Phospholipids).",
-                answers: [
-                    { text: "صح", correct: true, rationale: "يتكون الغشاء الخلوي من طبقة مزدوجة (Bilayer) من الدهون الفوسفورية، بالإضافة إلى البروتينات والكولسترول والكربوهيدرات." },
-                    { text: "خطأ", correct: false, rationale: "الغشاء الخلوي هو بالفعل طبقة مزدوجة (Bilayer) من الدهون الفوسفورية." }
-                ]
-            },
-            // الماء
-            {
-                question: "ما هو نظام التحكم (المحلول المنظم) الأساسي للرقم الهيدروجيني في بلازما الدم؟",
-                answers: [
-                    { text: "نظام الفوسفات", correct: false, rationale: "نظام الفوسفات هو أحد المنظمات الفسيولوجية الهامة، لكنه يعمل بشكل أساسي داخل الخلايا، بينما نظام البيكربونات هو الأساسي في بلازما الدم." },
-                    { text: "نظام الأسيتات", correct: false, rationale: "نظام الأسيتات (حمض الخليك وخلات الصوديوم) هو مثال على المحاليل المنظمة، ولكنه ليس المنظم الأساسي في دم الإنسان." },
-                    { text: "نظام البيكربونات", correct: true, rationale: "نظام التحكم الأساسي للرقم الهيدروجيني في بلازما الدم هو نظام البيكربونات، الذي يتألف من حمض الكربونيك (H₂CO₃) والبيكربونات (HCO₃⁻)." },
-                    { text: "حمض الهيدروكلوريك", correct: false, rationale: "حمض الهيدروكلوريك هو حمض قوي، وليس محلولاً منظماً." }
-                ]
-            },
-            {
-                question: "عند دخول مادة قاعدية إلى الدم، ماذا يحدث لنظام البيكربونات المنظم؟",
-                answers: [
-                    { text: "يتفاعل حمض الكربونيك (H₂CO₃) معها وتزداد كمية البيكربونات (HCO₃⁻)", correct: true, rationale: "عند دخول مادة قاعدية (basic substance)، يتفاعل معها حمض الكربونيك (H₂CO₃)، مما يؤدي إلى زيادة في تركيز البيكربونات (HCO₃⁻)." },
-                    { text: "تتفاعل البيكربونات (HCO₃⁻) معها وتزداد كمية حمض الكربونيك (H₂CO₃)", correct: false, rationale: "هذا يحدث عند دخول مادة حامضية. القاعدة تتفاعل مع الحمض (حمض الكربونيك)." },
-                    { text: "لا يتغير شيء", correct: false, rationale: "وظيفة المحلول المنظم هي التفاعل لمقاومة التغير في الـ pH، لذلك يجب أن تتغير تراكيز مكوناته." },
-                    { text: "يقل تركيز كلا من حمض الكربونيك والبيكربونات", correct: false, rationale: "عند تفاعل القاعدة مع حمض الكربونيك، يقل حمض الكربونيك ويزيد البيكربونات." }
-                ]
-            },
-            // الكربوهيدرات
-            {
-                question: "لحساب عدد المتشابهات الفراغية (2ⁿ) لسكر سداسي ألدوزي (Aldohexose)، كم تساوي 'n' (عدد ذرات الكربون غير المتماثلة)؟",
-                answers: [
-                    { text: "2", correct: false, rationale: "عدد ذرات الكربون غير المتماثلة في الألدوهكسوز هو 4 (نطرح ذرة الكربون الأولى C1 الألدهيدية والأخيرة C6)." },
-                    { text: "3", correct: false, rationale: "الرقم 3 هو عدد ذرات الكربون غير المتماثلة في الكيتوهكسوز (Ketohexose)." },
-                    { text: "4 (القاعدة: الألدوزي نطرح 2)", correct: true, rationale: "الألدوهكسوز (6 كربون) يحتوي على 4 ذرات كربون غير متماثلة (n=4)، لأن ذرة الكربون C1 (الألدهيد) و C6 (الكحول الأولي) متماثلة. (القاعدة: n = 6-2 = 4)." },
-                    { text: "6", correct: false, rationale: "الرقم 6 هو العدد الكلي لذرات الكربون، وليس عدد الذرات غير المتماثلة." }
-                ]
-            },
-            {
-                question: "لحساب عدد المتشابهات الفراغية (2ⁿ) لسكر سداسي كيتوني (Ketohexose) مثل الفركتوز، كم تساوي 'n' (عدد ذرات الكربون غير المتماثلة)؟",
-                answers: [
-                    { text: "4", correct: false, rationale: "الرقم 4 هو عدد ذرات الكربون غير المتماثلة في الألدوهكسوز (Aldohexose)." },
-                    { text: "3 (القاعدة: الكيتوني نطرح 3)", correct: true, rationale: "الكيتوهكسوز (6 كربون) يحتوي على 3 ذرات كربون غير متماثلة (n=3)، لأن C1 (كحول أولي), C2 (الكيتون), و C6 (كحول أولي) تعتبر متماثلة. (القاعدة: n = 6-3 = 3)." },
-                    { text: "5", correct: false, rationale: "عدد ذرات الكربون غير المتماثلة هو 3 فقط (C3, C4, C5)." },
-                    { text: "6", correct: false, rationale: "الرقم 6 هو العدد الكلي لذرات الكربون." }
-                ]
-            },
-             {
-                question: "كم عدد المتشابهات الفراغية المحتملة لسكر سداسي ألدوزي (Aldohexose)؟",
-                answers: [
-                    { text: "8 (2³)", correct: false, rationale: "عدد المتشابهات 8 هو للكيتوهكسوز (n=3)، بينما الألدوهكسوز له n=4." },
-                    { text: "16 (2⁴)", correct: true, rationale: "الألدوهكسوز له 4 ذرات كربون غير متماثلة (n=4). وعليه، عدد المتشابهات الفراغية هو 2ⁿ = 2⁴ = 16." },
-                    { text: "4 (2²)", correct: false, rationale: "عدد المتشابهات 4 هو للألدوتتروز (n=2)." },
-                    { text: "32 (2⁵)", correct: false, rationale: "الألدوهكسوز له 4 ذرات كربون غير المتماثلة فقط." }
-                ]
-            },
-            {
-                question: "ما هو نوع التشابه الفراغي بين D-Glucose و D-Galactose؟",
-                answers: [
-                    { text: "إبيمرات (Epimers) عند C2", correct: false, rationale: "التشابه بين D-Glucose و D-Mannose هو إبيمر عند C2." },
-                    { text: "إبيمرات (Epimers) عند C4", correct: true, rationale: "D-جلوكوز و D-جلاكتوز هما إبيمرات (epimers) فيما يتعلق بذرة الكربون رقم 4، حيث يختلفان فقط في الترتيب الفراغي حول هذه الذرة." },
-                    { text: "أنومرات (Anomers)", correct: false, rationale: "الأنومرات (ألفا وبيتا) تصف الاختلاف حول ذرة الكربون الأنوميرية (C1) بعد تكوين الحلقة." },
-                    { text: "صور متماثلة (Enantiomers)", correct: false, rationale: "الصور المتماثلة (مثل D-Glucose و L-Glucose) تكون صورة مرآة لبعضها عند *كل* ذرات الكربون غير المتماثلة." }
-                ]
-            },
-            {
-                question: "في الشكل الحلقي (Pyranose) لسكر الجلوكوز، ما الذي يحدد ما إذا كان السكر α (ألفا) أو β (بيتا)؟",
-                answers: [
-                    { text: "اتجاه مجموعة الهيدروكسيل (OH) على ذرة الكربون الأنوميرية (C1)", correct: true, rationale: "يتم تحديد ألفا وبيتا بناءً على اتجاه مجموعة الهيدروكسيل (OH) على ذرة الكربون رقم 1 (الكربون الأنومرية). إذا كانت (OH) إلى أسفل يكون ألفا (α)، وإذا كانت إلى أعلى يكون بيتا (β)." },
-                    { text: "اتجاه مجموعة (OH) على ذرة الكربون C4", correct: false, rationale: "الاختلاف عند C4 يحدد الإبيمر (مثل الجلوكوز والجلاكتوز)، وليس الأنومر (ألفا أو بيتا)." },
-                    { text: "اتجاه مجموعة (OH) على ذرة الكربون ما قبل الأخيرة (C5)", correct: false, rationale: "الاختلاف عند C5 (في السلسلة المفتوحة) يحدد ما إذا كان السكر D أو L." },
-                    { text: "ما إذا كان السكر سداسي (Pyranose) أو خماسي (Furanose)", correct: false, rationale: "نوع الحلقة (بيرانوز أو فيورانوز) يحدد حجمها، ولكل منهما يمكن أن يوجد في شكلي ألفا وبيتا." }
-                ]
-            },
-            {
-                question: "صح أم خطأ: في سكر الفركتوز الحلقي، تعتبر ذرة الكربون رقم 2 (C2) هي ذرة الكربون الأنوميرية.",
-                answers: [
-                    { text: "صح", correct: true, rationale: "لأن الفركتوز سكر كيتوني، فإن مجموعة الكيتون (C2) هي التي تتفاعل لتكوين الحلقة، وتصبح هي ذرة الكربون الأنوميرية." },
-                    { text: "خطأ", correct: false, rationale: "ذرة الكربون C1 هي الذرة الأنوميرية في السكريات الألدوزية (مثل الجلوكوز)، أما في الكيتوزية (مثل الفركتوز) فهي C2." }
-                ]
-            },
-            {
-                question: "يتكون سكر السكروز (سكر المائدة) من ارتباط جزيئي...",
-                answers: [
-                    { text: "α-جلوكوز و α-جلوكوز", correct: false, rationale: "هذا هو تركيب سكر المالتوز (سكر الشعير)." },
-                    { text: "β-جلوكوز و β-جالاكتوز", correct: false, rationale: "هذا هو تركيب سكر اللاكتوز (سكر الحليب)." },
-                    { text: "α-جلوكوز و β-فركتوز", correct: true, rationale: "يتكون سكر السكروز من ارتباط جزيء α-جلوكوز و β-فركتوز." },
-                    { text: "β-فركتوز و β-فركتوز", correct: false, rationale: "هذا هو أساس سكر الإنيولين (سكر عديد)، وليس السكروز (سكر ثنائي)." }
-                ]
-            },
-            {
-                question: "ما هي نوع الرابطة الجلايكوسيدية في سكر اللاكتوز (سكر الحليب)؟",
-                answers: [
-                    { text: "α-1→4", correct: false, rationale: "هذه هي الرابطة الموجودة في سكر المالتوز وسلاسل الأميلوز المستقيمة في النشا." },
-                    { text: "β-1→4", correct: true, rationale: "يتكون اللاكتوز من ارتباط β-جالاكتوز مع جلوكوز برابطة جلايكوسيدية نوع β-1→4." },
-                    { text: "α-1→2", correct: false, rationale: "هذه هي الرابطة المميزة لسكر السكروز (بين الجلوكوز والفركتوز)." },
-                    { text: "α-1→6", correct: false, rationale: "هذه هي الرابطة الموجودة عند نقاط التفرع في الأميلوبكتين والجلايكوجين." }
-                ]
-            },
-            {
-                question: "صح أم خطأ: سكر السكروز يعتبر سكراً مختزلاً.",
-                answers: [
-                    { text: "صح", correct: false, rationale: "السكروز سكر غير مختزل، وذلك لعدم وجود مجموعة ألدهيدية حرة. ذرات الكربون الأنوميرية (C1 في الجلوكوز و C2 في الفركتوز) كلاهما مشارك في الرابطة." },
-                    { text: "خطأ", correct: true, rationale: "السكروز هو سكر غير مختزل. السكريات المختزلة (مثل المالتوز واللاكتوز) يجب أن تحتوي على مجموعة ألدهيد حرة (ذرة كربون أنوميرية غير مرتبطة)." }
-                ]
-            },
-            {
-                question: "أي من السكريات العديدة التالية يعتبر \"غير متجانس\" (Heterogeneous)؟",
-                answers: [
-                    { text: "النشا", correct: false, rationale: "النشا سكر عديد متجانس، لأنه يعطي نفس النوع من السكر (جلوكوز) عند تحلله." },
-                    { text: "السيليلوز", correct: false, rationale: "السيليلوز سكر عديد متجانس، يتكون فقط من وحدات β-جلوكوز." },
-                    { text: "الجلايكوجين", correct: false, rationale: "الجلايكوجين سكر عديد متجانس، يتكون فقط من وحدات α-جلوكوز." },
-                    { text: "حمض الهايلويورونك", correct: true, rationale: "السكريات العديدة غير المتجانسة تعطي أكثر من نوع من السكر عند تحللها. حمض الهايلويورونك غير متجانس لأنه يتكون من وحدات متكررة من (Glucuronic Acid) و (N-Acetyl-D-glucosamine)." }
-                ]
-            },
-            {
-                question: "ما هي الوحدة البنائية الأساسية ونوع الرابطة في السيليلوز (Cellulose)؟",
-                answers: [
-                    { text: "α-جلوكوز ، ورابطة α-1→4", correct: false, rationale: "هذا هو تركيب الأميلوز (الجزء المستقيم من النشا)." },
-                    { text: "β-جلوكوز ، ورابطة β-1→4", correct: true, rationale: "يتكون السيليلوز من سلاسل مستقيمة غير متفرعة ناتجة من ارتباط وحدات β-جلوكوز بروابط β-1→4 جلايكوسيدية." },
-                    { text: "α-جلوكوز ، وروابط α-1→4 و α-1→6", correct: false, rationale: "هذا هو تركيب الأميلوبكتين (الجزء المتفرع من النشا) والجلايكوجين." },
-                    { text: "β-فركتوز ، ورابطة β-1→2", correct: false, rationale: "هذا هو تركيب سكر الإنيولين." }
-                ]
-            },
-            {
-                question: "ما هو السكر العديد (المتجانس) الذي يخزن في الكبد والعضلات في الحيوانات ويعتبر أكثر تفرعاً من الأميلوبكتين؟",
-                answers: [
-                    { text: "النشا", correct: false, rationale: "النشا هو سكر التخزين في النباتات." },
-                    { text: "السيليلوز", correct: false, rationale: "السيليلوز هو سكر تركيبي (بنائي) في جدار الخلية النباتية." },
-                    { text: "الجلايكوجين", correct: true, rationale: "الجلايكوجين هو سكر التخزين الحيواني (في الكبد والعضلات)، ويشبه الأميلوبكتين لكنه يكون أكثر تفرعاً." },
-                    { text: "الكيتين", correct: false, rationale: "الكيتين سكر تركيبي في الهيكل الخارجي للافقاريات." }
-                ]
-            }
-        ];
+        <div class="article-card">
+            <h2>المادة السادسة والسبعون</h2>
+            <p>توضح هذه المادة أسباب انتهاء العلاقة الزوجية (الفرقة). تحصل الفرقة بين الزوجين في أي من الحالات الآتية:</p>
+            <ul>
+                <li><strong>الطلاق:</strong> وهو إنهاء الزواج من جانب الزوج.</li>
+                <li><strong>الخلع:</strong> وهو انهاء الزواج بطلب من الزوجة مقابل تعويض (عادة ما يكون تنازلاً عن المهر أو جزء منه).</li>
+                <li><strong>فسخ عقد الزواج:</strong> وهو إبطال العقد من الأساس بسبب وجود عيب أو مانع شرعي.</li>
+                <li><strong>وفاة أحد الزوجين.</strong></li>
+                <li><strong>اللعان بين الزوجين.</strong></li>
+            </ul>
+        </div>
         
-        // --- أسئلة الاختبار الثاني (العضيات) ---
-        const questionsQuiz2 = [
-            // النواة
-            {
-                question: '<img src="https://www.vedantu.com/seo/content-images/ed56ad7c-ba1f-4ecb-9e5f-cff188b41d5e_1..png" alt="عضية النواة"><br>ما هي هذه العضية التي تعتبر مركز التحكم في الخلية؟',
-                answers: [
-                    { text: "النواة (Nucleus)", correct: true, rationale: "هذه هي النواة، وهي محاطة بغشاء مزدوج وتحتوي على النوية والمادة الوراثية (DNA)." },
-                    { text: "الميتوكوندريا", correct: false, rationale: "الميتوكوندريا لها غشاء داخلي به انثناءات (أعراف)، وشكلها مختلف." },
-                    { text: "جهاز جولجي", correct: false, rationale: "جهاز جولجي عبارة عن حويصلات غشائية مسطحة." },
-                    { text: "اللايزوسوم", correct: false, rationale: "اللايزوسوم عبارة عن حويصلة صغيرة (كيس) فقط." }
-                ]
-            },
-            {
-                question: "ما هي وظيفة الفتحات (الثقوب) النووية الموجودة على غشاء النواة؟",
-                answers: [
-                    { text: "إنتاج الطاقة", correct: false, rationale: "إنتاج الطاقة هو وظيفة الميتوكوندريا." },
-                    { text: "المرور الاختياري للمواد من وإلى السيتوبلازم", correct: true, rationale: "الفتحات النووية هي بوابات تنظم دخول وخروج الجزيئات مثل RNA والبروتينات من وإلى النواة." },
-                    { text: "تصنيع البروتين", correct: false, rationale: "تصنيع البروتين يتم في الريبوسومات." },
-                    { text: "الهضم والتحلل", correct: false, rationale: "الهضم والتحلل وظيفة اللايزوسوم." }
-                ]
-            },
-            {
-                question: "ما هي وظيفة النوية (Nucleolus) الموجودة داخل النواة؟",
-                answers: [
-                    { text: "تخزين الـ DNA", correct: false, rationale: "الـ DNA مخزن في الكروماتين/الكروموسومات." },
-                    { text: "تصنيع الريبوسومات", correct: true, rationale: "النوية (غير محاطة بغشاء) هي المصنع الذي يتم فيه تجميع وحدات الريبوسومات." },
-                    { text: "إنتاج الطاقة للنواة", correct: false, rationale: "إنتاج الطاقة (ATP) للخلية كلها يتم في الميتوكوندريا." },
-                    { text: "تغليف المواد", correct: false, rationale: "التغليف وظيفة جهاز جولجي." }
-                ]
-            },
-            // الشبكة الإندوبلازمية
-            {
-                question: '<img src="https://www.shutterstock.com/image-vector/education-chart-biology-endoplasmic-reticulum-600w-1057812947.jpg" alt="عضية الشبكة الإندوبلازمية"><br>ما اسم هذه الشبكة الغشائية المتصلة بالنواة؟',
-                answers: [
-                    { text: "جهاز جولجي", correct: false, rationale: "جهاز جولجي يكون منفصلاً عن النواة عادةً." },
-                    { text: "الشبكة الإندوبلازمية (Endoplasmic Reticulum)", correct: true, rationale: "هذه هي الشبكة الإندوبلازمية بنوعيها الخشن (عليه ريبوسومات) والأملس، وهي متصلة بالغلاف النووي." },
-                    { text: "الغشاء البلازمي", correct: false, rationale: "الغشاء البلازمي يحيط بالخلية بأكملها." },
-                    { text: "الميتوكوندريا", correct: false, rationale: "الميتوكوندريا عضية منفصلة بشكلها البيضاوي المميز." }
-                ]
-            },
-            {
-                question: "ما هي الوظيفة الأساسية للشبكة الإندوبلازمية الخشنة (Rough ER)؟",
-                answers: [
-                    { text: "بناء الدهون", correct: false, rationale: "بناء الدهون هو وظيفة الشبكة الإندوبلازمية الملساء (الناعمة)." },
-                    { text: "بناء البروتينات (بواسطة الريبوسومات التي عليها)", correct: true, rationale: "تُسمى \"خشنة\" لوجود الريبوسومات على سطحها، والتي وظيفتها الأساسية هي بناء البروتينات." },
-                    { text: "إنتاج الطاقة (ATP)", correct: false, rationale: "إنتاج الطاقة هو وظيفة الميتوكوندريا." },
-                    { text: "التغليف والتصدير", correct: false, rationale: "التغليف والتصدير خارج الخلية هو وظيفة جهاز جولجي." }
-                ]
-            },
-            {
-                question: "ما هي وظيفة الشبكة الإندوبلازمية الملساء (الناعمة)؟",
-                answers: [
-                    { text: "بناء بعض الدهون", correct: true, rationale: "الشبكة الملساء (الناعمة) هي الموقع الرئيسي لبناء الدهون." },
-                    { text: "بناء البروتينات", correct: false, rationale: "بناء البروتينات وظيفة الشبكة الخشنة (لوجود الريبوسومات)." },
-                    { text: "الهضم", correct: false, rationale: "الهضم وظيفة اللايزوسومات." },
-                    { text: "المرور الاختياري", correct: false, rationale: "المرور الاختياري وظيفة الغشاء البلازمي وفتحات النواة." }
-                ]
-            },
-            // جهاز جولجي
-            {
-                question: '<img src="https://cdn.britannica.com/52/116252-050-A1D8E92B/Golgi-apparatus-complex-modification-proteins-role-cell.jpg" alt="عضية جهاز جولجي"><br>ما اسم هذه العضية التي تشبه "مكتب بريد" الخلية؟',
-                answers: [
-                    { text: "اللايزوسوم", correct: false, rationale: "اللايزوسوم حويصلة واحدة، وليس مجموعة حويصلات متراصة." },
-                    { text: "الشبكة الإندوبلازمية", correct: false, rationale: "الشبكة الإندوبلازمية متصلة بالنواة وتكون على هيئة شبكة أو أنابيب." },
-                    { text: "جهاز جولجي (Golgi Apparatus)", correct: true, rationale: "هذا هو جهاز جولجي، يتكون من حويصلات غشائية مسطحة، ووظيفته معالجة وتغليف المواد." },
-                    { text: "النواة", correct: false, rationale: "النواة هي العضية الكبيرة التي تحتوي على DNA." }
-                ]
-            },
-            {
-                question: "ما هي وظيفة جهاز جولجي الرئيسية المتعلقة بالمواد المصنعة في الشبكة الإندوبلازمية؟",
-                answers: [
-                    { text: "هضمها وتحليلها", correct: false, rationale: "الهضم والتحليل وظيفة اللايزوسوم." },
-                    { text: "استخدامها لإنتاج طاقة", correct: false, rationale: "إنتاج الطاقة وظيفة الميتوكوندريا." },
-                    { text: "معالجتها وتغليفها وتصديرها خارج الخلية (Exocytosis)", correct: true, rationale: "جهاز جولجي يستقبل البروتينات والدهون، يعالجها، يغلفها في حويصلات، ثم يصدرها خارج الخلية." },
-                    { text: "تخزينها كنشا", correct: false, rationale: "التخزين كنشا يحدث في النباتات، وليس وظيفة جولجي." }
-                ]
-            },
-            // الميتوكوندريا
-            {
-                question: '<img src="https://www.shutterstock.com/image-vector/vector-illustration-mitochondria-components-on-260nw-2241887621.jpg" alt="عضية الميتوكوندريا"><br>ما اسم هذه العضية التي تعتبر "محطة توليد الطاقة"؟',
-                answers: [
-                    { text: "الميتوكوندريا (Mitochondria)", correct: true, rationale: "هذه هي الميتوكوندريا، تتميز بغشائين، والداخلي ينطوي مكوناً الأعراف (Cristae)." },
-                    { text: "البيروكسيزوم", correct: false, rationale: "البيروكسيزوم حويصلة بسيطة أصغر حجماً." },
-                    { text: "النواة", correct: false, rationale: "النواة أكبر حجماً وتحتوي على النوية." },
-                    { text: "جهاز جولجي", correct: false, rationale: "جهاز جولجي عبارة عن أكياس غشائية مسطحة." }
-                ]
-            },
-            {
-                question: "ما هي الوظيفة الأساسية للميتوكوندريا؟",
-                answers: [
-                    { text: "تصنيع البروتين", correct: false, rationale: "تصنيع البروتين وظيفة الريبوسومات." },
-                    { text: "إنتاج الطاقة (ATP) عبر عمليات الأكسدة", correct: true, rationale: "الميتوكوندريا هي المركز الرئيسي للتنفس الخلوي وعمليات الأكسدة لإنتاج الطاقة (ATP)." },
-                    { text: "تخزين الماء", correct: false, rationale: "تخزين الماء وظيفة الفجوات (Vacuoles) بشكل أساسي." },
-                    { text: "الدعامة والحماية", correct: false, rationale: "الدعامة والحماية وظيفة الجدار الخلوي (في النباتات)." }
-                ]
-            },
-            // اللايزوسوم
-            {
-                question: '<img src="https://microbenotes.com/wp-content/uploads/2020/02/Lysosomes-Diagram-e1586376325209-1024x524.jpeg" alt="عضية اللايزوسوم"><br>ما اسم هذه الحويصلة التي تحتوي إنزيمات هاضمة؟',
-                answers: [
-                    { text: "الريبوسوم", correct: false, rationale: "الريبوسوم أصغر بكثير وهو جسيم وليس حويصلة غشائية." },
-                    { text: "اللايزوسوم (Lysosome)", correct: true, rationale: "هذا هو اللايزوسوم (الجسيم الحال)، وهو حويصلة مشتقة من جولجي ومليئة بإنزيمات التحلل." },
-                    { text: "البيروكسيزوم", correct: false, rationale: "البيروكسيزوم يشبهه شكلياً، لكنه يحتوي على إنزيمات أكسدة (مثل الكاتاليز) وليس إنزيمات هضم." },
-                    { text: "النواة", correct: false, rationale: "النواة هي مركز التحكم الأكبر حجماً." }
-                ]
-            },
-            {
-                question: "ما هي وظيفة اللايزوسوم (الجسيم الحال)؟",
-                answers: [
-                    { text: "هضم وتكسير المواد (Phagocytosis) ومخلفات الخلية", correct: true, rationale: "اللايزوسومات هي (الجهاز الهضمي) للخلية، تهضم المواد الداخلة ومكونات الخلية القديمة." },
-                    { text: "إنتاج الطاقة", correct: false, rationale: "هذه وظيفة الميتوكوندريا." },
-                    { text: "بناء الدهون", correct: false, rationale: "هذه وظيفة الشبكة الإندوبلازمية الملساء." },
-                    { text: "تصدير البروتينات", correct: false, rationale: "هذه وظيفة جهاز جولجي." }
-                ]
-            },
-            // البيروكسيزوم
-            {
-                question: "ما هي العضية التي تحتوي على إنزيم (Catalase) لتحطيم مادة H₂O₂ (فوق أكسيد الهيدروجين) السامة؟",
-                answers: [
-                    { text: "اللايزوسوم", correct: false, rationale: "اللايزوسوم يحتوي إنزيمات هضم وتحليل (Phagocytosis)، وليس الكاتاليز." },
-                    { text: "الميتوكوندريا", correct: false, rationale: "الميتوكوندريا تركز على إنتاج الطاقة (ATP)." },
-                    { text: "البيروكسيزوم (Peroxisome)", correct: true, rationale: "البيروكسيزوم هو الذي ينتج H₂O₂ كناتج ثانوي لعمليات الأكسدة، ويحتوي على إنزيم الكاتاليز لتحطيمه فوراً إلى ماء وأكسجين." },
-                    { text: "جهاز جولجي", correct: false, rationale: "جهاز جولجي مسؤول عن التغليف والتصدير." }
-                ]
-            },
-            // الريبوسومات
-            {
-                question: '<img src="https://www.shutterstock.com/image-vector/structure-ribosome-infographics-vector-illustration-260nw-507985297.jpg" alt="عضية الريبوسوم"><br>ما اسم هذه الجسيمات المسؤولة عن تصنيع البروتين؟',
-                answers: [
-                    { text: "الريبوسومات (Ribosomes)", correct: true, rationale: "هذه هي الريبوسومات، تتكون من وحدتين (كبرى وصغرى) وهي مصانع البروتين في الخلية." },
-                    { text: "الكروموسومات", correct: false, rationale: "الكروموسومات هي المادة الوراثية (DNA) داخل النواة." },
-                    { text: "اللايزوسومات", correct: false, rationale: "اللايزوسومات حويصلات هضمية." },
-                    { text: "البروتينات الداخلية", correct: false, rationale: "هذه هي العضيات التي *تصنع* البروتينات." }
-                ]
-            },
-            {
-                question: "أين توجد الريبوسومات في الخلية حقيقية النواة؟",
-                answers: [
-                    { text: "فقط مرتبطة بالشبكة الإندوبلازمية الخشنة", correct: false, rationale: "توجد مرتبطة، ولكن أيضاً توجد حرة في السيتوبلازم." },
-                    { text: "فقط حرة تسبح في السيتوبلازم", correct: false, rationale: "توجد حرة، ولكن أيضاً مرتبطة بالشبكة الإندوبلازمية." },
-                    { text: "حرة في السيتوبلازم ومرتبطة بالشبكة الإندوبلازمية", correct: true, rationale: "توجد الريبوسومات في مكانين: حرة في السيتوبلازم (لتصنيع بروتينات تبقى داخل الخلية) ومرتبطة بالشبكة الخشنة (لتصنيع بروتينات للتصدير أو للأغشية)." },
-                    { text: "داخل جهاز جولجي فقط", correct: false, rationale: "جهاز جولجي يستقبل البروتينات بعد تصنيعها، ولا يصنعها." }
-                ]
-            },
-            // الغشاء الخلوي
-            {
-                question: '<img src="https://www.shutterstock.com/image-vector/fluid-mosaic-model-cell-membrane-600w-2503414059.jpg" alt="الغشاء الخلوي"><br>ماذا يمثل هذا الشكل (النموذج الفسيفسائي المائع)؟',
-                answers: [
-                    { text: "الجدار الخلوي", correct: false, rationale: "الجدار الخلوي تركيب صلب وسميك (مثل السيليلوز)، وهذا تركيب مرن." },
-                    { text: "الغشاء الخلوي (Cell Membrane)", correct: true, rationale: "هذا هو الغشاء الخلوي، يتكون من طبقة مزدوجة من الدهون الفوسفورية (Bilayer) وبروتينات منغمسة بداخلها." },
-                    { text: "غشاء النواة", correct: false, rationale: "غشاء النواة يشبهه لكنه مزدوج (غشائين) ويحتوي على ثقوب نووية." },
-                    { text: "الشبكة الإندوبلازمية", correct: false, rationale: "الشبكة الإندوبلازمية هي شبكة من الأغشية داخل السيتوبلازم." }
-                ]
-            },
-            {
-                question: "ما هي المكونات الأربعة الرئيسية للغشاء الخلوي حسب السلايدات؟",
-                answers: [
-                    { text: "دهون فوسفورية، بروتينات، كولسترول، كربوهيدرات (سكريات)", correct: true, rationale: "يتكون الغشاء من طبقة مزدوجة من الدهون الفوسفورية، وبروتينات (داخلية وخارجية)، ووحدات كولسترول، ونسبة بسيطة من الكربوهيدرات." },
-                    { text: "سيليلوز، بروتين، ماء، أيونات", correct: false, rationale: "السيليلوز هو مكون الجدار الخلوي في النبات، وليس الغشاء الخلوي." },
-                    { text: "DNA, RNA, ريبوسومات، نواة", correct: false, rationale: "هذه مكونات داخل الخلية، وليست مكونات الغشاء المحيط بها." },
-                    { text: "دهون فقط", correct: false, rationale: "الدهون الفوسفورية هي المكون الأساسي، ولكنه ليس الوحيد." }
-                ]
-            },
-            // الجدار الخلوي
-            {
-                question: '<img src="https://www.sciencefacts.net/wp-content/uploads/2020/06/Cell-Wall-Structure-Diagram.jpg" alt="الجدار الخلوي"><br>ما اسم هذا التركيب الصلب الذي يوفر الدعامة والحماية؟',
-                answers: [
-                    { text: "الغشاء الخلوي", correct: false, rationale: "الغشاء الخلوي مرن ورقيق، أما هذا فسميك وصلب." },
-                    { text: "الجدار الخلوي (Cell Wall)", correct: true, rationale: "هذا هو الجدار الخلوي، يوجد في النباتات والبكتيريا (وليس الحيوانات)، ويتكون من ألياف (مثل السيليلوز) ليعطي الدعامة." },
-                    { text: "الهيكل الخلوي", correct: false, rationale: "الهيكل الخلوي عبارة عن أنابيب وألياف بروتينية *داخل* الخلية." },
-                    { text: "الكبسولة (في بدائية النواة)", correct: false, rationale: "الصورة توضح تركيب جدار خلية نباتية (من السيليلوز) بشكل أساسي." }
-                ]
-            },
-            {
-                question: "صح أم خطأ: الجدار الخلوي يوجد في الخلايا الحيوانية وخلايا الإنسان.",
-                answers: [
-                    { text: "صح", correct: false, rationale: "الجدار الخلوي لا يوجد في الحيوان أو الإنسان، بل يوجد في النباتات والبكتيريا. الخلايا الحيوانية محاطة بغشاء خلوي فقط." },
-                    { text: "خطأ", correct: true, rationale: "الجدار الخلوي لا يوجد في الحيوان أو الإنسان. الخلايا الحيوانية محاطة بغشاء خلوي فقط." }
-                ]
-            },
-            // السيتوبلازم
-            {
-                question: '<img src="https://cdn-ildfibj.nitrocdn.com/qaWeLntkRcyxNUcEoWbLpZLQkcgLFsiJ/assets/images/optimized/www.biologyonline.com/wp-content/uploads/2019/10/cell-parts-1-686x576.png" alt="السيتوبلازم"><br>ما اسم المادة الهلامية (الجزء السائل + العضيات) التي تملأ الخلية؟',
-                answers: [
-                    { text: "السائل النووي", correct: false, rationale: "السائل النووي هو السائل الموجود *داخل* النواة." },
-                    { text: "السيتوبلازم (Cytoplasm)", correct: true, rationale: "السيتوبلازم هو كل شيء داخل الغشاء الخلوي ما عدا النواة (أي السيتوسول + العضيات)." },
-                    { text: "السيتوسول", correct: false, rationale: "السيتوسول هو الجزء *السائل* فقط من السيتوبلازم (الماء والأيونات والإنزيمات الذائبة)." },
-                    { text: "الدم", correct: false, rationale: "هذه مكونات خلية واحدة، والدم يتكون من بلازما وخلايا دم." }
-                ]
-            },
-            {
-                question: "ما الفرق بين السيتوبلازم (Cytoplasm) والسيتوسول (Cytosol)؟",
-                answers: [
-                    { text: "لا يوجد فرق، هما نفس الشيء", correct: false, rationale: "يوجد فرق دقيق بينهما." },
-                    { text: "السيتوبلازم هو السائل فقط، والسيتوسول هو السائل مع العضيات", correct: false, rationale: "هذا عكس التعريف الصحيح." },
-                    { text: "السيتوسول هو الجزء السائل الهلامي، أما السيتوبلازم فهو السيتوسول + العضيات المنغمسة فيه", correct: true, rationale: "السيتوبلازم = السيتوسول (السائل) + العضيات (مثل الميتوكوندريا وجولجي)." },
-                    { text: "السيتوبلازم يوجد في الحيوان والسيتوسول في النبات", correct: false, rationale: "كلاهما يوجد في جميع الخلايا حقيقية النواة." }
-                ]
-            },
-            // مقارنات
-            {
-                question: "أي من التالي يوجد في الخلايا بدائية النواة (Prokaryotes)؟",
-                answers: [
-                    { text: "نواة حقيقية بغشاء نووي", correct: false, rationale: "الخلايا بدائية النواة لا تحتوي على نواة حقيقية أو غشاء نووي." },
-                    { text: "ريبوسومات وسيتوبلازم", correct: true, rationale: "الخلايا بدائية النواة (مثل البكتيريا) بسيطة، ولكنها تحتوي على الأساسيات: سيتوبلازم، ريبوسومات لتصنيع البروتين، ومادة وراثية (Nucleoid)." },
-                    { text: "ميتوكوندريا وجهاز جولجي", correct: false, rationale: "الميتوكوندريا وجهاز جولجي هي عضيات غشائية توجد فقط في الخلايا حقيقية النواة." },
-                    { text: "شبكة إندوبلازمية", correct: false, rationale: "الشبكة الإندوبلازمية عضية غشائية توجد فقط في الخلايا حقيقية النواة." }
-                ]
-            }
-        ];
+        <div class="article-card">
+            <h2>المادة السابعة والسبعون</h2>
+            <p>الطلاق هو حل عقد الزواج بإرادة الزوج، من خلال اللفظ الدال عليه.</p>
+        </div>
 
-        // --- المتغيرات الأساسية للاختبار ---
-        const menuContainer = document.getElementById('menu-container');
-        const quizContentElement = document.getElementById('quiz-content');
-        const scoreContainerElement = document.getElementById('score-container');
+        <div class="article-card">
+            <h2>المادة الثامنة والسبعون</h2>
+            <p>اللفظ الدال على الطلاق نوعان:</p>
+            <ul>
+                <li><strong>صريح:</strong> مثل كلمة "الطلاق" ومشتقاتها.</li>
+                <li><strong>كناية:</strong> وهو اللفظ الذي يحتمل معنى الطلاق وغيره مثل "الحقي بأهلك"، ويقع الطلاق به إذا نوى الزوج الطلاق.</li>
+            </ul>
+        </div>
+
+        <div class="article-card">
+            <h2>المادة التاسعة والسبعون</h2>
+            <p>يقع الطلاق باللفظ الصريح أو الكناية، وإذا اختلف في تفسير الكناية، فالعبرة بما فهمته الزوجة.</p>
+        </div>
+
+        <div class="article-card">
+            <h2>المادة الثمانون</h2>
+            <p>لا يقع الطلاق في الحالات التالية:</p>
+            <ul>
+                <li>طلاق المُكْرَه (المجبر) أو غير المختار.</li>
+                <li>طلاق من زال عقله كالمجنون أو السكران.</li>
+                <li>طلاق من غضب غضباً شديداً أفقده السيطرة على كلامه.</li>
+                <li>إذا طلق الزوج زوجته وهي حائض، أو في نفس فترتها الشرعية بعد الطهر وقبل الجماع.</li>
+            </ul>
+        </div>
+
+        <div class="article-card">
+            <h2>المادة الحادية والثمانون</h2>
+            <p>يقع الطلاق باللفظ الكناية إذا نوى به الزوج الطلاق، حتى لو لم يقصد حقيقة إنهاء الزواج (مثل أن يقولها مازحاً).</p>
+            <p>لا يقع الطلاق بالكناية إلا إذا نوى الزوج به الطلاق.</p>
+        </div>
+
+        <div class="article-card">
+            <h2>المادة الثانية والثمانون</h2>
+            <p>لا يؤثر عدم صحة (بطلان) التوكيل في إيقاع الطلاق في الحالات المنصوص عليها في المادتين (80) و (81).</p>
+        </div>
+
+        <div class="article-card">
+            <h2>المادة الثالثة والثمانون</h2>
+            <p>أي طلاق يتم بالقول أو الإشارة أو الكتابة في وقت واحد، لا يقع به سوى طلقة واحدة (حتى لو تكرر اللفظ).</p>
+        </div>
+
+        <div class="article-card">
+            <h2>المادة الرابعة والثمانون</h2>
+            <p>يجوز للزوج توكيل غيره (رجل أو امرأة) في إيقاع الطلاق.</p>
+            <p>لا يُعتبر عزل الوكيل نافذاً بعد إيقاع الوكيل للطلاق، إلا إذا كان العزل قد تم ووصل للوكيل قبل أن يوقع الطلاق.</p>
+        </div>
+
+        <div class="article-card">
+            <h2>المادة الخامسة والثمانون</h2>
+            <p>الطلاق نوعان رئيسيان:</p>
+            <ul>
+                <li><strong>طلاق رجعي:</strong> لا ينتهي به عقد الزواج فوراً، بل يظل الزوج يحق له مراجعة زوجته (استعادتها كزوجة) دون عقد جديد طيلة فترة العدة.</li>
+                <li><strong>طلاق بائن:</strong> ينتهي به عقد الزواج فوراً، وينقسم إلى:
+                    <ul>
+                        <li><strong>بائن بينونة صغرى:</strong> بعد هذا الطلاق، لا يحل للزوجين العودة إلى بعضهما إلا بعقد ومهر جديدين، مع احتساب الطلاقات السابقة.</li>
+                        <li><strong>بائن بينونة كبرى:</strong> بعد هذا الطلاق (الطلاق الثالث عادة)، لا تحل المرأة للزوج الأول إلا بعد أن تتزوج من رجل آخر زواجاً صحيحاً ثم ينفسخ ذلك الزواج الثاني بطلاق أو وفاة.</li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+
+        <div class="article-card">
+            <h2>المادة السادسة والثمانون</h2>
+            <p>كل طلاق في زواج صحيح يعتبر طلاقاً رجعياً ما عدا في حالتين:</p>
+            <ul>
+                <li>الطلاق الذي يكون البتة (أي البائن مثل الطلاق قبل الدخول أو الخلع).</li>
+                <li>الطلاق الذي يكون بعد استنفاد عدد الطلقات المسموح بها (البينونة الكبرى).</li>
+            </ul>
+        </div>
         
-        const questionElement = document.getElementById('question-text');
-        const questionCounterElement = document.getElementById('question-counter');
-        const answerButtonsElement = document.getElementById('answer-buttons');
-        const nextButton = document.getElementById('next-btn');
-        // *** هذا هو السطر الذي تم إصلاحه ***
-        const rationaleElement = document.getElementById('rationale-text'); 
+        <div class="article-card">
+            <h2>المادة السابعة والثمانون</h2>
+            <p>إذا طلق الزوج زوجته طلاقاً رجعياً، فله حق مراجعتها (أي إعادتها إلى عصمته) خلال فترة العدة.</p>
+            <p>لا يسقط هذا الحق حتى لو تنازل الزوج عنه.</p>
+        </div>
+
+        <div class="article-card">
+            <h2>المادة الثامنة والثمانون</h2>
+            <p>تتحقق المراجعة باللفظ الصريح أو الكتابة، أو بالفعل الدال عليها (كالجماع في العدة بنية المراجعة).</p>
+        </div>
+
+        <div class="article-card">
+            <h2>المادة التاسعة والثمانون</h2>
+            <p>لا تصح المراجعة إذا كانت مجبرةً، أو معلقة على شرط، أو مؤجلة إلى وقت مستقبلي.</p>
+        </div>
+
+        <div class="article-card">
+            <h2>المادة التسعون</h2>
+            <p>يجب على الزوج إشعار الزوجة بالطلاق أمام الجهة المختصة (مثل المحكمة) خلال مدة أقصاها 15 يوماً من تاريخ الطلاق.</p>
+            <p>عدم قيامه بذلك لا يسقط حق الزوجة في رفع دعوى لإثبات الطلاق.</p>
+        </div>
+
+        <div class="article-card">
+            <h2>المادة الحادية والتسعون</h2>
+            <p>إذا لم يُبلغ الزوج بالطلاق حسب المادة (90)، وأنكرت الزوجة علمها بالطلاق، فلها المطالبة بالنفقة من تاريخ وقوع الطلاق فعلياً إلى تاريخ علمها به.</p>
+        </div>
+
+        <div class="article-card">
+            <h2>المادة الثانية والتسعون</h2>
+            <p>يجب على الزوج في الطلاق الرجعي إشعار الزوجة بالمراجعة خلال مدة أقصاها 15 يوماً من تاريخ المراجعة.</p>
+            <p>إذا لم يُبلغ الزوج بالمراجعة، وأنكرت الزوجة علمها بها، ثم تزوجت برجل آخر، لا تصح المراجعة (أي لا تنفسخ عصمة الزوج الثاني).</p>
+            <p>إذا لم يُبلغ الزوج بالمراجعة وأنكرت الزوجة علمها بها دون أن تتزوج، فلها المطالبة بالنفقة عن الفترة السابقة، وهذا استثناء من القاعدة العامة.</p>
+        </div>
+
+        <div class="article-card">
+            <h2>المادة الثالثة والتسعون</h2>
+            <p>لا يقبل قول الزوجة وحدها في دعوى إثبات الطلاق أو المراجعة.</p>
+            <p>يشترط لإثبات أي منهما وجود بيئة (شهادة شاهدين أو ما يقوم مقامها).</p>
+            <p><strong>المغزى:</strong> هذه مسألة لا يمكن إثباتها بكلمة واحدة، بل تحتاج إلى دليل خارجي.</p>
+        </div>
         
-        let currentQuestionsArray = [];
-        let shuffledQuestions, currentQuestionIndex;
-        let score = 0;
-        let userAnswers = []; // لتخزين إجابات المستخدم للمراجعة
+        <div class="article-card">
+            <h2>المادة الرابعة والتسعون</h2>
+            <p>يُقبل قول الزوجة إذا ادعت انقضاء عدتها قبل حصول المراجعة.</p>
+            <p><strong>الشرط:</strong> أن تكون الفترة التي ذكرتها تحتمل انقضاء العدة فيها عادةً (مثل أن تدعي أن عدتها انقضت بعد ثلاثة أشهر من الطلاق).</p>
+            <p><strong>المغزى:</strong> يُعتد بقولها في أمر متعلق بجسدها وأمد زمني يمكن التحقق منه عادةً.</p>
+        </div>
 
-        // --- وظائف التنقل ---
+        <div class="article-card">
+            <h2>المادة الخامسة والتسعون</h2>
+            <p><strong>تعريف الخلع:</strong> هو فراق بين الزوجين تطلبه الزوجة وترضى به مقابل عوض تدفعه للزوج (كأن تتنازل عن المهر أو جزء منه).</p>
+        </div>
+
+        <div class="article-card">
+            <h2>المادة السادسة والتسعون</h2>
+            <p>يصح الخلع بتراضي الزوجين إذا كانا كاملي الأهلية على إنهاء عقد الزواج، دون الحاجة إلى حكم قضائي.</p>
+        </div>
+
+        <div class="article-card">
+            <h2>المادة السابعة والتسعون</h2>
+            <p>يقع الخلع بأي لفظ أو كتابة تدل على الفراق.</p>
+            <ul>
+                <li>يكون الخلع فرقة بائنة بينونة صغرى (أي ينتهي به الزواج فوراً، ولا يحل العودة إلا بعقد ومهر جديدين).</li>
+                <li>لا يحتسب الخلع من عدد الطلقات الثلاث (أي لا يعد طلقة من الطلقات التي يملكها الزوج).</li>
+            </ul>
+        </div>
+
+        <div class="article-card">
+            <h2>المادة الثامنة والتسعون</h2>
+            <p>يقع الخلع في أي حال كانت عليه الزوجة، حتى أثناء الحيض أو في النفاس، خلافاً للطلاق الذي له شروط في هذا الشأن.</p>
+        </div>
         
-        function showMenu() {
-            menuContainer.classList.remove('hide');
-            quizContentElement.classList.add('hide');
-            scoreContainerElement.classList.add('hide');
-        }
+        <div class="article-card">
+            <h2>المادة التاسعة والتسعون</h2>
+            <p>إذا فرض الزوج العوض على زوجته دون رغبة منها، فلا يعد هذا خلعاً، بل يطبق عليه أحكام الطلاق العادي.</p>
+        </div>
 
-        function showQuiz() {
-            menuContainer.classList.add('hide');
-            quizContentElement.classList.remove('hide');
-            scoreContainerElement.classList.add('hide');
-        }
+        <div class="article-card">
+            <h2>المادة المائة</h2>
+            <p>يجوز أن يكون أي مال يمكن تقويمه (تقدير قيمته) عوضاً في الخلع.</p>
+            <p>لا يجوز أن يكون العوض هو التنازل عن حقوق الأولاد (كالنفقة) أو حضانتهم.</p>
+        </div>
+
+        <div class="article-card">
+            <h2>المادة الأولى بعد المائة</h2>
+            <p>إذا كان العوض في الخلع هو المهر نفسه (أي تنازلت الزوجة عن المهر مقابل الطلاق)، فيقتصر العوض على تسليم ما بقي من المهر فعلياً.</p>
+            <p>يُسقط (يستقطع) ما بقي من المهر، حتى لو كان مؤجلاً (متفقاً على دفعه في المستقبل).</p>
+        </div>
+
+        <div class="article-card">
+            <h2>المادة الثانية بعد المائة</h2>
+            <p>يجب توثيق عقد الخلع لدى الجهة المختصة (مثل المحكمة).</p>
+            <p>يحق لأي ذي مصلحة (كالزوج أو الزوجة أو ورثتهما) طلب إثبات الخلع بأي وسيلة من وسائل الإثبات المقبولة نظاماً.</p>
+        </div>
+
+        <div class="article-card">
+            <h2>المادة الثالثة بعد المائة</h2>
+            <p>أي فرقة (انفصال) تحصل بحكم قضائي تعد فسخاً للعقد.</p>
+            <ul>
+                <li>تكون هذه الفرقة بائنة بينونة صغرى (أي لا رجعة فيها إلا بعقد جديد).</li>
+                <li>لا تحتسب من عدد الطلقات الثلاث.</li>
+            </ul>
+        </div>
+
+        <div class="article-card">
+            <h2>المادة الرابعة بعد المائة</h2>
+            <p>يحق لكل من الزوجين طلب فسخ عقد الزواج بسبب وجود عيب في الآخر (مثل العقم، الأمراض المعدية أو المنفرة) يمنع الاستمتاع أو يستحيل معه استمرار الحياة.</p>
+            <p>يشمل ذلك العيوب الموجودة قبل العقد أو الطارئة بعده.</p>
+            <p>لا يُقبل الطلب إذا كان الطالب عالماً بالعيب وقت العقد أو أظهر رضاً عنه بعد العلم.</p>
+        </div>
         
-        function showScore() {
-            menuContainer.classList.add('hide');
-            quizContentElement.classList.add('hide');
-            scoreContainerElement.classList.remove('hide');
-        }
+        <div class="article-card">
+            <h2>المادة الخامسة بعد المائة</h2>
+            <p>تُحدد أحكام المهر في حال (الفسخ للعيب):</p>
+            <ul>
+                <li><strong>إذا حدث العيب بعد الدخول:</strong> لا يسترد الزوج ما دفعه من مهر.</li>
+                <li><strong>إذا كان العيب قبل العقد وتم الفسخ قبل الدخول:</strong> يسترد الزوج المهر كاملاً ويسقط الباقي.</li>
+                <li><strong>إذا كان العيب في الزوجة قبل العقد وتم الفسخ بعد الدخول:</strong> للزوجة نصف المهر.</li>
+                <li><strong>إذا كان العيب في الزوج قبل العقد وتم الفسخ بعد الدخول:</strong> للزوجة المهر كاملاً، ويمكن للزوج الرجوع على من غشه (إذا كان لا يعلم بالعيب).</li>
+            </ul>
+        </div>
 
-        // --- وظائف الاختبار ---
+        <div class="article-card">
+            <h2>المادة السادسة بعد المائة</h2>
+            <p>للمحكمة فسخ عقد زواج المرأة التي لم يدخل بها، بناء على طلبها، إذا لم يدفع الزوج مهرها المعجل بعد انتهاء الأجل المحدد.</p>
+            <p>لا يفسخ عقد الزواج لعدم دفع المهر للمرأة التي دخل بها، ويصبح المهر ديناً في ذمة الزوج يمكن للمرأة المطالبة به.</p>
+        </div>
 
-        // دالة لبدء الاختبار
-        function startQuiz(quizType) {
-            if (quizType === 'quiz1') {
-                currentQuestionsArray = questionsQuiz1;
-            } else if (quizType === 'quiz2') {
-                currentQuestionsArray = questionsQuiz2;
-            }
-            
-            shuffledQuestions = currentQuestionsArray.sort(() => Math.random() - 0.5);
-            currentQuestionIndex = 0;
-            score = 0;
-            userAnswers = []; 
-            showQuiz();
-            showQuestion(shuffledQuestions[currentQuestionIndex]);
-        }
+        <div class="article-card">
+            <h2>المادة السابعة بعد المائة</h2>
+            <p>تفسخ المحكمة عقد الزواج بناء على طلب الزوجة إذا هجرها الزوج (تركها) بدون سبب شرعي، أو تعذر استيفاء الحقوق الزوجية (كالنفقة) منه.</p>
+            <p>تفسخ المحكمة العقد إذا حَبَسَ الزوج زوجته (منعها من الخروج) بدون حق، حتى لو كان ذلك في البلد الذي تزوجها فيه.</p>
+        </div>
 
-        // دالة لعرض السؤال
-        function showQuestion(question) {
-            resetState();
-            questionCounterElement.innerText = `السؤال ${currentQuestionIndex + 1} من ${shuffledQuestions.length}`;
-            questionElement.innerHTML = question.question; // استخدام innerHTML لعرض الصور
-            
-            question.answers.forEach(answer => {
-                const button = document.createElement('button');
-                button.innerText = answer.text;
-                button.classList.add('btn');
-                button.dataset.correct = answer.correct;
-                button.addEventListener('click', selectAnswer);
-                answerButtonsElement.appendChild(button);
-            });
-        }
+        <div class="article-card">
+            <h2>المادة الثامنة بعد المائة</h2>
+            <p>تَفْسَخ المحكمة العقد بناء على طلب الزوجة إذا أَقرَّ الزوج بضرر يلحقها يجعل استمرار العشرة بينهما مستحيلاً، بعد ثبوت هذا الضرر.</p>
+        </div>
 
-        // دالة لإعادة تعيين الحالة (إخفاء الأزرار والتعليقات)
-        function resetState() {
-            nextButton.classList.add('hide');
-            rationaleElement.style.display = 'none'; // <-- هذا السطر هو سبب الخطأ
-            rationaleElement.classList.remove('correct', 'incorrect');
-            while (answerButtonsElement.firstChild) {
-                answerButtonsElement.removeChild(answerButtonsElement.firstChild);
-            }
-        }
+        <div class="article-card">
+            <h2>المادة التاسعة بعد المائة</h2>
+            <p>إذا ادعت الزوجة ضرراً يتعذر معه استمرار الحياة الزوجية، واستمر الشقاق، وتعذر الإصلاح، تُعيَّن المحكمة حَكَمين (واحد من أهل الزوج وآخر من أهل الزوجة) خلال مدة محددة.</p>
+            <p>إذا تعذر اختيار الحكمين من الأهل، تعينهم المحكمة.</p>
+        </div>
+
+        <div class="article-card">
+            <h2>المادة العاشرة بعد المائة</h2>
+            <p>يتولى الحكمان دراسة أسباب الشقاق والسعي للإصلاح بين الزوجين.</p>
+            <p>لا يؤثر في عمل الحكمين امتناع أحد الزوجين عن التعاون معهما.</p>
+        </div>
+
+        <div class="article-card">
+            <h2>المادة الحادية عشرة بعد المائة</h2>
+            <p>إذا عجز الحكمان عن الإصلاح، يقرران ما يراهان من فرقة بين الزوجين (طلاق أو فسخ)، مع تعويض أو بدونه.</p>
+            <p>يجب أن يراعي التعويض الذي تدفعه المرأة (إن وجد) ما دفعه الزوج من مهر.</p>
+            <p>يقدم الحكمان تقريراً للمحكمة يوضح جهودهما ونتيجتهما والأسباب التي استندا إليها.</p>
+        </div>
+
+        <div class="article-card">
+            <h2>المادة الثانية عشرة بعد المائة</h2>
+            <p>للمحكمة فسخ عقد الزواج بطلب من الزوجة قبل الدخول أو الخلوة، إذا امتنع الزوج عن إتمام العقد (كالامتناع عن دفع المهر أو إتمام الزواج)، على أن تعيد الزوجة ما قبضته من مهر.</p>
+            <p>إذا كان طلب الفسخ بسبب راجع للزوجة (كرهتها للزوج)، فيلزمها إعادة المهر كاملاً، وكذلك تعويض ما أنفقه الزوج من أجل الزواج إذا طلب ذلك.</p>
+        </div>
+
+        <div class="article-card">
+            <h2>المادة الثالثة عشرة بعد المائة</h2>
+            <p>على المحكمة فسخ العقد بطلب الزوجة في حالتين:</p>
+            <ul>
+                <li>إذا حلف الزوج يميناً بعدم جماعها لمدة تزيد على أربعة أشهر، ولم يرجع عن يمينه قبل انقضاء المدة.</li>
+                <li>إذا امتنع عن جماعها لمدة تزيد على أربعة أشهر دون عذر شرعي.</li>
+            </ul>
+            <p>(هذه حالات شبه "الإيلاء" و "الهجر" في الفراش)</p>
+        </div>
+
+        <div class="article-card">
+            <h2>المادة الرابعة عشرة بعد المائة</h2>
+            <p>إذا طلبت الزوجة الفسخ بسبب غياب زوجها (كأن يكون مسافراً أو هارباً) مع معرفة مكان إقامته، فإن المحكمة تُعرفها بـ "مهلة انتظار" مدتها أربعة أشهر.</p>
+            <p>إذا لم يمكن إشعاره، أو لم يعد بعد الإشعار، فسخ العقد بعد انقضاء الأربعة أشهر من تاريخ الإشعار.</p>
+        </div>
+
+        <div class="article-card">
+            <h2>المادة الخامسة عشرة بعد المائة</h2>
+            <p>إذا طلبت الزوجة الفسخ بسبب فقدان زوجها أو غيابه دون أن تعرف مكان إقامته، فسخ العقد بعد مهلة انتظار لا تقل عن سنة ولا تزيد على سنتين من تاريخ الفقدان.</p>
+        </div>
+
+        <div class="article-card">
+            <h2>المادة السادسة عشرة بعد المائة</h2>
+            <p><strong>تعريف العدة:</strong> هي المدة المحددة التي لا يحل للمرأة خلالها الزواج بسبب انتهاء العلاقة الزوجية (بطلاق أو وفاة أو ما في حكمها).</p>
+        </div>
+
+        <div class="article-card">
+            <h2>المادة السابعة عشرة بعد المائة</h2>
+            <p>تجب العدة في الحالات التالية:</p>
+            <ul>
+                <li>بعد الزواج الصحيح (حتى لو لم يحصل دخول).</li>
+                <li>بعد انتهاء الزواج في حال الشبهة (أي وطء بشبهة).</li>
+                <li>بعد الدخول في عقد الزواج الفاسد.</li>
+            </ul>
+        </div>
+
+        <div class="article-card">
+            <h2>المادة الثامنة عشرة بعد المائة</h2>
+            <p>يبدأ حساب مدة العدة من تاريخ:</p>
+            <ul>
+                <li>وقوع الطلاق الفعلي أو الوفاة.</li>
+                <li>صدور حكم قضائي بالفسخ أو الطلاق.</li>
+                <li>في حالة الطلاق غير الموثق، من تاريخ إثباته لدى المحكمة.</li>
+            </ul>
+            <p>لا تحل المرأة للزواج خلال العدة إلا بعد انتهاء مدتها أو صدور حكم ببراءة رحمها.</p>
+        </div>
+
+        <div class="article-card">
+            <h2>المادة التاسعة عشرة بعد المائة</h2>
+            <p>عدة المرأة التي توفي عنها زوجها (حتى لو لم يدخل بها) هي: أربعة أشهر وعشرة أيام.</p>
+        </div>
+
+        <div class="article-card">
+            <h2>المادة العشرون بعد المائة</h2>
+            <p>عدة المرأة الحامل (أي التي انفصلت عن زوجها بأي سبب) هي: وضع الحمل (أي حتى تلد)، بغض النظر عن المدة.</p>
+        </div>
+
+        <div class="article-card">
+            <h2>المادة الحادية والعشرون بعد المائة</h2>
+            <p>عدة غير الحامل التي انفصلت بغير الوفاة (أي بالطلاق أو الفسخ) تكون كالتالي:</p>
+            <ul>
+                <li><strong>ثلاث حيضات:</strong> للمرأة التي تحيض.</li>
+                <li><strong>ثلاثة أشهر:</strong> للمرأة التي لا تحيض (بسبب صغر أو كبر سن).</li>
+                <li>إذا انقطع حيض المرأة دون سبب معروف (لأمراض مثلاً)، فعدتها ثلاثة أشهر.</li>
+            </ul>
+        </div>
         
-        // دالة لاختيار تعزيز عشوائي
-        function getRandomEncouragement() {
-            return encouragements[Math.floor(Math.random() * encouragements.length)];
-        }
+        <div class="article-card">
+            <h2>المادة الثانية والعشرون بعد المائة</h2>
+            <p>إذا توفي الزوج وكانت المرأة في عدة طلاق رجعي (أي أثناء العدة من طلاق رجعي)، تنتقل إلى عدة الوفاة (أربعة أشهر وعشرة أيام)، ولا تحتسب ما مضى من عدة الطلاق.</p>
+        </div>
 
-        // دالة عند اختيار إجابة
-        function selectAnswer(e) {
-            const selectedButton = e.target;
-            const isCorrect = selectedButton.dataset.correct === 'true';
-            const currentQuestion = shuffledQuestions[currentQuestionIndex];
-            const correctAnswer = currentQuestion.answers.find(ans => ans.correct === true);
+        <div class="article-card">
+            <h2>المادة الثالثة والعشرون بعد المائة</h2>
+            <p>إذا توفي الزوج والمرأة في عدة طلاق بائن (أي انتهى الزواج بالكلية)، تكمل عدتها الحالية (ثلاثة قروء أو ثلاثة أشهر) ولا تنتقل إلى عدة الوفاة، إلا إذا كان الطلاق أثناء مرض الموت، فتجب عليها عدة الوفاة.</p>
+        </div>
 
-            // إظهار الشرح والتعزيز
-            if (isCorrect) {
-                score++;
-                rationaleElement.classList.add('correct');
-                const encouragement = getRandomEncouragement();
-                rationaleElement.innerHTML = `<span class="encouragement">${encouragement}</span><strong>الشرح:</strong> ${correctAnswer.rationale}`;
-            } else {
-                rationaleElement.classList.add('incorrect');
-                rationaleElement.innerHTML = `<strong>للأسف، الإجابة غير صحيحة. الشرح:</strong> ${correctAnswer.rationale}`;
-            }
-            
-            rationaleElement.style.display = 'block';
+        <div class="article-card">
+            <h2>المادة الرابعة والعشرون بعد المائة</h2>
+            <p><strong>تعريف الحضانة:</strong> هي حفظ من لا يستقل بأمر نفسه (الطفل)، وتربيته، والقيام على شؤونه من تعليم وعلاج.</p>
+        </div>
 
-            // تخزين الإجابة للمراجعة
-            userAnswers.push({
-                questionText: currentQuestion.question,
-                selectedAnswer: selectedButton.innerText,
-                correctAnswer: correctAnswer.text,
-                rationale: correctAnswer.rationale,
-                isCorrect: isCorrect
-            });
+        <div class="article-card">
+            <h2>المادة الخامسة والعشرون بعد المائة</h2>
+            <p>شروط الحاضن:</p>
+            <ul>
+                <li>الأهلية (العقل والبلوغ).</li>
+                <li>القدرة على تربية الطفل وحفظه ورعايته.</li>
+                <li>الخلو من الأمراض المعدية الخطيرة.</li>
+            </ul>
+        </div>
 
-            // تعطيل الأزرار
-            Array.from(answerButtonsElement.children).forEach(button => {
-                setStatusClass(button, button.dataset.correct === 'true');
-                button.disabled = true;
-            });
+        <div class="article-card">
+            <h2>المادة السادسة والعشرون بعد المائة</h2>
+            <p>شروط إضافية:</p>
+            <ul>
+                <li><strong>إذا كانت الحاضن امرأة:</strong> يشترط ألا تكون متزوجة من رجل أجنبي عن الطفل (أي ليس محرماً له)، إلا إذا كانت مصلحة الطفل تقتضي ذلك.</li>
+                <li><strong>إذا كان الحاضن رجلاً:</strong> يشترط أن يكون محرماً للطفلة (إذا كانت أنثى)، وأن يقيم معه من تصلح للحضانة من النساء.</li>
+            </ul>
+        </div>
 
-            // إظهار زر "التالي"
-            if (shuffledQuestions.length > currentQuestionIndex + 1) {
-                nextButton.innerText = 'السؤال التالي';
-            } else {
-                nextButton.innerText = 'إظهار النتيجة والمراجعة';
-            }
-            nextButton.classList.remove('hide');
-        }
+        <div class="article-card">
+            <h2>المادة السابعة والعشرون بعد المائة</h2>
+            <p>أولوية الحضانة:</p>
+            <ul>
+                <li>للأم ثم الأب (ما دامت الزوجية قائمة).</li>
+                <li>إذا انفصلا، تنتقل الحضانة للأم أولاً.</li>
+            </ul>
+            <p>(ثم أم الأم، ثم أم الأب، ثم للجدات، ثم للخالات، ثم لعمات الطفل، ثم للمحكمة أن تقرر من ترى فيه مصلحة الطفل).</p>
+        </div>
+        
+        <div class="article-card">
+            <h2>المادة الثامنة والعشرون بعد المائة</h2>
+            <p>سقوط حق الحضانة في الحالات الآتية:</p>
+            <ul>
+                <li>فقدان أحد الشروط المنصوص عليها (كالأهلية أو القدرة أو السلامة من الأمراض).</li>
+                <li>انتقال الحاضن إلى مكان يبعد عن الطفل ويعيق الحضانة.</li>
+                <li>تنازل الحاضن عن الحضانة لمدة تزيد على سنة دون عذر مقبول.</li>
+            </ul>
+        </div>
 
-        // دوال مساعدة لتلوين الأزرار
-        function setStatusClass(element, correct) {
-            clearStatusClass(element);
-            if (correct) {
-                element.classList.add('correct');
-            } else {
-                element.classList.add('incorrect');
-            }
-        }
+        <div class="article-card">
+            <h2>المادة التاسعة والعشرون بعد المائة</h2>
+            <p>ضوابط سفر الحاضن بالطفل خارج المملكة:</p>
+            <ul>
+                <li>لا يجوز للحاضن (إذا كان أحد الوالدين) السفر بالطفل خارج المملكة لمدة تزيد على 30 يوماً في السنة إلا بموافقة الوالد الآخر.</li>
+                <li>إذا كان الحاضن من غير الوالدين (كالجدة)، فلا يجوز السفر بالطفل لمدة تزيد على 30 يوماً إلا بموافقة الوالدين (أو من بقي منهما).</li>
+            </ul>
+        </div>
 
-        function clearStatusClass(element) {
-            element.classList.remove('correct');
-            element.classList.remove('incorrect');
-        }
+        <div class="article-card">
+            <h2>المادة الثلاثون بعد المائة</h2>
+            <p>يجوز لمن سقط حقه في الحضانة أن يطلب استعادته إذا زال سبب السقوط.</p>
+        </div>
 
-        // دالة لزر "التالي"
-        function handleNextButton() {
-            currentQuestionIndex++;
-            if (shuffledQuestions.length > currentQuestionIndex) {
-                showQuestion(shuffledQuestions[currentQuestionIndex]);
-            } else {
-                showScoreAndReview();
-            }
-        }
+        <div class="article-card">
+            <h2>المادة الحادية والثلاثون بعد المائة</h2>
+            <p>أولوية الحضانة حسب سن الطفل:</p>
+            <ul>
+                <li>إذا كان الطفل دون السابعة، تلزم الأم بالحضانة إن وجدت، ثم الأب.</li>
+                <li>إذا بلغ الطفل السابعة، يُلزم الأب بالحضانة إن وجد، ثم الأم.</li>
+            </ul>
+            <p>(للطفل الخيار بعد هذه السن في بعض المذاهب)</p>
+        </div>
 
-        // دالة لإظهار النتيجة والمراجعة النهائية
-        function showScoreAndReview() {
-            showScore(); // إظهار حاوية النتيجة
-            
-            // 1. عرض النتيجة
-            let scoreHTML = `
-                <h2>النتيجة النهائية</h2>
-                <p>لقد أجبت بشكل صحيح على ${score} من أصل ${shuffledQuestions.length} سؤال.</p>
-            `;
-            
-            // 2. إنشاء حاوية المراجعة
-            let reviewHTML = '<div id="review-container"><h2>مراجعة الاختبار</h2>';
-            
-            userAnswers.forEach((answer, index) => {
-                reviewHTML += `
-                    <div class="review-question">
-                        <h4>السؤال ${index + 1}:</h4>
-                        <div>${answer.questionText}</div> <p class="user-answer" style="margin-top: 15px;">
-                            <strong>إجابتك:</strong> ${answer.selectedAnswer} 
-                            ${answer.isCorrect 
-                                ? '<span class="correct-text">(صحيحة)</span>' 
-                                : '<span class="incorrect-text">(خاطئة)</span>'}
-                        </p>
-                        ${!answer.isCorrect 
-                            ? `<p class="correct-answer"><strong>الإجابة الصحيحة:</strong> ${answer.correctAnswer}</p>` 
-                            : ''}
-                        <p class="review-rationale"><strong>الشرح:</strong> ${answer.rationale}</p>
-                    </div>
-                `;
-            });
-            
-            reviewHTML += '</div>';
-            
-            // 3. رسالة السناب الفكاهية
-            const finalPromoHTML = `
-                <div class="final-promo">
-                    ما شاء الله تبارك الله، خلصت الاختبار!
-                    <br>
-                    سواء جبت العيد أو طلعت دافور، الأهم إنك حاولت. ولأنك بطل وكملت للآخر، تعال شوف باقي الاسئلة على سنابي <strong>iyz3d</strong>، هناك الاختبارات اللي على أصولها! 😉
-                </div>
-            `;
-            
-            // 4. إنشاء زر الرجوع للقائمة
-            const backButtonHTML = `
-                <button class="btn back-to-menu-btn" onclick="showMenu()">
-                    الرجوع للقائمة الرئيسية
-                </button>
-            `;
+        <div class="article-card">
+            <h2>المادة الثانية والثلاثون بعد المائة</h2>
+            <p>إذا امتنع جميع مستحقي الحضانة، تختار المحكمة من تراه صالحاً من الأقارب أو الجهات المختصة.</p>
+        </div>
 
-            // 5. تجميع كل شيء وعرضه
-            scoreContainerElement.innerHTML = scoreHTML + finalPromoHTML + reviewHTML + backButtonHTML;
-        }
+        <div class="article-card">
+            <h2>المادة الثالثة والثلاثون بعد المائة</h2>
+            <p>إذا تركت الأم بيت الزوجية بسبب خلاف أو غيره، لا يسقط حقها في الحضانة لمجرد ذلك.</p>
+        </div>
+        
+        <div class="article-card">
+            <h2>المادة الرابعة والثلاثون بعد المائة</h2>
+            <p>حق زيارة الطفل:</p>
+            <ul>
+                <li>إذا كان الطفل في حضانة أحد الوالدين، للآخر حق زيارته واستضافته بما لا يتعارض مع مصلحته.</li>
+                <li>للمحكمة تنظيم زيارة أقارب الطفل إذا كان تحت حضانة أحد الوالدين المتوفى أو الغائب.</li>
+                <li>إذا كان الطفل تحت حضانة غير الوالدين، للمحكمة تنظيم زيارة أقاربه.</li>
+            </ul>
+        </div>
 
-        // --- ربط الأزرار ---
-        document.getElementById('start-quiz-1').addEventListener('click', () => startQuiz('quiz1'));
-        document.getElementById('start-quiz-2').addEventListener('click', () => startQuiz('quiz2'));
-        nextButton.addEventListener('click', handleNextButton);
+        <div class="article-card">
+            <h2>المادة الخامسة والثلاثون بعد المائة</h2>
+            <p>نهاية الحضانة:</p>
+            <ul>
+                <li>تنتهي الحضانة ببلوغ الطفل 15 سنة.</li>
+                <li>لا يجبر على الإقامة عند أحد والديه إذا بلغ الطفل 15 سنة.</li>
+                <li>تستمر الحضانة إذا كان الطفل محتاجاً (كمريض أو معاق) بعد البلوغ.</li>
+            </ul>
+        </div>
 
-        // (الدالة showMenu() تم تعريفها في الأعلى وهي مرتبطة بزر الرجوع)
-
-    </script>
-</body>
+    </div> </body>
 </html>
