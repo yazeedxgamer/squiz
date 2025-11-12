@@ -1,343 +1,310 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html dir="rtl" lang="ar">
 <head>
     <meta charset="UTF-8">
-    
-    <meta name="mobile-web-app-capable" content="yes">
-    
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    
-    <meta name="theme-color" content="#ffffff">
-    <meta name="apple-mobile-web-app-status-bar-style" content="white-translucent">
-    
-    <link rel="apple-touch-icon" href="https://ae01.alicdn.com/kf/HTB12v64d8Cw3KVjSZFl763JkFXao.png">
-    
-    <link rel="manifest" href="data:application/json;charset=utf-8,{%22name%22:%22AliExpress%22,%22short_name%22:%22AliExpress%22,%22start_url%22:%22.%22,%22display%22:%22standalone%22,%22background_color%22:%22#ffffff%22,%22theme_color%22:%22#ffffff%22,%22description%22:%22Order%20Confirmation%22,%22icons%22:[{%22src%22:%22https://ae01.alicdn.com/kf/HTB12v64d8Cw3KVjSZFl763JkFXao.png%22,%22sizes%22:%22192x192%22,%22type%22:%22image/png%22},{%22src%22:%22https://ae01.alicdn.com/kf/HTB12v64d8Cw3KVjSZFl763JkFXao.png%22,%22sizes%22:%22512x512%22,%22type%22:%22image/png%22}]}">
-    
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>تم تأكيد الطلب</title>
-    
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&family=Noto+Sans+Arabic:wght@400;500;700&display=swap" rel="stylesheet">
-    
+    <title>ملخص البيئة والمصادر الطبيعية</title>
     <style>
-        :root {
-            --ali-green: #01a971;
-            --ali-bg: #f2f2f2;
-            --ali-text: #191919;
-            --ali-text-light: #666;
-            --ali-border: #eee;
-        }
-
+        /* تصميم احترافي وملون لـ "شريفه" */
         body {
-            margin: 0;
+            font-family: Arial, "Helvetica Neue", Helvetica, sans-serif; /* خط واضح */
+            line-height: 1.8;
+            background-color: #f4f8f9; /* خلفية هادئة جداً */
+            color: #333;
+            margin: 0; /* بدون هوامش */
             padding: 0;
-            font-family: 'Roboto', 'Noto Sans Arabic', sans-serif;
-            background-color: var(--ali-bg);
-            color: var(--ali-text);
-            font-size: 14px;
-            line-height: 1.5;
         }
-
-        /* رأس الصفحة مع الشعار */
-        .header {
-            display: flex;
-            flex-direction: column; 
-            align-items: center;
-            justify-content: center;
-            padding: 12px 16px;
-            background: #fff;
-            border-bottom: 1px solid var(--ali-border);
-            position: sticky;
-            top: 0;
-            z-index: 100;
-        }
-        .logo {
-            margin-bottom: 8px; 
-        }
-        .logo img {
-            /* تم تعديل هذا القسم ليستخدم SRC بدلاً من CSS */
-            height: 28px; 
-            display: block;
-        }
-        .header-title {
-            font-size: 18px;
-            font-weight: 700;
-        }
-
-        /* رسالة تأكيد الطلب */
-        .success-box {
-            background-color: #e6f7ec;
-            border: 1px solid #b7ebc9;
-            border-radius: 8px;
-            padding: 16px;
-            margin: 12px 16px;
-            display: flex;
-            flex-direction: column; 
-            align-items: flex-end; 
-            text-align: right;
-        }
-        .success-main-message {
-            display: flex;
-            align-items: center;
-            margin-bottom: 8px; 
-            width: 100%; 
-            justify-content: flex-end; 
-        }
-        .success-icon {
-            font-size: 24px;
-            color: var(--ali-green);
-            margin-left: 12px;
-            flex-shrink: 0;
-        }
-        .success-text {
-            font-size: 14px;
-            font-weight: 700;
-            color: var(--ali-text);
-        }
-        .shipping-email-text {
-            font-size: 13px;
-            color: var(--ali-text-light);
-            text-align: right; 
-            width: 100%;
-        }
-
-
-        /* الكروت (للعناوين والملخص) */
         .container {
-            padding: 0 16px;
+            width: 95%;
+            margin: 20px auto;
+            background-color: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            padding: 30px;
         }
-        .card {
-            background: #fff;
-            border-radius: 8px;
-            margin: 12px 0;
-            padding: 16px;
-            box-shadow: 0 1px 4px rgba(0,0,0,0.05);
+        h1 {
+            text-align: center;
+            color: #0056b3; /* أزرق داكن للعنوان الرئيسي */
+            border-bottom: 3px solid #007bff;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
         }
-        
-        h2.card-title {
-            font-size: 16px;
-            font-weight: 700;
-            margin: 0 0 12px 0;
-            padding-bottom: 12px;
-            border-bottom: 1px solid var(--ali-border);
+        h2 {
+            color: #00796b; /* أخضر داكن (تركوازي) */
+            background-color: #e0f2f1; /* خلفية خفيفة للعنوان الفرعي */
+            padding: 10px 15px;
+            border-radius: 5px;
+            margin-top: 25px;
+            border-right: 5px solid #00796b;
         }
+        h3 {
+            color: #d81b60; /* فوشي/وردي داكن */
+            margin-top: 20px;
+            border-bottom: 1px dashed #d81b60;
+            padding-bottom: 5px;
+        }
+        ul {
+            list-style-type: none; /* إزالة التنقيط الافتراضي */
+            padding-right: 20px; /* مسافة بادئة مخصصة */
+        }
+        li {
+            margin-bottom: 10px;
+            position: relative;
+            padding-right: 20px; /* مسافة للعلامة المخصصة */
+        }
+        li::before {
+            content: '🔹'; /* علامة مخصصة */
+            position: absolute;
+            right: 0;
+            top: 0;
+            color: #007bff; /* لون العلامة أزرق */
+        }
+        strong, b {
+            color: #0d47a1; /* أزرق غامق للكلمات المهمة */
+        }
+        .definition {
+            background-color: #fff9c4; /* أصفر فاتح للتعاريف */
+            border: 1px solid #fbc02d;
+            border-right-width: 5px;
+            padding: 15px;
+            border-radius: 5px;
+            font-style: italic;
+            margin: 15px 0;
+        }
+        .warning {
+            background-color: #ffebee; /* أحمر فاتح للتحذيرات والمخاطر */
+            border: 1px solid #c62828;
+            border-right-width: 5px;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 15px 0;
+        }
+        .list-cycles li::before { color: #d81b60; }
+        .list-pollution li::before { color: #c62828; }
 
-        /* معلومات الشحن والتوصيل */
-        .info-header {
-            font-size: 13px;
-            color: var(--ali-text-light);
-            margin-bottom: 8px;
+        .footer {
+            text-align: center;
+            margin-top: 40px;
+            font-size: 1.1em;
+            font-weight: bold;
+            color: #555;
+            border-top: 1px solid #ddd;
+            padding-top: 20px;
         }
-        .info-content {
-            font-size: 14px;
-            font-weight: 500;
-            line-height: 1.4;
-        }
-        .info-content.delivery-date {
-            color: var(--ali-green);
-            font-weight: 700;
-        }
-        .info-divider {
-            height: 1px;
-            background-color: var(--ali-border);
-            margin: 16px 0;
-        }
-
-        /* تفاصيل المنتج */
-        .product-card {
-            display: flex;
-        }
-        .product-image {
-            width: 80px;
-            height: 80px;
-            border-radius: 4px;
-            margin-left: 12px;
-            flex-shrink: 0;
-            object-fit: cover;
-            border: 1px solid var(--ali-border);
-        }
-        .product-details {
-            flex-grow: 1;
-            min-width: 0;
-        }
-        .product-store {
-            font-size: 13px;
-            color: var(--ali-text-light);
-            margin-bottom: 4px;
-        }
-        .product-title {
-            font-size: 14px;
-            font-weight: 500;
-            margin-bottom: 8px;
-            display: -webkit-box;
-            -webkit-line-clamp: 2;
-            -webkit-box-orient: vertical;  
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
-        .product-price {
-            font-size: 16px;
-            font-weight: 700;
-            text-align: left; /* السعر دائماً باليسار */
-        }
-
-        /* ملخص الطلب والدفع */
-        .summary-row {
-            display: flex;
-            justify-content: space-between;
-            font-size: 14px;
-            margin-bottom: 8px;
-        }
-        .summary-label {
-            color: var(--ali-text-light);
-        }
-        .summary-value {
-            color: var(--ali-text);
-            font-weight: 500;
-        }
-        .summary-value.discount {
-            color: #ff4747; /* لون الخصم */
-        }
-        .summary-divider {
-            height: 1px;
-            background: var(--ali-border);
-            margin: 12px 0;
-        }
-        .summary-total .summary-label,
-        .summary-total .summary-value {
-            font-size: 16px;
-            font-weight: 700;
-            color: var(--ali-text);
-        }
-        
-        .payment-method {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        .payment-label {
-            font-size: 14px;
-            color: var(--ali-text-light);
-        }
-        .payment-value {
-            display: flex;
-            align-items: center;
-            font-size: 14px;
-            font-weight: 700;
-        }
-        .payment-value img {
-            height: 20px;
-            margin-right: 8px;
-        }
-        
-        /* رسالة الأمان */
-        .safe-info {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 24px 16px;
-            font-size: 12px;
-            color: #999;
-        }
-        .safe-info-img {
-            height: 14px;
-            margin: 0 4px;
-        }
-
     </style>
 </head>
 <body>
-
-    <div class="header">
-        <div class="logo">
-            <img src="https://ae01.alicdn.com/kf/Scb097b6a482b49e38d7c4937227e85c99.png" alt="AliExpress Logo">
-        </div>
-        <span class="header-title">تم تأكيد الطلب</span>
-    </div>
-
-    <div class="success-box">
-        <div class="success-main-message">
-            <div class="success-icon">
-                <svg viewBox="0 0 1024 1024" width="1em" height="1em" fill="currentColor">
-                    <path d="M512 86.828866c233.208082 0 422.268041 189.049402 422.268041 422.268041 0 233.208082-189.059959 422.268041-422.268041 422.268041s-422.268041-189.059959-422.268041-422.268041c0-233.218639 189.059959-422.268041 422.268041-422.268041z m0 63.340206c-198.233732 0-358.927835 160.694103-358.927835 358.927835 0 198.223175 160.694103 358.927835 358.927835 358.927835s358.927835-160.70466 358.927835-358.927835c0-198.233732-160.694103-358.927835-358.927835-358.927835z m183.71134 233.319587a31.670103 31.670103 0 0 1 45.42268 44.206186l-0.752577 0.85831L492.061856 684.721649a31.670103 31.670103 0 0 1-44.110619 0.752577l-0.858309-0.752577-147.257732-147.257732a31.670103 31.670103 0 0 1 43.512371-45.528247l0.858309 0.752577 125.103093 125.103093 227.051546-227.051546z"></path>
-                </svg>
-            </div>
-            <div class="success-text">
-                شكراً لك! تم استلام طلبك بنجاح.
-            </div>
-        </div>
-        <div class="shipping-email-text">
-            ستصلك رسالة عبر البريد الإلكتروني حالما يتم شحن طلبك.
-        </div>
-    </div>
-
     <div class="container">
-        <div class="card">
-            <div class="address-info">
-                <div class="info-header">سيتم الشحن إلى:</div>
-                <div class="info-content">
-                    يزيد الشمري<br>
-                    +966 559364427<br>
-                    الشيخ سليمان بن سمحان، الدرعية<br>
-                    الرياض, Saudi Arabia, 000000
-                </div>
-            </div>
-            <div class="info-divider"></div>
-            <div class="delivery-info">
-                <div class="info-header">تاريخ الوصول المتوقع:</div>
-                <div class="info-content delivery-date">
-                    من يوم 21 إلى يوم 29
-                </div>
-            </div>
-        </div>
+        <h1>ملخص مقرر البيئة والمصادر الطبيعية (صفحات 98 - 175)</h1>
 
-        <div class="card">
-            <div class="product-card">
-                <img class="product-image" src="https://ae-pic-a1.aliexpress-media.com/kf/Sded1eee0be5241c6801a8849a3d5beed9.jpg_220x220.jpg" alt="SlimeVR Plus Tracker">
-                <div class="product-details">
-                    <div class="product-store">VRLab Store</div>
-                    <div class="product-title">SlimeVR Plus Tracker BNO085 vrchat steamvr</div>
-                    <div class="product-price">SAR 1,236.14</div>
-                </div>
-            </div>
-        </div>
+        <section>
+            <h2>تدفق الطاقة في النظام البيئي (صفحات 98 - 110)</h2>
+            <p class="definition">
+                <strong>تدفق الطاقة (Energy Flow):</strong> هو انتقال الطاقة عبر سلسلة الغذاء، بدءاً من الكائنات المنتجة إلى الكائنات المستهلكة.
+            </p>
+            
+            <h3>المستويات الغذائية (Trophic Levels)</h3>
+            <ul>
+                <li><strong>1. المنتجات (Producers):</strong> كائنات ذاتية التغذية (النباتات، الطحالب) تصنع غذاءها (طاقة كيميائية) من طاقة الشمس (التمثيل الضوئي).</li>
+                <li><strong>2. المستهلكات (Consumers):</strong> كائنات غير ذاتية التغذية (الحيوانات) تحصل على الطاقة بأكل كائنات أخرى.</li>
+                <li><strong>3. المحللات (Decomposers):</strong> كائنات (البكتيريا والفطريات) تحلل المواد العضوية الميتة وتعيدها للنظام.</li>
+            </ul>
 
-        <div class="card">
-            <h2 class="card-title">ملخص الطلب</h2>
-            <div class="summary-row">
-                <span class="summary-label">إجمالي المنتجات</span>
-                <span class="summary-value">SAR 1,243.84</span>
-            </div>
-            <div class="summary-row">
-                <span class="summary-label">خصم المنتجات</span>
-                <span class="summary-value discount">-SAR 7.70</span>
-            </div>
-            <div class="summary-row">
-                <span class="summary-label">الشحن</span>
-                <span class="summary-value">مجاني</span>
-            </div>
-            <div class="summary-divider"></div>
-            <div class="summary-row summary-total">
-                <span class="summary-label">المجموع الإجمالي</span>
-                <span class="summary-value">SAR 1,236.14</span>
-            </div>
-            <div class="summary-divider"></div>
-            <div class="payment-method">
-                <span class="payment-label">تم الدفع بواسطة:</span>
-                <span class="payment-value">
-                    <img src="https://ae01.alicdn.com/kf/S2ee1f368a78345c293982065980ceddeG/216x144.png" alt="Visa">
-                    Visa **** 8948
-                </span>
-            </div>
+            <h3>الأهرامات الغذائية (Ecological Pyramids)</h3>
+            <ul>
+                <li><strong>هرم الأعداد:</strong> يمثل عدد الكائنات الحية في كل مستوى.</li>
+                <li><strong>هرم الكتلة الحية:</strong> يمثل الوزن (الكتلة) للكائنات في كل مستوى (وهو تعبير أكثر دقة).</li>
+                <li><strong>هرم الطاقة:</strong> يمثل مخزون الطاقة في كل مستوى، وهو يعبر عن كفاءة النظام البيئي.</li>
+            </ul>
+            
+            <h3>السلسلة والشبكة الغذائية</h3>
+            <ul>
+                <li><strong>السلسلة الغذائية (Food Chain):</strong> تمثيل خطي لانتقال الطاقة (مثل: عشب -> غزال -> أسد).</li>
+                <li><strong>الشبكة الغذائية (Food Web):</strong> تداخل مجموعة من السلاسل الغذائية، وهي تمثل جميع العلاقات الغذائية المتشابكة في النظام.</li>
+            </ul>
+
+            <h3>الإنتاجية وكفاءة الطاقة</h3>
+            <ul>
+                <li><strong>الإنتاجية الأولية الإجمالية (Gross):</strong> مجموع معدل التمثيل الضوئي (الطاقة الكلية التي أنتجها النبات).</li>
+                <li><strong>الإنتاجية الأولية الصافية (Net):</strong> الطاقة الفائضة عن حاجة النبات (الإجمالية - التنفس). وهي الطاقة المتاحة للمستوى الغذائي التالي.</li>
+                <li><strong>قاعدة الـ 10% (الكفاءة البيئية):</strong> تنتقل <strong>10%</strong> فقط من الطاقة من مستوى غذائي إلى المستوى الذي يليه. 90% تُفقد كحرارة أثناء الأيض أو لا تُستهلك.</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>دورات العناصر البيوجيوكيميائية (صفحات 111 - 144)</h2>
+            <p>هي دورة العناصر (مثل الكربون، النتروجين، الفسفور) بين المكونات الحية وغير الحية. تنقسم إلى:</p>
+            <ul class="list-cycles">
+                <li><strong>دورات غازية (Gaseous):</strong> المستودع الرئيسي هو الغلاف الجوي (مثل دورة الكربون والأكسجين والنتروجين). (دورة كاملة).</li>
+                <li><strong>دورات رسوبية (Sedimentary):</strong> المستودع الرئيسي هو قشرة الأرض (مثل دورة الفسفور والكبريت). (دورة غير كاملة).</li>
+            </ul>
+
+            <h3>أهم الدورات</h3>
+            
+            <h4>1. دورة الماء (Hydrologic Cycle)</h4>
+            <ul>
+                <li><strong>التبخر (Evaporation):</strong> تحول الماء من سائل إلى غاز (بفعل الشمس).</li>
+                <li><strong>النتح (Transpiration):</strong> تبخر الماء من أوراق النباتات.</li>
+                <li><strong>التكثف (Condensation):</strong> تحول بخار الماء إلى سائل (تكوّن السحب).</li>
+                <li><strong>الهطول (Precipitation):</strong> عودة الماء للأرض (مطر، ثلج، برد).</li>
+                <li><strong>الجريان السطحي (Runoff):</strong> جريان الماء على سطح الأرض.</li>
+            </ul>
+
+            <h4>2. دورة الكربون (Carbon Cycle)</h4>
+            <ul class="list-cycles">
+                <li><strong>العمليات الرئيسية:</strong>
+                    <ul>
+                        <li><strong>التمثيل الضوئي:</strong> النباتات تأخذ $CO_2$ من الجو.</li>
+                        <li><strong>التنفس:</strong> الكائنات الحية تطلق $CO_2$.</li>
+                        <li><strong>التحلل:</strong> المحللات تطلق $CO_2$ (في وجود أكسجين) أو الميثان (في غيابه).</li>
+                        <li><strong>الاحتراق:</strong> حرق الوقود الأحفوري (فحم، نفط) يطلق $CO_2$ بكميات هائلة.</li>
+                    </ul>
+                </li>
+                <li class="warning"><strong>أثر الإنسان:</strong> زيادة $CO_2$ (بسبب حرق الوقود وإزالة الغابات) يسبب <strong>ظاهرة الاحتباس الحراري (Global Warming)</strong>.</li>
+            </ul>
+
+            <h4>3. دورة الأوكسجين (Oxygen Cycle)</h4>
+            <ul class="list-cycles">
+                <li><strong>مصدره الرئيسي:</strong> عملية <strong>التمثيل الضوئي</strong> (النباتات والطحالب).</li>
+                <li><strong>استهلاكه:</strong> التنفس، التحلل، واحتراق الوقود الأحفوري.</li>
+            </ul>
+
+            <h4>4. دورة النيتروجين (Nitrogen Cycle)</h4>
+            <ul class="list-cycles">
+                <li>النيتروجين ($N_2$) في الجو (78%) غير صالح للاستخدام المباشر.</li>
+                <li><strong>تثبيت النيتروجين (Fixation):</strong> تحويل $N_2$ إلى أمونيوم ($NH_4$) بواسطة:
+                    <ul>
+                        <li><strong>بكتيريا (التثبيت الحيوي):</strong> أهم طريقة (مثل البكتيريا العقدية في جذور البقوليات).</li>
+                        <li><strong>البرق (التثبيت الجوي):</strong> كمية قليلة.</li>
+                        <li><strong>المصانع (التثبيت الصناعي):</strong> لإنتاج الأسمدة.</li>
+                    </ul>
+                </li>
+                <li><strong>عملية النترجة (Nitrification):</strong> بكتيريا تحول الأمونيوم ($NH_4$) إلى نتريت ($NO_2$) ثم إلى <strong>نترات ($NO_3$)</strong>, وهو الشكل الذي يمتصه النبات.</li>
+                <li><strong>إزالة النيتروجين (Denitrification):</strong> بكتيريا (في غياب الأكسجين) تعيد النترات ($NO_3$) إلى غاز $N_2$ في الجو.</li>
+            </ul>
+
+            <h4>5. دورة الفسفور (Phosphorus Cycle)</h4>
+            <ul class="list-cycles">
+                <li><strong>دورة رسوبية (بطيئة جداً)</strong> لا يوجد لها طور غازي.</li>
+                <li><strong>المصدر:</strong> الصخور (الفوسفات $PO_4$).</li>
+                <li><strong>العملية:</strong> التجوية (Weathering) تحرر الفوسفات من الصخور -> تمتصه النباتات -> تأكله الحيوانات -> يعود للتربة بالتحلل.</li>
+                <li><strong>أسباب ركود الدورة:</strong> صعوبة تحلل الفسفور في العظام، وفقدانه في الرواسب البحرية العميقة.</li>
+                <li class="warning"><strong>أثر الإنسان:</strong> تعدين الفوسفات لصناعة <strong>الأسمدة والمنظفات</strong>. جريانها للمياه يسبب <strong>ظاهرة الإثراء الغذائي (Eutrophication)</strong> (نمو الطحالب بكثافة).</li>
+            </ul>
+
+            <h4>6. دورة الكبريت (Sulfur Cycle)</h4>
+            <ul class="list-cycles">
+                <li>دورة رسوبية ولكن لها طور غازي.</li>
+                <li><strong>المصادر:</strong> الصخور (الجبس)، البراكين، تحلل المواد العضوية.</li>
+                <li><strong>التحلل اللاهوائي</strong> (في المستنقعات) ينتج غاز <strong>كبريتيد الهيدروجين ($H_2S$)</strong> (رائحة البيض الفاسد).</li>
+                <li class="warning"><strong>أثر الإنسان:</strong> حرق الوقود الأحفوري يطلق <strong>ثاني أكسيد الكبريت ($SO_2$)</strong>. تفاعل $SO_2$ و $H_2S$ مع الماء في الجو يكوّن <strong>المطر الحمضي (Acid Rain)</strong>.</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>التلوث البيئي وأخطاره (صفحات 147 - 175)</h2>
+            
+            <h3>مفاهيم وأنواع التلوث</h3>
+            <ul class="list-pollution">
+                <li><strong>تعريف التلوث:</strong> أي تغير (فيزيائي، كيميائي، حيوي) في البيئة يسبب خطراً على الصحة أو السلامة أو الرفاهية.</li>
+                <li><strong>تقسيمات التلوث جغرافياً:</strong>
+                    <ul>
+                        <li><strong>تلوث محلي:</strong> آثاره محصورة في منطقة المصدر.</li>
+                        <li><strong>تلوث بعيد المدى:</strong> ينتقل عبر الحدود (مثل المطر الحمضي).</li>
+                    </ul>
+                </li>
+                <li><strong>أنواع التلوث (حسب الأثر):</strong>
+                    <ul>
+                        <li><strong>معقول:</strong> لا يسبب أخطار واضحة.</li>
+                        <li><strong>خطر:</strong> يتعدى حدود الأمان ويسبب مشاكل واضحة.</li>
+                        <li><strong>مدمر:</strong> يتعدى الحد القاتل وينهي النظام البيئي.</li>
+                    </ul>
+                </li>
+                <li><strong>طبيعة الملوثات:</strong>
+                    <ul>
+                        <li><strong>فيزيائية:</strong> إشعاع، حرارة، ضوضاء.</li>
+                        <li><strong>كيميائية:</strong> (الأكثر شيوعاً) نفط، مبيدات، معادن ثقيلة (رصاص، زئبق).</li>
+                        <li><strong>إحيائية (بيولوجية):</strong> بكتيريا، فيروسات، فطريات (تأتي مع الصرف الصحي مثلاً).</li>
+                    </ul>
+                </li>
+            </ul>
+
+            <h3>تلوث الهواء (Air Pollution)</h3>
+            <p>تلوث الهواء هو المشكلة الأخطر لصعوبة السيطرة على انتشاره (الهواء متحرك). ينقسم إلى:</p>
+            <ul class="list-pollution">
+                <li><strong>ملوثات دقائقية (Particulates):</strong> مواد صلبة/سائلة عالقة (غبار، رمال، دخان $Soot$).</li>
+                <li><strong>ملوثات غازية (Gaseous):</strong> (انظر الجدول أدناه).</li>
+            </ul>
+
+            <h3>أهم غازات تلوث الهواء وآثارها</h3>
+
+            <h4>1. أول أكسيد الكربون (CO)</h4>
+            <ul class="list-pollution">
+                <li><strong>المصدر:</strong> الاحتراق <strong>غير الكامل</strong> للوقود (خاصة عوادم السيارات).</li>
+                <li><strong>الخطر (سام جداً):</strong> عديم اللون والرائحة. يرتبط بالهيموجلوبين في الدم (مكوناً $HbCO$) بقوة ويمنع نقل الأكسجين، مسبباً الاختناق (صداع، دوخة، انهيار، فقدان وعي).</li>
+            </ul>
+
+            <h4>2. ثاني أكسيد الكربون ($CO_2$)</h4>
+            <ul class="list-pollution">
+                <li><strong>المصدر:</strong> الاحتراق <strong>الكامل</strong> (حرق الوقود الأحفوري)، إزالة الغابات.</li>
+                <li><strong>الخطر:</strong> ليس ساماً مباشرة، ولكنه المسبب الرئيسي <strong>للاحتباس الحراري</strong>.</li>
+            </ul>
+
+            <h4>3. أكاسيد النيتروجين ($NO_x$)</h4>
+            <ul class="list-pollution">
+                <li><strong>المصدر:</strong> الاحتراق في درجات حرارة عالية (سيارات 70%، مصانع).</li>
+                <li><strong>الخطر:</strong> $NO_2$ غاز شديد الخطورة، يسبب <strong>الضباب الدخاني (Smog)</strong>، وهو أحد مكونات المطر الحمضي.</li>
+            </ul>
+
+            <h4>4. أكاسيد الكبريت ($SO_x$)</h4>
+            <ul class="list-pollution">
+                <li><strong>المصدر:</strong> حرق الوقود المحتوي على الكبريت (الفحم، النفط)، والبراكين.</li>
+                <li><strong>الخطر:</strong> $SO_2$ (الأخطر) غاز حمضي أكال. يدمر الجهاز التنفسي ويصل للدم، وهو المكون الرئيسي <strong>للمطر الحمضي</strong>.</li>
+            </ul>
+
+            <h4>5. كبريتيد الهيدروجين ($H_2S$)</h4>
+            <ul class="list-pollution">
+                <li><strong>المصدر:</strong> تحلل المخلفات (الصرف الصحي)، مصافي النفط، الصناعات الجلدية.</li>
+                <li><strong>الخطر:</strong> سام جداً (أخطر من $CO$)، رائحة بيض فاسد، يؤثر على الجهاز العصبي المركزي ويثبط التنفس الخلوي.</li>
+            </ul>
+
+            <h3>ملوثات الهواء العالمية</h3>
+            
+            <h4>1. الاحتباس الحراري (Global Warming)</h4>
+            <p class="definition">
+                هو الارتفاع التدريجي في حرارة الطبقة السفلى للغلاف الجوي. سببه زيادة <strong>الغازات الدفيئة</strong>.
+            </p>
+            <ul class="list-pollution">
+                <li><strong>الغازات الدفيئة:</strong> بخار الماء ($H_2O$)، ثاني أكسيد الكربون ($CO_2$)، الميثان ($CH_4$)، أكسيد النيتروز ($N_2O$)، الأوزون ($O_3$)، ومركبات الكلوروفلوروكربون (CFCs).</li>
+                <li><strong>الآلية:</strong> هذه الغازات "تحبس" الحرارة (الأشعة تحت الحمراء) المنبعثة من الأرض، مما يرفع درجة حرارتها. (الأثر طبيعي ومطلوب للحياة، ولكن زيادته خطرة).</li>
+            </ul>
+
+            <h4>2. طبقة الأوزون (Ozone Layer)</h4>
+            <ul class="list-pollution">
+                <li><strong>الموقع:</strong> توجد في طبقة <strong>الستراتوسفير</strong>.</li>
+                <li><strong>الوظيفة:</strong> <strong>حماية</strong> الأرض من <strong>الأشعة فوق البنفسجية (UV)</strong> الضارة، والتي تسبب سرطان الجلد.</li>
+                <li><strong>(تنبيه):</strong> الأوزون الموجود *قرب سطح الأرض* يعتبر ملوثاً وضاراً بالتنفس ويسبب صداع وإرهاق.</li>
+            </ul>
+
+            <h4>3. التلوث الإشعاعي (Radioactive Pollution)</h4>
+            <ul class="list-pollution">
+                <li><strong>المصدر:</strong> حوادث المفاعلات النووية، النفايات المشعة.</li>
+                <li><strong>الخطر:</strong> يدمر خلايا الكائنات الحية بشكل مباشر، أو يتراكم في السلسلة الغذائية.</li>
+            </ul>
+
+            <h4>4. الضوضاء (Noise)</h4>
+            <ul class="list-pollution">
+                <li>تعتبر شكلاً من تلوث الهواء لأنها موجات صوتية تنتقل عبره.</li>
+            </ul>
+
+            <h3>دراسة حالة: السحابة السوداء (لندن 1952)</h3>
+            <p class="warning">
+                كارثة شهيرة نتجت عن تراكم الضباب الدخاني (Smog) من المصانع وحرق الفحم. أدت لوفاة الآلاف من سكان لندن بسبب تدمير الجهاز التنفسي، وكانت دافعاً مهماً للحركة البيئية المعاصرة.
+            </p>
+        </section>
+
+        <div class="footer">
+            تلخيص شريفه العميرين
         </div>
     </div>
-
-    <div class="safe-info">
-        <img class="safe-info-img" src="//ae01.alicdn.com/kf/H8e0188e31d864f94ab796d13535dd096g.png" alt="Secure Info Icon">
-        <div class="safe-info-text">يحافظ AliExpress على أمان معلوماتك ومدفوعاتك</div>
-    </div>
-
 </body>
 </html>
